@@ -11,7 +11,7 @@ const Work = () => {
           <div className="item">
             <div className="work-info">
               <h5 className="active">QA Engineer</h5>
-              <p>2022 - Present</p>
+              <p>2021 - Present</p>
             </div>
             <p>Studio Sai, Seattle, Washington</p>
           </div>

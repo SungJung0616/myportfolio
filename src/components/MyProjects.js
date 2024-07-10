@@ -11,7 +11,7 @@ import simonGame from '../assets/simonGame.png';
 
 const projects = [
   {
-    title: "What's in your fridge (Frontend), (Backend)",
+    title: "What's in your fridge (Frontend,Backend)",
     description: 'What’s in your fridge is a website where users can browse various recipes and easily purchase the necessary ingredients.',
     imgSrc: fridge,
     link: 'https://github.com/SungJung0616/cooking-recipe-fe/tree/master',
@@ -19,7 +19,7 @@ const projects = [
     type: 'Group Project'
   },
   {
-    title: "SJ Shopping Mall (Frontend, Backend)",
+    title: "SJ Shopping Mall (Frontend,Backend)",
     description: 'SJ is a website where users can conveniently purchase a variety of clothes.',
     imgSrc: shoppingmall,
     link: 'https://github.com/SungJung0616/shoppin-mall-fe',
@@ -27,7 +27,7 @@ const projects = [
     type: 'Individual Project'
   },
   {
-    title: 'ToDo App (Frontend, Backend)',
+    title: 'ToDo App (Frontend,Backend)',
     description: 'A Todo List application built using JavaScript, React, Bootstrap, and CSS. This application allows users to register, log in, and manage their tasks efficiently. Users can add, edit, delete, and filter tasks, with tasks being stored securely on the backend.',
     imgSrc: todoApp,
     link: 'https://github.com/SungJung0616/toDo-fe',
