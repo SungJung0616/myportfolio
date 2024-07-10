@@ -4,13 +4,13 @@ import { Link } from 'react-scroll';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCode } from '@fortawesome/free-solid-svg-icons';
+import { faCode, faLaptopCode  } from '@fortawesome/free-solid-svg-icons';
 
 const NavBar = () => {
   return (
     <div className="nav">
       <div className="logo">
-        <FontAwesomeIcon icon={faCode} className='fa-code' />
+        <FontAwesomeIcon icon={faLaptopCode} className='fa-code' />
       </div>
       <div className="links">
       <Link 

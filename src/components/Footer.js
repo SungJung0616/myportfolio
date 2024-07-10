@@ -7,15 +7,15 @@ import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 const Footer = () => {
   return (
     <footer>
-      <a href="#">My Portfolio</a>
+      <a href="https://sj-personalportfolio.netlify.app/">My Portfolio</a>
       <div className="socials">
-        <a href="#" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/SungJung0616" target="_blank" rel="noopener noreferrer">
           <FontAwesomeIcon icon={faGithub} className="icon" />
         </a>
-        <a href="#">
+        <a href="mailto:sungjung0616@gmail.com">
           <FontAwesomeIcon icon={faEnvelope} className="icon" />
         </a>
-        <a href="#" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.linkedin.com/in/sungjung0616/" target="_blank" rel="noopener noreferrer">
           <FontAwesomeIcon icon={faLinkedin} className="icon" />
         </a>
       </div>
