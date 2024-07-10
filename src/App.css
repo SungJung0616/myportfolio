@@ -689,10 +689,6 @@ footer a .fa-job{
         margin-top: 2
     }
 
-    .about-me .info .hire-btn{
-        margin-bottom: 30px;
-    }
-
     .portfolio .portfo-items{
         gap: 22px;
         flex-wrap: wrap;
@@ -705,7 +701,7 @@ footer a .fa-job{
 }
 
 @media screen and (max-width: 768px) {
-    .nav .links a{
+    .nav .links .nav-link{
         font-size: 16px;
     }
 
@@ -774,12 +770,33 @@ footer a .fa-job{
 }
 
 @media screen and (max-width: 576px){
+    .nav{
+        font-size: 16px;
+        gap: 0;
+    }
+
+    .nav .links{
+        padding: 0px;
+    }
+
+    .about-me button.hire-btn{
+        font-size: 13px;
+    }
+
+    .about-me button.download-btn{
+        font-size: 10px;
+        padding: 2px 10px; /* 상하 패딩을 줄여줍니다 */
+        width: 100px; /* 버튼의 너비를 제한합니다 */
+        white-space: normal; /* 텍스트 줄바꿈을 허용합니다 */
+        text-align: center;  
+    }
+
     .main p.title{
         font-size: 18px;
     }
 
     .main p.subtitle{
-        font-size: 10px;
+        font-size: 12px;
     }
 
     .about .left .info h2{
@@ -813,5 +830,38 @@ footer a .fa-job{
         font-size : 13px;
     }
 
-    
+    .portfolio .header button{
+        font-size: 12px;
+        padding: 8px 14px;
+    }
+
+    .portfolio .portfo-items .item{
+        width: 100%;
+    }
+
+    .feedback .customers .item{
+        width: 100%;
+    }
+
+    .works .left, .works .right .item{
+        padding: 10px 10px;
+    }
+
+    .portfolio{
+        padding: 10px 10px;
+        margin: auto;
+    }
+
+    .about{
+        padding: 10px 10px;
+        margin: auto;
+    }
+
+    .skills{
+        padding: 0px 10px;
+    }
+
+    .about-me{
+        padding: 0px 10px;
+    }
 }
