@@ -20,7 +20,7 @@ const Home = () => {
       };
 
     const handleDownloadResumeClick = () => {
-        window.open(`${process.env.PUBLIC_URL}/2024 Sung Resume.pdf`, '_blank');
+        window.open(`${process.env.PUBLIC_URL}/2024 update Sung's Resume.pdf`, '_blank');
     };
 
   return (
