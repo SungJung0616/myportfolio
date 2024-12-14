@@ -23,7 +23,7 @@ const projects = [
     description: 'SJ is a website where users can conveniently purchase a variety of clothes.',
     imgSrc: shoppingmall,
     link: 'https://github.com/SungJung0616/shoppin-mall-fe',
-    liveLink: 'https://sj-shopping-mall.netlify.app/account/profile',
+    liveLink: 'https://sj-shopping-mall.netlify.app/',
     type: 'Individual Project'
   },
   {
