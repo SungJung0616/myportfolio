@@ -18,7 +18,7 @@ const Home = () => (
   <>
     <section className="hero" id="home">
       <div className="hero-copy">
-        <p className="eyebrow"><span className="status-dot" /> Los Angeles, California</p>
+        <p className="eyebrow"><span className="status-dot" /> Gardena, California</p>
         <h1>QA discipline.<br /><span>Automation mindset.</span></h1>
         <p className="hero-lede">
           I bridge software quality, operational systems, and practical automation—turning repetitive workflows into reliable, testable processes.
