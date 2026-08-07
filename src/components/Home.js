@@ -1,105 +1,54 @@
 import React from 'react';
-import cssLogo from '../assets/CSS.svg';
+import PythonLogo from '../assets/Python-Light.svg';
 import jsLogo from '../assets/JavaScript.svg';
 import HTMLLogo from '../assets/HTML.svg';
-import NodeLogo from '../assets/NodeJS-Dark.svg';
-import PythonLogo from '../assets/Python-Light.svg';
-import ExpressLogo from '../assets/ExpressJS-Light.svg';
-import GithubLogo from '../assets/Github-Light.svg';
-import JqueryLogo from '../assets/JQuery.svg';
+import cssLogo from '../assets/CSS.svg';
 import ReactLogo from '../assets/React.svg';
-import MongoDBLogo from '../assets/MongoDB.svg';
-import NetlifyLogo from  '../assets/Netlify-Dark.svg';
-import image from '../assets/profile.png';
+import NodeLogo from '../assets/NodeJS-Dark.svg';
 import PostgresLogo from '../assets/PostgreSQL-Dark.svg';
+import GithubLogo from '../assets/Github-Light.svg';
 
-const Home = () => {
+const skills = [
+  [PythonLogo, 'Python'], [jsLogo, 'JavaScript'], [HTMLLogo, 'HTML'],
+  [cssLogo, 'CSS'], [ReactLogo, 'React'], [NodeLogo, 'Node.js'],
+  [PostgresLogo, 'PostgreSQL'], [GithubLogo, 'GitHub']
+];
 
-    const handleHireMeClick = () => {
-        window.location.href = "mailto:sungjung0616@gmail.com?subject=Job Opportunity";
-      };
-
-    const handleDownloadResumeClick = () => {
-        window.open(`${process.env.PUBLIC_URL}/2024 update Sung's Resume.pdf`, '_blank');
-    };
-
-  return (
-    <div className="home" id="home">
-      <div className="main">
-        <h4>Hi, I Am <span>Sung Jung</span> 👋</h4>
-        <p className="title">FullStack Web Developer with QA Experience</p>
-        <p className="subtitle">I build robust and user-friendly applications with a focus on quality and efficiency. I'm passionate about continuous learning and improving my skills.</p>        
-      </div>
-
-      <h5 className="seprator">Who I Am</h5>
-
-      <div className="about-me">
-        <img src={image} alt="Sung Jung" />
-        <div className="info">
-          <h3>About Me</h3>
-          <p>
-            I am a passionate FullStack Web Developer with 2 years of experience in QA and 7 years in e-commerce. My journey began in the warehouse, where I handled transportation logistics, receiving, sales, online sales, and data analysis. Through my experience in QA, I have developed a keen eye for detail and a commitment to quality. My goal is to create seamless, user-friendly applications that make a difference.
-          </p>
-          <div className='about-buttons'>
-            <button className="hire-btn" onClick={handleHireMeClick}>Hire Me</button>
-            <button className="download-btn" onClick={handleDownloadResumeClick}>Download Resume</button>
-          </div>
+const Home = () => (
+  <>
+    <section className="hero" id="home">
+      <div className="hero-copy">
+        <p className="eyebrow"><span className="status-dot" /> Los Angeles, California</p>
+        <h1>QA discipline.<br /><span>Automation mindset.</span></h1>
+        <p className="hero-lede">
+          I bridge software quality, operational systems, and practical automation—turning repetitive workflows into reliable, testable processes.
+        </p>
+        <div className="hero-actions">
+          <a className="button primary" href="#work">Explore my work <span aria-hidden="true">↘</span></a>
+          <a className="button secondary" href={`${process.env.PUBLIC_URL}/resume/Sung_Jung_Resume.pdf`} download="Sung_Jung_Resume.pdf">Download resume</a>
         </div>
       </div>
+      <aside className="hero-panel" aria-label="Career highlights">
+        <p className="panel-label">Selected impact</p>
+        <div className="metric"><strong>8h → 4h</strong><span>Regression cycle improved with reusable save-state checkpoints</span></div>
+        <div className="metric"><strong>3h → 30m</strong><span>Recurring data preparation and ERP upload workflow automated</span></div>
+        <div className="metric"><strong>1 shipped title</strong><span>Eternights — development and PlayStation release QA</span></div>
+      </aside>
+    </section>
 
-      <h5 className="seprator">My Skills</h5>
-      <div className="skills">
-        <div className="left">
-          <div className="info">
-            <h3>What My Programming Skills Include</h3>
-            <p>
-              I develop simple, intuitive, and responsive user interfaces that help users get things done with less effort and time using the following technologies:
-            </p>
-          </div>
-          <button className="hire-btn" onClick={handleHireMeClick}>Hire Me</button>          
-        </div>
-
-        <div className="right">
-          <div className="item">
-           <img src={PythonLogo} alt='python'/>
-          </div>
-          <div className="item">
-           <img src={jsLogo} alt='js'/>
-          </div>
-          <div className="item">
-            <img src={cssLogo} alt='css'/>
-          </div>          
-          <div className="item">
-          <img src={HTMLLogo} alt='HTML'/>
-          </div>
-          <div className="item">
-          <img src={ReactLogo} alt='react'/>
-          </div>
-          <div className="item">
-          <img src={JqueryLogo} alt='Jquery'/>
-          </div>
-          <div className="item">
-          <img src={NodeLogo} alt='node'/>
-          </div>          
-          <div className="item">
-          <img src={ExpressLogo} alt='express'/>
-          </div>       
-          <div className="item">
-          <img src={GithubLogo} alt='github'/>
-          </div>
-          <div className="item">
-          <img src={MongoDBLogo} alt='mongo'/>
-          </div>          
-          <div className="item">
-          <img src={PostgresLogo} alt='postgresl'/>
-          </div>
-          <div className="item">
-          <img src={NetlifyLogo} alt='Netlify'/>
-          </div>
-        </div>
+    <section className="section skills-section" id="skills">
+      <div className="section-heading split-heading">
+        <div><p className="eyebrow">Capabilities</p><h2>What My Programming Skills Include</h2></div>
+        <p>I use code as a practical tool for validation, workflow automation, data handling, and building clear user experiences.</p>
       </div>
-    </div>
-  );
-};
+      <div className="skill-grid">
+        {skills.map(([icon, label]) => <div className="skill-card" key={label}><img src={icon} alt="" /><span>{label}</span></div>)}
+      </div>
+      <div className="capability-row">
+        <span>Manual & regression testing</span><span>Unity Test Framework</span><span>Google Apps Script</span><span>Selenium projects</span><span>Data validation</span><span>ERP / WMS operations</span>
+      </div>
+    </section>
+  </>
+);
 
 export default Home;

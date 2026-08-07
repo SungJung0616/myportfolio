@@ -1,61 +1,31 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle as faCircleSolid } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const Work = () => {
-  return (
-    <div className="works" id="works">
-      <div className="left">
-        <h3><FontAwesomeIcon icon={faCircleSolid} /> Recent Works</h3>
-        <div className="works-list">
-          <div className="item">
-            <div className="work-info">
-              <h5 className="active">QA Engineer</h5>
-              <p>2021 - Present</p>
-            </div>
-            <p>Studio Sai, Seattle, Washington</p>
-          </div>
-          <div className="item">
-            <div className="work-info">
-              <h5>Database Manager</h5>
-              <p>2016 - 2021</p>
-            </div>
-            <p>Gps Logix INC., Carson, California</p>
-          </div>
-          <div className="item">
-            <div className="work-info">
-              <h5>3PL Warehouse Manager</h5>
-              <p>2013 - 2015</p>
-            </div>
-            <p>Gps Logix INC., Portland, Oregon</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="right">
-        <div className="item">
-          <a href="#">About My Work</a>
-          <p>I have delivered high-quality services that prioritize user experience across various projects. My goal is to grow as a developer who creates programs that combine technical excellence with user-friendliness. Additionally, I focus on achieving the best results through collaboration and continuous improvement.</p>
-        </div>
-        <div className="item">
-          <a href="#">Design Solutions</a>
-          <p>Ways to solve design challenges with creative approaches.</p>
-        </div>
-        <div className="item">
-          <a href="#">Responsive Design</a>
-          <p>Ensuring a seamless user experience across all devices.</p>
-        </div>
-        <div className="item">
-          <a href="#">Research and Testing</a>
-          <p>Utilizing data-driven insights to ensure user satisfaction and eliminate potential issues.</p>
-        </div>
-        <div className="item">
-          <a href="#">Collaborative Projects</a>
-          <p>Collaborating with cross-functional teams to ensure seamless project execution and successful delivery.</p>
-        </div>
+const Work = () => (
+  <section className="section" id="work">
+    <div className="section-heading"><p className="eyebrow">Selected work</p><h2>Systems improved through testing and automation.</h2></div>
+    <div className="case-grid">
+      <article className="case-card featured">
+        <div className="case-meta"><span>01</span><span>Game QA</span></div>
+        <div><p className="case-kicker">Studio Sai · Eternights</p><h3>Faster regression without weakening coverage.</h3><p>Supported development and PlayStation release QA through manual and regression testing, bug reporting, and UI-focused validation with Unity Test Framework. Developer save states and checkpoints reduced repeat traversal during regression.</p><Link className="case-link" to="/case-studies/eternights-qa">Read case study <span>↗</span></Link></div>
+        <div className="tags"><span>PlayStation QA</span><span>Regression</span><span>Unity</span></div>
+      </article>
+      <article className="case-card">
+        <div className="case-meta"><span>02</span><span>Data + operations</span></div>
+        <div><p className="case-kicker">GPS Logix</p><h3>Automation and workflow design across two roles.</h3><p>From Python-based order transformation to designing warehouse workflows supporting high-volume 3PL fulfillment.</p><div className="case-link-group"><Link className="case-link" to="/case-studies/gps-order-automation">Order automation <span>↗</span></Link><Link className="case-link" to="/case-studies/gps-3pl-operations">3PL operations <span>↗</span></Link></div></div>
+        <div className="tags"><span>Python</span><span>Extensiv WMS</span><span>Workflow design</span></div>
+      </article>
+      <article className="case-card"><div className="case-meta"><span>03</span><span>Business systems</span></div><div><p className="case-kicker">LAYRD</p><h3>Operating the systems behind an independent brand.</h3><p>Own and support the operational and technical side of a Shopify-based home goods business, including storefront configuration, fulfillment, shipping, returns, financial records, and trademark administration.</p><Link className="case-link" to="/case-studies/layrd-operations">Read case study <span>↗</span></Link></div><div className="tags"><span>Shopify</span><span>Operations</span><span>Ownership</span></div></article>
+    </div>
+    <div className="experience-block">
+      <div className="section-heading"><p className="eyebrow">Experience</p><h2>A career built across quality and operations.</h2></div>
+      <div className="timeline">
+        <div className="timeline-row"><span>2024 — Present</span><div><h3>Operations Manager</h3><p>GPS Logix · Account &amp; warehouse operations</p></div></div>
+        <div className="timeline-row"><span>Dec 2021 — May 2024</span><div><h3>QA Engineer</h3><p>Studio Sai · Remote from South Korea</p></div></div>
+        <div className="timeline-row"><span>Jun 2016 — Nov 2021</span><div><h3>Database Manager</h3><p>GPS Logix · California</p></div></div>
       </div>
     </div>
-  )
-}
+  </section>
+);
 
-export default Work
+export default Work;

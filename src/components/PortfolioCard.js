@@ -1,20 +1,13 @@
 import React from 'react';
 
-const PortfolioCard = ({ title, description, imgSrc, link, liveLink, type }) => {
-  return (
-    <div className="item">
-      <img src={imgSrc} alt={title} />
-      <div className="info">
-        <h4>{title}</h4>
-        <p>{description}</p>
-        <p><strong>Type:</strong> {type}</p>
-        <a href={link} target="_blank" rel="noopener noreferrer">View on GitHub <i className='bx bx-link-external'></i></a>
-        {liveLink && (
-          <a href={liveLink} target="_blank" rel="noopener noreferrer">Visit Site <i className='bx bx-link-external'></i></a>
-        )}
-      </div>
+const PortfolioCard = ({ title, description, imgSrc, link, liveLink, type }) => (
+  <article className="archive-card">
+    <img src={imgSrc} alt={`${title} project preview`} />
+    <div className="archive-copy">
+      <p className="project-type">{type}</p><h3>{title}</h3><p>{description}</p>
+      <div className="project-links"><a href={link} target="_blank" rel="noreferrer">Code ↗</a>{liveLink && <a href={liveLink} target="_blank" rel="noreferrer">Live ↗</a>}</div>
     </div>
-  );
-};
+  </article>
+);
 
 export default PortfolioCard;

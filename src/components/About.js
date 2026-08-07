@@ -1,54 +1,20 @@
-import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { faCopy } from '@fortawesome/free-regular-svg-icons';
-import { faCircle as faCircleSolid } from '@fortawesome/free-solid-svg-icons';
-import image from '../assets/profile.png';
+import React from 'react';
 
-const About = () => {
-    const handleAvailableClick = (event) => {
-        event.preventDefault();
-        
-        alert('Available for Job!');
-      };
-    
-      const handleHireMeClick = () => {
-        window.location.href = "mailto:sungjung0616@gmail.com?subject=Job Opportunity";
-      };
-    
-      const handleCopyEmailClick = () => {
-        navigator.clipboard.writeText('sungjung0616@gmail.com');
-        alert('Email address copied to clipboard!');
-      };
+const initiatives = [
+  { status: 'In progress', title: 'CareerOS', text: 'Building a verified source of truth for resumes, portfolio content, interview stories, and long-term career development.' },
+  { status: 'Planning', title: 'WarehouseOS · Inbound Automation', text: 'Mapping a traceable inbound workflow with duplicate prevention, quantity validation, exception logging, and human review.' },
+  { status: 'Planning', title: 'Market Intelligence Lab', text: 'Defining a testable Python data pipeline for explainable market analysis—focused on evidence, not stock prediction.' }
+];
 
-  return (
-    <div className="about" id="about">
-      <div className="left">
-        <h3>Full Stack Web Developer with <span className="qa">QA</span> Experience</h3>
-        <div className="info">
-          <h2>I'm Sung Jung</h2>
-          <p>
-            I strive to be an authentic developer who values honesty, embraces others perspectives and blends ideas to move forward positively.
-          </p>
-          <div className="buttons">
-            <button className="hire" onClick={handleHireMeClick}>
-              Hire Me <FontAwesomeIcon icon={faPlus} />
-            </button>
-            <button className="email" onClick={handleCopyEmailClick}>
-              Copy Email <FontAwesomeIcon icon={faCopy} />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="right">
-        <a className="online" onClick={handleAvailableClick}>
-          <FontAwesomeIcon icon={faCircleSolid} className="fa-job" /> Available For Job
-        </a>
-        <img src={image} alt="Profile" />
-      </div>    
+const About = () => (
+  <section className="section now-section" id="now">
+    <div className="section-heading split-heading"><div><p className="eyebrow">Now / build log</p><h2>Work in progress, shown honestly.</h2></div><p>This public view is intentionally curated. Detailed notes stay private; milestones will be updated only after they are verified.</p></div>
+    <div className="now-grid">{initiatives.map(item => <article key={item.title}><span className={`status ${item.status === 'In progress' ? 'active' : ''}`}>{item.status}</span><h3>{item.title}</h3><p>{item.text}</p></article>)}</div>
+    <div className="contact-card">
+      <div><p className="eyebrow">Let’s work together</p><h2>Looking for someone who understands both the test and the system?</h2></div>
+      <div className="contact-actions"><a className="button primary" href="mailto:sungjung0616@gmail.com?subject=Portfolio%20inquiry">Email Sung</a><a className="button secondary" href={`${process.env.PUBLIC_URL}/resume/Sung_Jung_Resume.pdf`} download="Sung_Jung_Resume.pdf">Download resume</a></div>
     </div>
-  )
-}
+  </section>
+);
 
-export default About
+export default About;

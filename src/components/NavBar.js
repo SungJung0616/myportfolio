@@ -1,56 +1,14 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { Link } from 'react-scroll';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../App.css'; 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCode, faLaptopCode  } from '@fortawesome/free-solid-svg-icons';
+import { Link, useLocation } from 'react-router-dom';
 
 const NavBar = () => {
+  const isHome = useLocation().pathname === '/';
   return (
-    <div className="nav">
-      <div className="logo">
-        <FontAwesomeIcon icon={faLaptopCode} className='fa-code' />
-      </div>
-      <div className="links">
-      <Link 
-          to="home" 
-          smooth={true} 
-          duration={250} 
-          className="nav-link" 
-          activeClass="active"
-        >
-          Home
-        </Link>
-        <Link 
-          to="works" 
-          smooth={true} 
-          duration={250} 
-          className="nav-link" 
-          activeClass="active"
-        >
-          Works
-        </Link>
-        <Link 
-          to="projects" 
-          smooth={true} 
-          duration={250} 
-          className="nav-link" 
-          activeClass="active"
-        >
-          Projects
-        </Link>
-        <Link 
-          to="about" 
-          smooth={true} 
-          duration={250} 
-          className="nav-link" 
-          activeClass="active"
-        >
-          About
-        </Link>
-      </div>
-    </div>
+    <header className="nav-wrap">
+      <Link className="brand" to="/" aria-label="Sung Jung home"><span className="brand-mark">SJ</span><span>Sung Jung</span></Link>
+      {isHome ? <nav aria-label="Primary navigation"><a href="#work">Work</a><a href="#skills">Skills</a><a href="#archive">Archive</a><a href="#now">Now</a></nav> : <nav aria-label="Case study navigation"><Link to="/">← Back to portfolio</Link></nav>}
+      <a className="nav-cta" href="mailto:sungjung0616@gmail.com?subject=Portfolio%20inquiry">Let’s talk</a>
+    </header>
   );
 };
 
