@@ -10,6 +10,7 @@ import EternightsCaseStudy from './components/EternightsCaseStudy';
 import GPSOrderAutomation from './components/GPSOrderAutomation';
 import GPSOperationsCaseStudy from './components/GPSOperationsCaseStudy';
 import LayrdCaseStudy from './components/LayrdCaseStudy';
+import MarketIntelligenceCaseStudy from './components/MarketIntelligenceCaseStudy';
 import './App.css';
 
 const PortfolioHome = () => <><Home /><Work /><MyProjects /><About /></>;
@@ -24,6 +25,7 @@ const App = () => (
         <Route path="/case-studies/gps-order-automation" element={<GPSOrderAutomation />} />
         <Route path="/case-studies/gps-3pl-operations" element={<GPSOperationsCaseStudy />} />
         <Route path="/case-studies/layrd-operations" element={<LayrdCaseStudy />} />
+        <Route path="/case-studies/market-intelligence-lab" element={<MarketIntelligenceCaseStudy />} />
       </Routes>
     </main>
     <Footer />
