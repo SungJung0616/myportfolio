@@ -49,7 +49,7 @@ export default function CourtIntro() {
         <ellipse className="ball-shadow" cx="500" cy="558" rx="40" ry="9" fill="#09060f" opacity=".7"/>
         <g className="shot-ball"><circle r="24" fill="#d97a27" stroke="#f4b84e" strokeWidth="2"/><g fill="none" stroke="#462333" strokeWidth="2"><path d="M-24 0H24M0-24V24M-17-17Q15 0-17 17M17-17Q-15 0 17 17"/></g></g>
       </svg>
-      <div className="intro-caption" key={ready ? 'ready' : 'waiting'}><span>SUNG JUNG / HOME COURT</span><strong>Every play has a purpose.</strong></div>
+      <div className="intro-caption" key={ready ? 'ready' : 'waiting'}><span>SUNG JUNG / HOME COURT</span><strong>Every play<br className="intro-mobile-break" /> has a <em>purpose.</em></strong></div>
     </div>}
   </>;
 }
