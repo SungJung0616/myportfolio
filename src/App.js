@@ -13,8 +13,10 @@ import LayrdCaseStudy from './components/LayrdCaseStudy';
 import MarketIntelligenceCaseStudy from './components/MarketIntelligenceCaseStudy';
 import MemorialCaseStudy from './components/MemorialCaseStudy';
 import './App.css';
+import './CourtV2.css';
+import CareerBoard, { RecentPlays } from './components/CareerBoard';
 
-const PortfolioHome = () => <><Home /><Work /><MyProjects /><About /></>;
+const PortfolioHome = () => <><CareerBoard /><RecentPlays /><Home skillsOnly /><Work /><MyProjects /><About /></>;
 
 const App = () => (
   <div className="site-shell">

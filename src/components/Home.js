@@ -1,4 +1,5 @@
 import React from 'react';
+import CourtIntro from './CourtIntro';
 import PythonLogo from '../assets/Python-Light.svg';
 import jsLogo from '../assets/JavaScript.svg';
 import HTMLLogo from '../assets/HTML.svg';
@@ -14,12 +15,15 @@ const skills = [
   [PostgresLogo, 'PostgreSQL'], [GithubLogo, 'GitHub']
 ];
 
-const Home = () => (
+const Home = ({ skillsOnly = false }) => (
   <>
-    <section className="hero" id="home">
+    {!skillsOnly && <CourtIntro />}
+    {!skillsOnly && <section className="hero" id="home">
       <div className="hero-copy">
         <p className="eyebrow"><span className="status-dot" /> Gardena, California</p>
-        <h1>QA discipline.<br /><span>Automation mindset.</span></h1>
+        <p className="court-season">THE CAREER SCOREBOARD · VOL. 02</p>
+        <h1>Different systems.<br /><span>Same mindset.</span></h1>
+        <p className="court-position">SUNG JUNG <span>QA discipline. Automation mindset.</span></p>
         <p className="hero-lede">
           I bridge software quality, operational systems, and practical automation—turning repetitive workflows into reliable, testable processes.
         </p>
@@ -27,14 +31,15 @@ const Home = () => (
           <a className="button primary" href="#work">Explore my work <span aria-hidden="true">↘</span></a>
           <a className="button secondary" href={`${process.env.PUBLIC_URL}/resume/Sung_Jung_Resume.pdf`} download="Sung_Jung_Resume.pdf">Download resume</a>
         </div>
+        <div className="fan-strip"><span>OFF THE CLOCK</span><strong>Basketball & League of Legends</strong><span>Lakers faithful. T1 loyal.</span></div>
       </div>
       <aside className="hero-panel" aria-label="Career highlights">
-        <p className="panel-label">Selected impact</p>
+        <p className="panel-label">Career box score <span className="score-live">● SELECTED RESULTS</span></p>
         <div className="metric"><strong>8h → 4h</strong><span>Regression cycle improved with reusable save-state checkpoints</span></div>
-        <div className="metric"><strong>3h → 30m</strong><span>Recurring data preparation and ERP upload workflow automated</span></div>
+        <div className="metric"><strong>~3h → ~30m</strong><span>Daily order preparation workflow, including final human review and upload</span></div>
         <div className="metric"><strong>1 shipped title</strong><span>Eternights — development and PlayStation release QA</span></div>
       </aside>
-    </section>
+    </section>}
 
     <section className="section skills-section" id="skills">
       <div className="section-heading split-heading">

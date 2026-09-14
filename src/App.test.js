@@ -1,6 +1,7 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import App from './App';
+jest.mock('./components/PlayerAvatar', () => () => <div>Player avatar</div>);
 
 const renderAt = (path = '/') => render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>);
 
@@ -13,7 +14,10 @@ test('renders the memorial project and its verified ownership', () => {
 
 test('renders the portfolio positioning', () => {
   renderAt();
+  fireEvent.click(screen.getByRole('tab', { name: /About/i }));
   expect(screen.getByText(/QA discipline/i)).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('tab', { name: /Skills/i }));
+  expect(screen.getByText('Quality & validation')).toBeInTheDocument();
   expect(screen.getByText(/Order automation/i)).toBeInTheDocument();
   expect(screen.getByText(/3PL operations/i)).toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Case study ↗' })).toHaveAttribute('href', '/case-studies/remembering-young-hoon');
