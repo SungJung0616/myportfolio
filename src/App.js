@@ -11,6 +11,7 @@ import GPSOrderAutomation from './components/GPSOrderAutomation';
 import GPSOperationsCaseStudy from './components/GPSOperationsCaseStudy';
 import LayrdCaseStudy from './components/LayrdCaseStudy';
 import MarketIntelligenceCaseStudy from './components/MarketIntelligenceCaseStudy';
+import MemorialCaseStudy from './components/MemorialCaseStudy';
 import './App.css';
 
 const PortfolioHome = () => <><Home /><Work /><MyProjects /><About /></>;
@@ -26,6 +27,7 @@ const App = () => (
         <Route path="/case-studies/gps-3pl-operations" element={<GPSOperationsCaseStudy />} />
         <Route path="/case-studies/layrd-operations" element={<LayrdCaseStudy />} />
         <Route path="/case-studies/market-intelligence-lab" element={<MarketIntelligenceCaseStudy />} />
+        <Route path="/case-studies/remembering-young-hoon" element={<MemorialCaseStudy />} />
       </Routes>
     </main>
     <Footer />

@@ -4,11 +4,19 @@ import App from './App';
 
 const renderAt = (path = '/') => render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>);
 
+test('renders the memorial project and its verified ownership', () => {
+  renderAt('/case-studies/remembering-young-hoon');
+  expect(screen.getByText(/From the first requirements to AWS setup and deployment/i)).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /Visit the archive/i })).toHaveAttribute('href', 'https://father-memorial-test.netlify.app/');
+  expect(screen.getByText(/not a physical phone/i)).toBeInTheDocument();
+});
+
 test('renders the portfolio positioning', () => {
   renderAt();
   expect(screen.getByText(/QA discipline/i)).toBeInTheDocument();
   expect(screen.getByText(/Order automation/i)).toBeInTheDocument();
   expect(screen.getByText(/3PL operations/i)).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'Case study ↗' })).toHaveAttribute('href', '/case-studies/remembering-young-hoon');
 });
 
 test('renders the Eternights case study route', () => {
