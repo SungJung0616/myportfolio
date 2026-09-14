@@ -1,27 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import CourtCinema from './CourtCinema';
 
 export default function CourtIntro() {
   const [playing, setPlaying] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [fallback, setFallback] = useState(false);
+  const finish = useCallback(() => setPlaying(false), []);
+  const showCinema = useCallback(() => setReady(true), []);
+  const useFallback = useCallback(() => { setReady(false); setFallback(true); }, []);
+  const replay = () => { setReady(false); setFallback(false); setPlaying(true); };
   useEffect(() => {
     if (!window.matchMedia) return;
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    try { if (!motion.matches && !sessionStorage.getItem('court-intro-seen')) setPlaying(true); } catch (_) {}
+    try { if (!motion.matches && !sessionStorage.getItem('court-intro-v3-seen')) setPlaying(true); } catch (_) { if (!motion.matches) setPlaying(true); }
     const stop = () => setPlaying(false);
     motion.addEventListener?.('change', stop);
     return () => motion.removeEventListener?.('change', stop);
   }, []);
   useEffect(() => {
     if (!playing) return;
-    try { sessionStorage.setItem('court-intro-seen', '1'); } catch (_) {}
-    const timeout = setTimeout(() => setPlaying(false), 4200);
+    try { sessionStorage.setItem('court-intro-v3-seen', '1'); } catch (_) {}
+    const timeout = setTimeout(() => setPlaying(false), 10000);
     const escape = event => { if (event.key === 'Escape') setPlaying(false); };
     window.addEventListener('keydown', escape);
     return () => { clearTimeout(timeout); window.removeEventListener('keydown', escape); };
   }, [playing]);
+  useEffect(() => {
+    if (!playing || !fallback) return;
+    const timeout = setTimeout(finish, 4200);
+    return () => clearTimeout(timeout);
+  }, [playing, fallback, finish]);
   return <>
-    <button className="replay-court" onClick={() => setPlaying(true)}>Replay intro ↗</button>
-    {playing && <div className="court-intro" aria-label="Basketball opening animation">
+    <div className="intro-toolbar"><button className="replay-court" onClick={replay}>↻ Replay court intro</button></div>
+    {playing && <div className={`court-intro cinematic-intro ${ready ? 'cinema-ready' : ''} ${fallback ? 'cinema-fallback' : ''}`} aria-label="Basketball opening animation">
       <button className="skip-court" onClick={() => setPlaying(false)}>Skip intro →</button>
+      {!fallback && <CourtCinema onReady={showCinema} onFinish={finish} onUnavailable={useFallback} />}
+      {!ready && !fallback && <div className="court-loading">LIGHTS ON. YOUR COURT.</div>}
       <div className="arena-glow" />
       <svg className="court-scene" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
         <defs><linearGradient id="floor" x2="0" y2="1"><stop stopColor="#674328"/><stop offset="1" stopColor="#25192e"/></linearGradient></defs>
@@ -35,7 +49,7 @@ export default function CourtIntro() {
         <ellipse className="ball-shadow" cx="500" cy="558" rx="40" ry="9" fill="#09060f" opacity=".7"/>
         <g className="shot-ball"><circle r="24" fill="#d97a27" stroke="#f4b84e" strokeWidth="2"/><g fill="none" stroke="#462333" strokeWidth="2"><path d="M-24 0H24M0-24V24M-17-17Q15 0-17 17M17-17Q-15 0 17 17"/></g></g>
       </svg>
-      <div className="intro-caption"><span>SUNG JUNG / HOME COURT</span><strong>Every play has a purpose.</strong></div>
+      <div className="intro-caption" key={ready ? 'ready' : 'waiting'}><span>SUNG JUNG / HOME COURT</span><strong>Every play has a purpose.</strong></div>
     </div>}
   </>;
 }

@@ -1,5 +1,8 @@
 # Portfolio v2 — Career Scoreboard
 
+## Release: 3D court introduction
+The approved home experience includes an approximately five-second Three.js sequence: shot, rim rotation, net movement, floor bounce, and approach toward the camera. Skip/replay, reduced-motion handling, a completion timeout, and a 2D fallback are included. The illustrated profile remains the main page after the introduction. Browser rendering and completion were checked locally; eight tests and the production build passed. Strength labels now emphasize validation/exception review and requirements through delivery and validation. The header background extends across the viewport.
+
 ## Latest visual iteration
 Current portrait: `src/assets/sung-player-six-head-v4.png`. Built-in image editing prompt: preserve face identity and outfit, rebalance the elongated figure to approximately six heads tall, slightly enlarge head and shorten legs while retaining a slim adult frame and natural arms. This is an approximate illustrated proportion. Board typography now uses DM Sans consistently: medium-weight titles, larger body copy, and more comfortable line spacing.
 Full-height portrait beside stacked profile, strengths, and playing-style boards. Strengths link to evidence rather than using invented numerical ratings. New generated asset: `src/assets/sung-player-slim-v3.png`.

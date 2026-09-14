@@ -19,7 +19,7 @@ test('renders the portfolio positioning', () => {
   expect(screen.getByText(/QA discipline/i)).toBeInTheDocument();
   fireEvent.click(screen.getByRole('tab', { name: /Skills/i }));
   expect(screen.getByText('Quality & validation')).toBeInTheDocument();
-  expect(screen.getByText(/Order automation/i)).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: /^Order automation/i })).toHaveAttribute('href', '/case-studies/gps-order-automation');
   expect(screen.getByText(/3PL operations/i)).toBeInTheDocument();
   expect(screen.getByRole('link', { name: 'Case study ↗' })).toHaveAttribute('href', '/case-studies/remembering-young-hoon');
 });

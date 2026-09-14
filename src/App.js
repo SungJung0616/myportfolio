@@ -16,8 +16,9 @@ import './App.css';
 import './CourtV2.css';
 import './PlayerDashboard.css';
 import CareerBoard, { RecentPlays } from './components/CareerBoard';
+import CourtIntro from './components/CourtIntro';
 
-const PortfolioHome = () => <><CareerBoard /><RecentPlays /><Home skillsOnly /><Work /><MyProjects /><About /></>;
+const PortfolioHome = () => <><CourtIntro /><CareerBoard /><RecentPlays /><Home skillsOnly /><Work /><MyProjects /><About /></>;
 
 const App = () => (
   <div className="site-shell">

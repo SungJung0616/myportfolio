@@ -12,10 +12,10 @@ const sections = {
 function StrengthBoard() {
   const strengths = [
     ['Operations', 'Warehouse & account workflows', '/case-studies/gps-3pl-operations'],
-    ['Data quality', 'Transformation & validation', '/case-studies/gps-order-automation'],
-    ['Automation', 'Python & Apps Script', '/case-studies/gps-order-automation'],
+    ['Data quality', 'Validation & exception review', '/case-studies/gps-order-automation'],
+    ['Automation', 'Python order automation', '/case-studies/gps-order-automation'],
     ['Quality assurance', 'Regression & release delivery', '/case-studies/eternights-qa'],
-    ['Ownership', 'From requirements to deployment', '/case-studies/remembering-young-hoon']
+    ['Ownership', 'Requirements → delivery → validation', '/case-studies/remembering-young-hoon']
   ];
   return <section className="strength-board"><div className="board-top"><span>PLAYER STRENGTHS</span><span>PROVEN THROUGH WORK</span></div><div className="strength-body"><div>{strengths.map(([name,detail,to])=><Link className="strength-row" key={name} to={to}><span>{name}</span><span className="strength-evidence">{detail}</span><span aria-hidden="true">↗</span></Link>)}</div><blockquote><span aria-hidden="true">“</span><p>Same mindset.<br/>Different court.</p><small>DISCIPLINE.<br/>PROCESS.<br/>BETTER DAYS.</small></blockquote></div></section>;
 }
