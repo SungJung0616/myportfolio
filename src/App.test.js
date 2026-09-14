@@ -14,7 +14,8 @@ test('renders the memorial project and its verified ownership', () => {
 
 test('renders the portfolio positioning', () => {
   renderAt();
-  fireEvent.click(screen.getByRole('tab', { name: /About/i }));
+  expect(screen.getByRole('tab', { name: /Profile/i })).toHaveAttribute('aria-selected', 'true');
+  expect(screen.getByText('My strengths')).toBeInTheDocument();
   expect(screen.getByText(/QA discipline/i)).toBeInTheDocument();
   fireEvent.click(screen.getByRole('tab', { name: /Skills/i }));
   expect(screen.getByText('Quality & validation')).toBeInTheDocument();

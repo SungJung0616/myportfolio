@@ -20,6 +20,11 @@ Review choreography, mobile readability, and whether the home-court feel is stro
 CareerOS retains verified career information. This document tracks presentation decisions. A Notion v2 planning page can link to this document without duplicating career facts.
 
 ## Interactive player-profile iteration
+- Latest art direction: photo-referenced 2D cartoon replaces the geometric 3D avatar. Profile is the default tab, followed by Experience, Skills, and Projects. Profile shows Position, My strengths, and personal interests.
+- Generated asset: `src/assets/sung-player-cartoon-v2.png`, using built-in image generation. Reference: user-provided basketball-game photo; only the foreground user's likeness is used.
+- Final image edit prompt: Keep the illustrated man, facial likeness, outfit, shoes, pose, body proportions and full body unchanged. Change only the checkerboard background to deep purple #201426; no grid or added objects. Original generation direction: natural adult proportions, photo-referenced face and cap, gold/purple Lakers 77 uniform, basketball, Nike shoes, polished 2D editorial cartoon.
+
+### Previous 3D exploration (retained in source)
 - Hero now uses a procedural Three.js avatar in a purple/gold number 77 uniform. This is an early stylized model, not a likeness of Luka Doncic or Sung.
 - Experience, Skills, Projects, and About tabs switch real career content and link to case studies.
 - Recent Plays lists selected actual project updates without fabricated daily activity or dates.
