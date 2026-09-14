@@ -14,6 +14,7 @@ import MarketIntelligenceCaseStudy from './components/MarketIntelligenceCaseStud
 import MemorialCaseStudy from './components/MemorialCaseStudy';
 import './App.css';
 import './CourtV2.css';
+import './PlayerDashboard.css';
 import CareerBoard, { RecentPlays } from './components/CareerBoard';
 
 const PortfolioHome = () => <><CareerBoard /><RecentPlays /><Home skillsOnly /><Work /><MyProjects /><About /></>;

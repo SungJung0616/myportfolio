@@ -1,5 +1,11 @@
 # Portfolio v2 — Career Scoreboard
 
+## Latest visual iteration
+Current portrait: `src/assets/sung-player-six-head-v4.png`. Built-in image editing prompt: preserve face identity and outfit, rebalance the elongated figure to approximately six heads tall, slightly enlarge head and shorten legs while retaining a slim adult frame and natural arms. This is an approximate illustrated proportion. Board typography now uses DM Sans consistently: medium-weight titles, larger body copy, and more comfortable line spacing.
+Full-height portrait beside stacked profile, strengths, and playing-style boards. Strengths link to evidence rather than using invented numerical ratings. New generated asset: `src/assets/sung-player-slim-v3.png`.
+
+Built-in image editing prompt: preserve facial identity, smile, cap, gold Lakers 77 jersey, basketball and Nike sneakers; replace shorts with black baggy cargo pants; reduce head/cap about 20 percent relative to body, use 7.5–8-head adult proportions, longer legs and slim natural arms; full body visible against subtle purple geometry. Image generation follows this as art direction, not an exact measured anatomical guarantee.
+
 [Notion planning and progress](https://app.notion.com/p/3db5389c4d398165a28ee21d004131c8)
 
 Local design prototype on `portfolio-v2`. Existing production remains on `master`.
