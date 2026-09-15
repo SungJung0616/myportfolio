@@ -3,6 +3,12 @@
 @media(max-width:760px){.career-layout{grid-template-columns:1fr}.portrait-stage.player-stage{min-height:620px}.player-portrait{padding-bottom:85px}.career-heading h1{font-size:23px}.board-content{min-height:300px}.strength-body{padding:16px}.strength-row{grid-template-columns:90px 1fr 12px;gap:8px}.board-top{font-size:9px}.style-grid{grid-template-columns:1fr 1fr}.board-tabs button{font-size:12px}}
 
 /* A calmer reading rhythm inside the player boards. */
+@media(min-width:601px){
+  .cinematic-intro .intro-caption{bottom:0;padding:70px 24px 7vh;background:linear-gradient(0deg,rgba(5,3,12,.88),rgba(5,3,12,.5) 55%,transparent);text-shadow:0 2px 5px #000,0 0 22px #0009}
+  .cinematic-intro .intro-caption strong{color:#fff;font-weight:700;font-size:clamp(28px,3.2vw,42px);line-height:1.2}
+  .cinematic-intro .intro-caption>span{color:#f0dcae}
+  .cinematic-intro.cinema-ready .intro-caption{animation:caption-out .35s 3s forwards}
+}
 .cinematic-intro .intro-caption strong em{font-style:normal;color:inherit}
 .intro-mobile-break{display:none}
 @media(max-width:600px){
@@ -36,4 +42,12 @@
 .board-footer{font-size:13px}.board-footer .button{font-weight:500;font-size:13px}
 .strength-row{font-size:13px}.strength-evidence{font-size:12px;line-height:1.5}
 .style-grid h3{font-size:14px;font-weight:500}.style-grid p{font-size:12px;line-height:1.6}
+/* Place the message over the arena's dark upper wall, without hiding the shot. */
+.cinematic-intro .intro-caption{inset:6vh 15% auto 4%;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;padding:0;background:transparent;text-align:left;text-shadow:0 2px 18px #000;pointer-events:none}
+.cinematic-intro .intro-caption strong{display:block;max-width:900px;color:#fff;font-size:clamp(38px,5vw,72px);font-weight:700;line-height:1.08;letter-spacing:-.04em}
+.cinematic-intro .intro-caption strong em{color:#ffce50}
+.cinematic-intro .intro-caption>span{color:#c7bda6;font-size:12px;letter-spacing:.24em;margin-bottom:14px}
+.cinematic-intro.cinema-ready .intro-caption,.cinematic-intro.cinema-fallback .intro-caption{opacity:1;animation:wall-caption-out .4s 2.3s forwards}
+@keyframes wall-caption-out{from{opacity:1}to{opacity:0;visibility:hidden}}
+@media(max-width:600px){.cinematic-intro .intro-caption{inset:max(82px,calc(env(safe-area-inset-top) + 70px)) 16px auto;align-items:center;text-align:center}.cinematic-intro .intro-caption strong{font-size:clamp(30px,8.5vw,42px)}.cinematic-intro .intro-caption>span{font-size:10px;margin-bottom:13px}}
 @media(max-width:760px){.board-content h2{font-size:20px}.board-content p{font-size:14px}.board-tabs button{font-size:12px}.strength-row{font-size:12px}.strength-evidence{font-size:11px}}
