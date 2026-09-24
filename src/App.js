@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Home from './components/Home';
 import Work from './components/Work';
@@ -20,8 +20,19 @@ import CourtIntro from './components/CourtIntro';
 
 const PortfolioHome = () => <><CourtIntro /><CareerBoard /><RecentPlays /><Home skillsOnly /><Work /><MyProjects /><About /></>;
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [pathname]);
+
+  return null;
+};
+
 const App = () => (
   <div className="site-shell">
+    <ScrollToTop />
     <NavBar />
     <main>
       <Routes>
