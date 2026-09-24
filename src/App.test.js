@@ -8,7 +8,7 @@ const renderAt = (path = '/') => render(<MemoryRouter initialEntries={[path]}><A
 test('renders the memorial project and its verified ownership', () => {
   renderAt('/case-studies/remembering-young-hoon');
   expect(screen.getByText(/From the first requirements to AWS setup and deployment/i)).toBeInTheDocument();
-  expect(screen.getByRole('link', { name: /Visit the archive/i })).toHaveAttribute('href', 'https://father-memorial-test.netlify.app/');
+  expect(screen.getByRole('link', { name: /Visit the archive/i })).toHaveAttribute('href', 'https://remembering-young-hoon.netlify.app/');
   expect(screen.getByText(/not a physical phone/i)).toBeInTheDocument();
 });
 

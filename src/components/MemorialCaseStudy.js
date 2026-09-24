@@ -10,7 +10,7 @@ const MemorialCaseStudy = () => (
       <p className="eyebrow">Remembering Young Hoon</p>
       <h1>Preserving memories.<br /><span>Building trust into the system.</span></h1>
       <p className="case-study-lede">A bilingual living archive created in memory of my father, where family, friends, and colleagues can share stories while retaining control over what becomes public.</p>
-      <div className="hero-actions"><a className="button primary" href="https://father-memorial-test.netlify.app/" target="_blank" rel="noreferrer">Visit the archive</a><a className="button secondary" href={repository} target="_blank" rel="noreferrer">View GitHub</a></div>
+      <div className="hero-actions"><a className="button primary" href="https://remembering-young-hoon.netlify.app/" target="_blank" rel="noreferrer">Visit the archive</a><a className="button secondary" href={repository} target="_blank" rel="noreferrer">View GitHub</a></div>
       <dl className="case-facts"><div><dt>Role</dt><dd>Independent project owner</dd></div><div><dt>Delivery</dt><dd>AI-assisted development</dd></div><div><dt>Application</dt><dd>Next.js · React · TypeScript</dd></div><div><dt>Infrastructure</dt><dd>Netlify · AWS</dd></div></dl>
     </header>
 
