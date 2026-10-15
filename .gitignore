@@ -21,3 +21,15 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Local credentials and generated review artifacts
+.env
+.env.*
+!.env.example
+.netlify/
+*.pem
+*.key
+playwright-report/
+test-results/
+tools/preview-qa/node_modules/
+avatar-work/
