@@ -1,0 +1,5 @@
+// Descriptions, classifications and links preserved from src/components/MyProjects.js.
+export const filmProjects=[
+ {id:'sungflix',title:'SungFlix',type:'Frontend learning project',description:'A responsive movie discovery interface built while learning React and external APIs.',role:'React와 외부 API를 학습하며 구현한 프런트엔드 프로젝트입니다. 실무 프로젝트나 상용 서비스 성과로 분류하지 않습니다.',features:['영화 목록 탐색','외부 API 기반 영화 정보','반응형 인터페이스'],poster:'sungflix-poster.png',video:'sungflix-demo.webm',github:'https://github.com/SungJung0616/netflix-demo',live:'https://sj-sungflix-demo.netlify.app/',caseStudy:null,featured:true,mediaNote:'공개 데모의 실제 UI 녹화 · 2026-10-12 · 8초 · 무음. 영화 본편이나 예고편이 아닙니다.'},
+ {id:'dice',title:'Dice Game',type:'Frontend learning project',description:'A compact two-player React game exploring state, interaction, and replay logic.',role:'React의 상태 관리, 상호작용, 다시 플레이하기 흐름을 연습한 프런트엔드 학습 프로젝트입니다.',features:['두 플레이어 게임','상태와 사용자 상호작용','다시 플레이하는 흐름'],poster:'dice-poster.png',video:null,github:'https://github.com/SungJung0616/diceGame',live:'https://sj-diceplay.netlify.app/',caseStudy:null,featured:false,mediaNote:'기존 포트폴리오 대표 이미지입니다. 등록된 데모 영상은 없습니다.'}
+];

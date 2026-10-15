@@ -1,0 +1,404 @@
+[
+  {
+    "name": "desktop",
+    "phase": "before",
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "warning",
+        "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+      }
+    ],
+    "errors": [],
+    "failed": [
+      {
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=33.8883&longitude=-118.309&current=temperature_2m,is_day,precipitation,weather_code,cloud_cover&timezone=America%2FLos_Angeles&timeformat=unixtime",
+        "error": "net::ERR_FAILED"
+      }
+    ],
+    "http": [],
+    "camera": [
+      23,
+      18,
+      31
+    ],
+    "hero": {
+      "x": 0,
+      "y": 72,
+      "width": 590.390625,
+      "height": 888
+    },
+    "cta": {
+      "x": 72,
+      "y": 731.453125,
+      "width": 486.390625,
+      "height": 46
+    },
+    "fonts": [
+      {
+        "font": "14px",
+        "width": 197,
+        "scroll": 197,
+        "height": 44
+      },
+      {
+        "font": "14px",
+        "width": 145,
+        "scroll": 145,
+        "height": 44
+      }
+    ]
+  },
+  {
+    "name": "desktop",
+    "phase": "after",
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "warning",
+        "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "warning",
+        "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+      }
+    ],
+    "errors": [],
+    "failed": [
+      {
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=33.8883&longitude=-118.309&current=temperature_2m,is_day,precipitation,weather_code,cloud_cover&timezone=America%2FLos_Angeles&timeformat=unixtime",
+        "error": "net::ERR_FAILED"
+      },
+      {
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=33.8883&longitude=-118.309&current=temperature_2m,is_day,precipitation,weather_code,cloud_cover&timezone=America%2FLos_Angeles&timeformat=unixtime",
+        "error": "net::ERR_FAILED"
+      }
+    ],
+    "http": [],
+    "camera": [
+      23,
+      18,
+      31
+    ],
+    "hero": {
+      "x": 0,
+      "y": 72,
+      "width": 590.390625,
+      "height": 888
+    },
+    "cta": {
+      "x": 72,
+      "y": 731.453125,
+      "width": 486.390625,
+      "height": 46
+    },
+    "fonts": [
+      {
+        "font": "14px",
+        "width": 197,
+        "scroll": 197,
+        "height": 44
+      },
+      {
+        "font": "14px",
+        "width": 145,
+        "scroll": 145,
+        "height": 44
+      }
+    ],
+    "ctaPassed": true,
+    "destinations": [
+      "home",
+      "career",
+      "playbook",
+      "results",
+      "film",
+      "work",
+      "archive",
+      "stack",
+      "contact"
+    ],
+    "reduced": {
+      "checked": true,
+      "progress": 0.14
+    }
+  },
+  {
+    "name": "tablet",
+    "phase": "before",
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "warning",
+        "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+      }
+    ],
+    "errors": [],
+    "failed": [
+      {
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=33.8883&longitude=-118.309&current=temperature_2m,is_day,precipitation,weather_code,cloud_cover&timezone=America%2FLos_Angeles&timeformat=unixtime",
+        "error": "net::ERR_FAILED"
+      }
+    ],
+    "http": [],
+    "camera": [
+      20,
+      32,
+      76
+    ],
+    "hero": {
+      "x": 0,
+      "y": 64,
+      "width": 768,
+      "height": 341.125
+    },
+    "cta": {
+      "x": 22,
+      "y": 339.125,
+      "width": 702,
+      "height": 44
+    },
+    "fonts": [
+      {
+        "font": "13px",
+        "width": 177,
+        "scroll": 177,
+        "height": 42
+      },
+      {
+        "font": "13px",
+        "width": 129,
+        "scroll": 129,
+        "height": 42
+      }
+    ]
+  },
+  {
+    "name": "tablet",
+    "phase": "after",
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "warning",
+        "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "warning",
+        "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+      }
+    ],
+    "errors": [],
+    "failed": [
+      {
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=33.8883&longitude=-118.309&current=temperature_2m,is_day,precipitation,weather_code,cloud_cover&timezone=America%2FLos_Angeles&timeformat=unixtime",
+        "error": "net::ERR_FAILED"
+      },
+      {
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=33.8883&longitude=-118.309&current=temperature_2m,is_day,precipitation,weather_code,cloud_cover&timezone=America%2FLos_Angeles&timeformat=unixtime",
+        "error": "net::ERR_FAILED"
+      }
+    ],
+    "http": [],
+    "camera": [
+      20,
+      32,
+      76
+    ],
+    "hero": {
+      "x": 0,
+      "y": 64,
+      "width": 768,
+      "height": 430.640625
+    },
+    "cta": {
+      "x": 32,
+      "y": 428.640625,
+      "width": 688,
+      "height": 44
+    },
+    "fonts": [
+      {
+        "font": "13px",
+        "width": 177,
+        "scroll": 177,
+        "height": 42
+      },
+      {
+        "font": "13px",
+        "width": 129,
+        "scroll": 129,
+        "height": 42
+      }
+    ],
+    "ctaPassed": true,
+    "destinations": [
+      "home",
+      "career",
+      "playbook",
+      "results",
+      "film",
+      "work",
+      "archive",
+      "stack",
+      "contact"
+    ],
+    "reduced": {
+      "checked": true,
+      "progress": 0.14
+    }
+  },
+  {
+    "name": "mobile",
+    "phase": "before",
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "warning",
+        "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+      }
+    ],
+    "errors": [],
+    "failed": [
+      {
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=33.8883&longitude=-118.309&current=temperature_2m,is_day,precipitation,weather_code,cloud_cover&timezone=America%2FLos_Angeles&timeformat=unixtime",
+        "error": "net::ERR_FAILED"
+      }
+    ],
+    "http": [],
+    "camera": [
+      20,
+      32,
+      76
+    ],
+    "hero": {
+      "x": 0,
+      "y": 64,
+      "width": 390,
+      "height": 340.71875
+    },
+    "cta": {
+      "x": 22,
+      "y": 338.71875,
+      "width": 324,
+      "height": 44
+    },
+    "fonts": [
+      {
+        "font": "13px",
+        "width": 177,
+        "scroll": 177,
+        "height": 42
+      },
+      {
+        "font": "13px",
+        "width": 135,
+        "scroll": 135,
+        "height": 42
+      }
+    ]
+  },
+  {
+    "name": "mobile",
+    "phase": "after",
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "warning",
+        "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_FAILED"
+      },
+      {
+        "type": "warning",
+        "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+      }
+    ],
+    "errors": [],
+    "failed": [
+      {
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=33.8883&longitude=-118.309&current=temperature_2m,is_day,precipitation,weather_code,cloud_cover&timezone=America%2FLos_Angeles&timeformat=unixtime",
+        "error": "net::ERR_FAILED"
+      },
+      {
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=33.8883&longitude=-118.309&current=temperature_2m,is_day,precipitation,weather_code,cloud_cover&timezone=America%2FLos_Angeles&timeformat=unixtime",
+        "error": "net::ERR_FAILED"
+      }
+    ],
+    "http": [],
+    "camera": [
+      20,
+      32,
+      76
+    ],
+    "hero": {
+      "x": 0,
+      "y": 64,
+      "width": 390,
+      "height": 340.71875
+    },
+    "cta": {
+      "x": 22,
+      "y": 338.71875,
+      "width": 324,
+      "height": 44
+    },
+    "fonts": [
+      {
+        "font": "13px",
+        "width": 177,
+        "scroll": 177,
+        "height": 42
+      },
+      {
+        "font": "13px",
+        "width": 135,
+        "scroll": 135,
+        "height": 42
+      }
+    ],
+    "ctaPassed": true,
+    "destinations": [
+      "home",
+      "career",
+      "playbook",
+      "results",
+      "film",
+      "work",
+      "archive",
+      "stack",
+      "contact"
+    ],
+    "reduced": {
+      "checked": true,
+      "progress": 0.14
+    }
+  }
+]

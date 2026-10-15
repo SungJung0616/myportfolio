@@ -1,0 +1,5 @@
+# Only pull-request Deploy Previews use the static candidate.
+# Production continues to inherit the existing Netlify UI build settings.
+[context.deploy-preview]
+  command = "echo Static Portfolio 2.0 preview"
+  publish = "preview/v0304-p2-hero-cta"
