@@ -11,7 +11,10 @@
 #intro-hero .hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:24px;pointer-events:auto}
 #intro-hero .hero-actions a,#intro-hero .hero-actions button{box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 16px;border:1px solid transparent;border-radius:8px;font:600 14px/1.35 'Segoe UI',sans-serif;text-decoration:none;cursor:pointer;box-shadow:none;white-space:normal}
 #intro-hero .hero-primary{background:#68418b;color:#fff}
+#intro-hero .hero-actions a,#intro-hero .hero-actions button{touch-action:manipulation}
 #intro-hero .hero-explore{background:transparent;color:#34243f;border-color:#b8a9c2!important}
 #intro-hero .hero-actions :focus-visible{outline:3px solid #34243f;outline-offset:4px}
 @media(hover:hover){#intro-hero .hero-primary:hover{background:#50316d}#intro-hero .hero-explore:hover{background:#e8dfed}}
+/* Tablet-only editorial placement; scene and camera remain unchanged. */
 @media(max-width:799px){#intro-hero{min-height:0;padding-top:18px;padding-bottom:22px}#intro-hero .hero-name{margin-bottom:10px}#intro-hero .hero-description{margin-top:14px;line-height:1.45}#intro-hero .hero-philosophy{margin-top:14px}#intro-hero .hero-specialty{margin-top:6px}#intro-hero .hero-actions{margin-top:16px;gap:8px}#intro-hero .hero-actions a,#intro-hero .hero-actions button{min-height:44px;font-size:13px;padding:10px 12px}}
+@media(min-width:600px) and (max-width:799px){#intro-hero{padding-top:clamp(66px,10.5vh,110px);padding-left:32px;padding-right:48px}}

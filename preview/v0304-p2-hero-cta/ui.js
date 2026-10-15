@@ -6,7 +6,7 @@ document.documentElement.classList.add('ui-polish');
 document.addEventListener('keydown', () => document.documentElement.dataset.input = 'keyboard');
 document.addEventListener('pointerdown', () => document.documentElement.dataset.input = 'pointer');
 const skip = document.createElement('a');
-skip.className = 'skip-work'; skip.href = '#work'; skip.textContent = '작업 내용으로 바로가기';
+skip.className = 'skip-work'; skip.href = '#work'; skip.textContent = 'Skip to Work';
 document.body.prepend(skip);
 const notice = document.createElement('div'); notice.className = 'ui-notice';
 notice.setAttribute('role','status'); notice.setAttribute('aria-live','polite'); document.body.append(notice);
@@ -15,17 +15,17 @@ function announce(text) { clearTimeout(noticeTimer); notice.textContent=text; no
 
 // Archive categories preserve the original classifications rather than relabeling projects.
 const cards = [...document.querySelectorAll('#archive article')];
-const filters = [['all','전체',()=>true],['independent','독립 프로젝트',p=>p.type.startsWith('Independent')],['group','팀 프로젝트',p=>p.type.startsWith('Group')],['learning','학습 프로젝트',p=>!p.type.startsWith('Independent')&&!p.type.startsWith('Group')]];
-const toolbar=document.createElement('div'); toolbar.className='archive-filter'; toolbar.setAttribute('role','group'); toolbar.setAttribute('aria-label','아카이브 작업 유형');
+const filters = [['all','All',()=>true],['independent','Independent',p=>p.type.startsWith('Independent')],['group','Team',p=>p.type.startsWith('Group')],['learning','Learning',p=>!p.type.startsWith('Independent')&&!p.type.startsWith('Group')]];
+const toolbar=document.createElement('div'); toolbar.className='archive-filter'; toolbar.setAttribute('role','group'); toolbar.setAttribute('aria-label','Project type');
 const count=document.createElement('p'); count.className='archive-count'; count.setAttribute('role','status');
-function filter(key,updateUrl=true){const f=filters.find(f=>f[0]===key)||filters[0];let n=0;cards.forEach((c,i)=>{c.hidden=!f[2](archive[i]);if(!c.hidden)n++;});toolbar.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===f[0])));count.textContent=`${n}개 프로젝트 · 원래 작업 유형과 설명 유지`;if(updateUrl){const url=new URL(location.href);if(f[0]==='all')url.searchParams.delete('archive');else url.searchParams.set('archive',f[0]);history.replaceState(null,'',url);}}
+function filter(key,updateUrl=true){const f=filters.find(f=>f[0]===key)||filters[0];let n=0;cards.forEach((c,i)=>{c.hidden=!f[2](archive[i]);if(!c.hidden)n++;});toolbar.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===f[0])));count.textContent=`${n} projects`;if(updateUrl){const url=new URL(location.href);if(f[0]==='all')url.searchParams.delete('archive');else url.searchParams.set('archive',f[0]);history.replaceState(null,'',url);}}
 filters.forEach(([key,label])=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.filter=key;b.onclick=()=>filter(key);toolbar.append(b);});
 $('.archive-list').before(toolbar,count);filter(new URL(location.href).searchParams.get('archive')||'all',false);
 
 // Contextual evidence links, not decorative interactive-looking cards.
-document.querySelectorAll('.stack-list article').forEach((card,i)=>{const a=document.createElement('a');a.href='https://sj-personalportfolio.netlify.app'+skills[i].to;a.target='_blank';a.rel='noopener noreferrer';a.textContent='적용 사례 보기';card.append(a);});
-const copy=document.createElement('button');copy.id='copy-email';copy.textContent='이메일 주소 복사';
-copy.onclick=async()=>{try{await navigator.clipboard.writeText('sungjung0616@gmail.com');copy.textContent='✓ 복사 완료';announce('이메일 주소를 복사했습니다.');setTimeout(()=>copy.textContent='이메일 주소 복사',2200);}catch{announce('복사 권한이 없습니다. 이메일 링크를 사용해 주세요.');}};
+document.querySelectorAll('.stack-list article').forEach((card,i)=>{const a=document.createElement('a');a.href='https://sj-personalportfolio.netlify.app'+skills[i].to;a.target='_blank';a.rel='noopener noreferrer';a.textContent='See related work';card.append(a);});
+const copy=document.createElement('button');copy.id='copy-email';copy.textContent='Copy email address';
+copy.onclick=async()=>{try{await navigator.clipboard.writeText('sungjung0616@gmail.com');copy.textContent='✓ Copied';announce('Email address copied.');setTimeout(()=>copy.textContent='Copy email address',2200);}catch{announce('Copy unavailable. Please use the email link.');}};
 $('.contact-links').append(copy);
 
 // Keep existing destinations/camera handlers; only enrich their feedback.
