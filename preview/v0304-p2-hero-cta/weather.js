@@ -43,6 +43,12 @@ export const weatherModifiers={
 };
 const weatherIds=Object.keys(weatherModifiers);
 const windModes=['live','calm','breezy','strong'];
+const weatherLabels={clear:'Clear',cloudy:'Cloudy',rainy:'Rain',foggy:'Fog',snow:'Snow'};
+export function resolveEnvironment(hour,observation,timeOverride=null,weatherOverride=null){
+ const phase=phaseIds.includes(timeOverride)?timeOverride:phaseForHour(hour);
+ const forcedCondition=weatherIds.includes(weatherOverride)||weatherOverride==='snow'?weatherOverride:null;
+ return{phase,weather:forcedCondition==='snow'?'cloudy':forcedCondition||observation.category,forcedCondition};
+}
 // Lighting keeps four categories; snowfall is a separate precipitation effect.
 export function weatherEffectTargets(data,category,forcedCondition=null,windPreview='live'){
  const snow=forcedCondition?forcedCondition==='snow':classifyWeather(data).description==='Snow';
@@ -69,9 +75,9 @@ export function createWeather({scene,sun,hemisphere,arenaLights=[],courtDiffuser
  const reduceControl=document.getElementById('reduce');
  let clockFormatter;
  try{clockFormatter=new Intl.DateTimeFormat('en-GB',{timeZone,hour:'2-digit',minute:'2-digit',hourCycle:'h23'});}catch{/* Browser-local fallback below. */}
- let data=null,mode='live',status='loading',updated=0,phase='night',clockSource=timeZone,loadGeneration=0;
+ let data=null,status='loading',updated=0,phase='night',clockSource=timeZone,loadGeneration=0;
  let observedWeather=classifyWeather(null),weather='clear';
- const conditions={night:false,rain:false,cloud:false,manual:false};
+ let actualNight=false;
  const diagnostics=window.weatherState={};
  const environmentState=window.environmentState={phase,clockSource,preview:false,transitioning:false};
  // Localhost + explicit opt-in. Alt+Shift+1…4 previews weather; Alt+0 restores live.
@@ -80,7 +86,7 @@ export function createWeather({scene,sun,hemisphere,arenaLights=[],courtDiffuser
  const requestedPhase=devPreview?params.get('environmentPreview'):null;
  let previewPhase=phaseIds.includes(requestedPhase)?requestedPhase:null;
  const requestedWeather=devPreview?params.get('weatherPreview'):null;
- let previewWeather=weatherIds.includes(requestedWeather)||requestedWeather==='live'||requestedWeather==='snow'?requestedWeather:null;
+ let previewWeather=weatherIds.includes(requestedWeather)||requestedWeather==='snow'?requestedWeather:requestedWeather==='live'?null:previewPhase?'clear':null;
  let previewWind=devPreview&&windModes.includes(params.get('windPreview'))?params.get('windPreview'):'live';
  const targets={},from={},current={};
  for(const key of colorKeys){targets[key]=new T.Color();from[key]=new T.Color();current[key]=new T.Color();}
@@ -95,15 +101,39 @@ export function createWeather({scene,sun,hemisphere,arenaLights=[],courtDiffuser
  }
  let initialized=false,transitionElapsed=0,transitionDuration=2.4,targetKey='';
 
- const ui=document.createElement('details');ui.id='weather-review';ui.innerHTML='<summary>Weather preview</summary><label>Exterior conditions <select aria-label="Preview weather"><option value="live">Live</option><option value="clear">Preview · Clear day</option><option value="cloudy">Preview · Cloudy day</option><option value="rain">Preview · Rain</option><option value="night">Preview · Night</option></select></label><p id="weather-note">Loading weather…</p><button id="weather-retry">Retry</button><a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Weather data by Open-Meteo</a>';document.body.append(ui);
- ui.querySelector('select').onchange=e=>{mode=e.target.value;refresh();};ui.querySelector('button').onclick=load;
+ const options=(dimension,items)=>items.map(([id,label])=>`<button type="button" data-${dimension}="${id}" aria-pressed="false">${label}</button>`).join('');
+ const ui=document.createElement('section');ui.id='arena-atmosphere';ui.setAttribute('aria-label','Arena Atmosphere');
+ ui.innerHTML=`<button type="button" id="atmosphere-toggle" aria-label="Arena Atmosphere" aria-haspopup="dialog" aria-expanded="false" aria-controls="atmosphere-panel"><span class="atmosphere-sun" aria-hidden="true">☼</span><span>Arena Atmosphere</span><span class="atmosphere-badge" aria-hidden="true">Live</span></button>
+ <div id="atmosphere-panel" role="dialog" aria-modal="false" aria-labelledby="atmosphere-title" aria-describedby="atmosphere-description" hidden>
+  <div class="atmosphere-heading"><div><h2 id="atmosphere-title">Set the Scene</h2><p id="atmosphere-description">Explore the court in a different light.</p></div><button type="button" id="atmosphere-close" aria-label="Close Arena Atmosphere">×</button></div>
+  <fieldset><legend>TIME OF DAY</legend><div class="atmosphere-options">${options('time',[['live','Live'],...phaseIds.map(id=>[id,environmentPhases[id].label])])}</div></fieldset>
+  <fieldset><legend>WEATHER</legend><div class="atmosphere-options">${options('weather',[['live','Live'],...Object.entries(weatherLabels)])}</div></fieldset>
+  <p id="atmosphere-scene" role="status" aria-live="polite" aria-atomic="true"></p>
+  <div class="atmosphere-footer"><button type="button" id="atmosphere-reset">Reset to Live <span aria-hidden="true">↺</span></button><p id="atmosphere-observation"></p><a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Weather data by Open-Meteo</a><button type="button" id="weather-retry" hidden>Retry live weather</button></div>
+ </div>`;
+ document.body.append(ui);
+ const toggle=ui.querySelector('#atmosphere-toggle'),panel=ui.querySelector('#atmosphere-panel');
+ const timeButtons=[...ui.querySelectorAll('[data-time]')],weatherButtons=[...ui.querySelectorAll('[data-weather]')];
+ function closePanel(restoreFocus=false){if(panel.hidden)return;const returnFocus=restoreFocus||panel.contains(document.activeElement);panel.hidden=true;toggle.setAttribute('aria-expanded','false');if(returnFocus)toggle.focus({preventScroll:true});}
+ toggle.onclick=()=>{const open=panel.hidden;panel.hidden=!open;toggle.setAttribute('aria-expanded',String(open));if(open)label();};
+ ui.querySelector('#atmosphere-close').onclick=()=>closePanel(true);
+ ui.querySelector('#atmosphere-reset').onclick=()=>{previewPhase=previewWeather=null;previewWind='live';refresh();};
+ for(const button of timeButtons)button.onclick=()=>{previewPhase=button.dataset.time==='live'?null:button.dataset.time;refresh();};
+ for(const button of weatherButtons)button.onclick=()=>{previewWeather=button.dataset.weather==='live'?null:button.dataset.weather;refresh();};
+ ui.querySelector('#weather-retry').onclick=load;
+ document.addEventListener('pointerdown',e=>{if(!ui.contains(e.target))closePanel();});
+ document.addEventListener('focusin',e=>{if(!ui.contains(e.target))closePanel();});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden){e.preventDefault();closePanel(true);}});
+ // Dismiss on navigation input without canceling its native scroll behavior.
+ addEventListener('wheel',()=>closePanel(),{passive:true});
+ addEventListener('touchmove',()=>closePanel(),{passive:true});
+ addEventListener('portfolio:navigate',()=>closePanel());
  const previewNote=devPreview?document.createElement('p'):null;
- if(previewNote){previewNote.id='environment-preview-note';ui.append(previewNote);}
- let conditionSelect,windSelect;
+ if(previewNote){previewNote.id='environment-preview-note';panel.append(previewNote);}
+ let windSelect;
  if(devPreview){
-  const controls=document.createElement('div');controls.innerHTML='<label>Dev condition <select id="environment-condition" aria-label="Development weather condition"><option value="live">Live weather</option><option value="clear">Clear</option><option value="cloudy">Cloudy</option><option value="rainy">Rain</option><option value="foggy">Fog</option><option value="snow">Snow</option></select></label><label>Dev wind <select id="environment-wind" aria-label="Development wind"><option value="live">Live wind</option><option value="calm">Calm</option><option value="breezy">Breezy</option><option value="strong">Strong</option></select></label>';ui.append(controls);
-  conditionSelect=controls.querySelector('#environment-condition');windSelect=controls.querySelector('#environment-wind');
-  conditionSelect.onchange=e=>{previewWeather=e.target.value;refresh();};windSelect.onchange=e=>{previewWind=e.target.value;refresh();};
+  const controls=document.createElement('div');controls.className='atmosphere-development';controls.innerHTML='<label>Development wind <select id="environment-wind" aria-label="Development wind"><option value="live">Live wind</option><option value="calm">Calm</option><option value="breezy">Breezy</option><option value="strong">Strong</option></select></label>';panel.append(controls);
+  windSelect=controls.querySelector('#environment-wind');windSelect.onchange=e=>{previewWind=e.target.value;refresh();};
  }
  // Retain existing clouds; precipitation uses one reusable rain/snow pool each.
  const clouds=new T.Group();scene.add(clouds);const cm=new T.MeshStandardMaterial({color:'#dce2e9',roughness:1,transparent:true,opacity:.75,depthWrite:false});for(let i=0;i<7;i++){const group=new T.Group();group.position.set(-40+i*14,12+(i%2)*2,-30-(i%3)*5);for(let j=0;j<3;j++){const m=new T.Mesh(new T.SphereGeometry(1,16,10),cm);m.scale.set(5+j,1.4,2.5);m.position.x=(j-1)*5;group.add(m);}clouds.add(group);}
@@ -115,18 +145,10 @@ export function createWeather({scene,sun,hemisphere,arenaLights=[],courtDiffuser
  }
  function refresh(){
   const hour=effectiveHour();
-  phase=previewPhase||(mode==='live'?phaseForHour(hour):mode==='night'?'night':'daytime');
-  conditions.manual=mode!=='live';
-  conditions.night=conditions.manual?mode==='night':data?data.is_day===0:hour<6||hour>=18;
-  conditions.rain=conditions.manual?mode==='rain':!!data&&(Number.isFinite(data.precipitation)&&data.precipitation>0||rainCodes.has(data.weather_code));
-  conditions.cloud=conditions.manual?mode==='cloudy'||mode==='rain':!!data&&(Number.isFinite(data.cloud_cover)&&data.cloud_cover>=45&&data.cloud_cover<=100||[2,3,45,48].includes(data.weather_code));
+  actualNight=data?data.is_day===0:hour<6||hour>=18;
   observedWeather=classifyWeather(data);
-  const liveWeather=mode==='live'?observedWeather.category:mode==='rain'?'rainy':mode==='cloudy'?'cloudy':'clear';
-  // Preserve the old phase-only clear preview; explicit 'live' restores API modifiers.
-  weather=previewWeather==='live'?observedWeather.category:previewWeather==='snow'?'cloudy':previewWeather||(previewPhase?'clear':liveWeather);
-  const forcedCondition=previewWeather&&previewWeather!=='live'?previewWeather:previewPhase&&!previewWeather?'clear':mode!=='live'&&previewWeather!=='live'?liveWeather:null;
-  const effectData=previewPhase&&!previewWeather?null:data;
-  const effectTargets=weatherEffectTargets(effectData,weather,forcedCondition,previewWind);
+  const resolved=resolveEnvironment(hour,observedWeather,previewPhase,previewWeather);phase=resolved.phase;weather=resolved.weather;
+  const effectTargets=weatherEffectTargets(data,weather,resolved.forcedCondition,previewWind);
   const key=phase+':'+weather+':'+effectKeys.map(name=>effectTargets[name]).join(':');
   if(key!==targetKey){
    targetKey=key;const config=environmentPhases[phase];
@@ -153,21 +175,26 @@ export function createWeather({scene,sun,hemisphere,arenaLights=[],courtDiffuser
    environmentState.transitioning=transitionDuration>0;
    initialized=true;
   }
-  environmentState.phase=phase;environmentState.clockSource=clockSource;environmentState.preview=!!(previewPhase||previewWeather||previewWind!=='live');environmentState.weather=weather;environmentState.precipitation=effectTargets.snowAmount?'snow':effectTargets.rainAmount?'rain':'none';environmentState.weatherSource=previewWeather&&previewWeather!=='live'?'development-preview':previewPhase&&!previewWeather?'phase-preview-clear':mode!=='live'&&previewWeather!=='live'?'legacy-preview':observedWeather.source;
+  environmentState.phase=phase;environmentState.clockSource=clockSource;environmentState.preview=!!(previewPhase||previewWeather||previewWind!=='live');environmentState.weather=weather;environmentState.precipitation=effectTargets.snowAmount?'snow':effectTargets.rainAmount?'rain':'none';environmentState.weatherSource=previewWeather?'visitor-selection':observedWeather.source;
+  environmentState.timeOverride=previewPhase;environmentState.weatherOverride=previewWeather;
+  ui.dataset.scene=environmentState.preview?'custom':'live';ui.dataset.environmentPhase=phase;ui.dataset.environmentWeather=weather;ui.dataset.environmentPrecipitation=environmentState.precipitation;
+  for(const button of timeButtons)button.setAttribute('aria-pressed',String(button.dataset.time===(previewPhase||'live')));
+  for(const button of weatherButtons)button.setAttribute('aria-pressed',String(button.dataset.weather===(previewWeather||'live')));
+  ui.querySelector('.atmosphere-badge').textContent=environmentState.preview?'Custom':'Live';
+  ui.querySelector('#atmosphere-scene').textContent=environmentState.preview?'Custom scene · '+environmentPhases[phase].label+' / '+(previewWeather?weatherLabels[previewWeather]:observedWeather.description):'Live scene · Los Angeles';
   if(devPreview){
-   ui.dataset.environmentPhase=phase;ui.dataset.environmentWeather=weather;ui.dataset.environmentPrecipitation=environmentState.precipitation;
-   conditionSelect.value=previewWeather||(previewPhase?'clear':'live');windSelect.value=previewWind;
+   windSelect.value=previewWind;
    const windLabel=previewWind==='live'?(Number.isFinite(data?.wind_speed_10m)&&data.wind_speed_10m>=0&&data.wind_speed_10m<=100?'live '+data.wind_speed_10m.toFixed(1)+' m/s':'live unavailable'):previewWind;
-   previewNote.textContent=(environmentState.preview?'TEST OVERRIDE — ':'LIVE ENVIRONMENT — ')+environmentPhases[phase].label+' / '+(previewWeather==='snow'?'Snow (cloudy lighting)':weather)+' · wind: '+windLabel+'. Header weather remains the actual observation. Alt+1–5: time; Alt+Shift+1–5: clear/cloud/rain/fog/snow; Alt+Shift+0: live weather; Alt+0: reset all.';
+   previewNote.textContent='Development preview · '+environmentPhases[phase].label+' / '+(previewWeather==='snow'?'Snow (cloudy lighting)':weather)+' · wind: '+windLabel+'. Alt+1–5: time; Alt+Shift+1–5: clear/cloud/rain/fog/snow; Alt+Shift+0: live weather; Alt+0: reset all.';
    console.info('[environment-preview]',JSON.stringify({phase,weather,weatherSource:environmentState.weatherSource,clockSource,override:previewPhase,weatherOverride:previewWeather,transitionSeconds:transitionDuration}));
   }
   label();
  }
  function label(){
-  const el=document.querySelector('.weather');if(!el)return;const description=observedWeather.description;
-  el.textContent=mode!=='live'?' · Preview weather · '+({clear:'Clear day',cloudy:'Cloudy day',rain:'Rain',night:'Night'})[mode]:data?' · '+description+' '+Math.round(data.temperature_2m)+'°C · '+(conditions.night?'Night':'Day'):' · Weather unavailable · —';
-  el.title=data?'Open-Meteo current estimate · '+new Date(data.time*1000).toLocaleString('en-US',{timeZone}):'Weather unavailable. Environment uses approximate clock phases, not astronomical sunrise/sunset.';
-  ui.querySelector('#weather-note').textContent=(mode!=='live'?'Preview effect — not live weather. ':'')+(data?'Open-Meteo · Gardena · Updated every 15 minutes':status==='loading'?'Connecting to weather…':'Weather unavailable. Using approximate clock-based lighting.');
+  const el=document.querySelector('.weather'),description=observedWeather.description;
+  if(el){el.textContent=data?' · '+description+' '+Math.round(data.temperature_2m)+'°C · '+(actualNight?'Night':'Day'):' · Weather unavailable · —';el.title=data?'Open-Meteo current estimate · '+new Date(data.time*1000).toLocaleString('en-US',{timeZone}):'Weather unavailable. Environment uses approximate clock phases, not astronomical sunrise/sunset.';}
+  ui.querySelector('#atmosphere-observation').textContent='Actual LA weather · '+(data?description+' '+Math.round(data.temperature_2m)+'°C':status==='loading'?'Connecting…':'Unavailable; Live uses neutral lighting.');
+  ui.querySelector('#weather-retry').hidden=status!=='unconnected';
  }
  async function load(){
   const generation=++loadGeneration;status='loading';label();
@@ -189,9 +216,9 @@ export function createWeather({scene,sun,hemisphere,arenaLights=[],courtDiffuser
   const key=/^Digit[0-5]$/.test(e.code)?e.code.slice(-1):e.key;
   if(!/^[0-5]$/.test(key))return;
   const index=Number(key);e.preventDefault();
-  if(e.shiftKey)previewWeather=index===5?'snow':index?weatherIds[index-1]:'live';
+  if(e.shiftKey)previewWeather=index===5?'snow':index?weatherIds[index-1]:null;
   else if(index)previewPhase=phaseIds[index-1];
-  else{previewPhase=null;previewWeather=null;previewWind='live';mode='live';ui.querySelector('select').value='live';}
+  else{previewPhase=null;previewWeather=null;previewWind='live';}
   refresh();
  });
 
@@ -215,7 +242,7 @@ export function createWeather({scene,sun,hemisphere,arenaLights=[],courtDiffuser
   clouds.visible=out&&current.cloudAmount>.01;cm.opacity=.75*current.cloudAmount*exteriorWeight;
   effects.update(current,exteriorWeight,dt,reducedMotion.matches||!!reduceControl?.checked);
   if(environmentState.transitioning&&t===1){transitionElapsed=transitionDuration;environmentState.transitioning=false;if(devPreview)console.info('[environment-preview] settled',phase,weather);}
-  diagnostics.status=status;diagnostics.mode=mode;diagnostics.outside=out;diagnostics.night=conditions.night;diagnostics.rain=effects.diagnostics.rainVisible;diagnostics.snow=effects.diagnostics.snowVisible;diagnostics.clouds=clouds.visible;diagnostics.sun=sun.intensity;diagnostics.hemisphere=hemisphere.intensity;diagnostics.temperature=data?.temperature_2m;diagnostics.sourceTime=data?.time;
+  diagnostics.status=status;diagnostics.mode=environmentState.preview?'custom':'live';diagnostics.outside=out;diagnostics.night=actualNight;diagnostics.rain=effects.diagnostics.rainVisible;diagnostics.snow=effects.diagnostics.snowVisible;diagnostics.clouds=clouds.visible;diagnostics.sun=sun.intensity;diagnostics.hemisphere=hemisphere.intensity;diagnostics.temperature=data?.temperature_2m;diagnostics.sourceTime=data?.time;
  }
  return{update};
 }

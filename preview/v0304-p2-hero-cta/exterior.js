@@ -1,6 +1,6 @@
 import {applyHero} from './hero.js';
 import {createWelcomeIntro} from './welcome-intro.js';
-import {createWeather} from './weather.js?v=fix13b1-effects-2';
+import {createWeather} from './weather.js?v=fix13c-atmosphere-1';
 import {createLayrdEasterEgg} from './layrd-easter-egg.js';
 import {createFilmArchive} from './film.js';
 import * as T from './three.module.js';
