@@ -2,6 +2,8 @@
 
 Reconstructed on 2026-10-18. This is the date of documentation, not an inferred implementation date.
 
+FIX 01–12 and the baseline document retain the original reconstruction snapshot at `9b03cb1`. The accumulated implementation was subsequently preserved in baseline commit `2fd0304713afba495488b44df646daaccff032c4`. The new [FIX 13A entry](FIX-13A.md) records local work after that baseline; it is not part of that commit. This documentation update does not independently recheck PR or deployment status.
+
 This journal records the evolution of the isolated Portfolio 2.0 preview from repository evidence. It does not reconstruct missing commits or certify every historical FIX as complete. Read the [baseline](BASELINE.md), [P2 milestone history](P2-HISTORY.md), and [evidence gaps](EVIDENCE-GAPS.md) before interpreting individual entries.
 
 ## How to read status
@@ -44,10 +46,10 @@ Artifact links are repository-relative and are not embedded. Local QA media are 
 | [FIX 11](FIX-11.md) | LAYRD flag, decorative boxes, and external-link interaction | Source and captures; public media/branding review remains separate. |
 | [FIX 12](FIX-12.md) | Film glass entrance and reverse-scroll work | Current door/scroll implementation; later entrance plaque is an unnumbered follow-up. |
 | [STEP 03B](FIX-10.md#step-03b--film-viewing-interval-and-preview-packaging) | Film viewing interval and isolated Deploy Preview packaging | New focused local wheel/selection and packaged iframe checks passed; not committed or deployed. Does not retroactively certify historical FIX tests. |
-| FIX 13A | Requested/planned only | Existing weather module has day/night presets, not the requested five interpolated time phases. No implementation entry created. |
+| [FIX 13A](FIX-13A.md) | Five clock-based, interpolated environment phases and the FIX 13A.1 visual refinement after `2fd0304` | Focused local browser, in-memory logic, and packaging checks recorded in the entry. Approved for one independent delivery commit; Git/PR history establishes inclusion, not deployment. |
 | FIX 13B | Not started in this journal task | Implementation evidence unavailable; no report created. |
 
-All FIX 01–12 entries describe local changes beyond `9b03cb1`. They are **not committed and not included in the inspected PR head**. Deployment of those local changes is not established. This statement does not deny earlier unrelated preview deployments; it identifies the boundary for the current accumulated candidate.
+At the original reconstruction snapshot, all FIX 01–12 entries described local changes beyond `9b03cb1`: they were **not committed and not included in the then-inspected PR head**, and deployment was not established. Those historical statements are not a claim about today's delivery state. The later baseline commit preserves the accumulated work without inventing separate FIX-by-FIX commits; FIX 13A is a separate development milestone.
 
 ## Historical naming
 
@@ -55,4 +57,4 @@ P2-03 letters and later FIX numbers are different workstreams, not equivalent ve
 
 ## Next use
 
-After review, establish an approved baseline and keep future entries small: problem, decision, changed paths, verification result, limitations, and exact commit/PR/deployment references. Do not convert the reconstructed entries into invented historical commits.
+The approved accumulated baseline is now identifiable as `2fd0304`. Keep future entries small: problem, decision, changed paths, verification result, limitations, and exact commit/PR/deployment references when independently checked. Do not convert the reconstructed entries into invented historical commits.

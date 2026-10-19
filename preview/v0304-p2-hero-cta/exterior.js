@@ -1,6 +1,6 @@
 import {applyHero} from './hero.js';
 import {createWelcomeIntro} from './welcome-intro.js';
-import {createWeather} from './weather.js';
+import {createWeather} from './weather.js?v=fix13a1-lighting-1';
 import {createLayrdEasterEgg} from './layrd-easter-egg.js';
 import {createFilmArchive} from './film.js';
 import * as T from './three.module.js';
@@ -42,7 +42,8 @@ for(let z=8;z<20;z+=1.5)for(let x=-3;x<=3;x+=1.5)box(1.46,.025,1.46,x,.263,z,M.p
 for(const x of [-4.1,4.1])box(.16,.11,12,x,.29,13,M.cream,.035);
 // Oval shell with a true opening at the front, not a picture of a building.
 const rx=14,rz=10,cz=-4;
-function ringWall(y0,y1,a0,a1,material,radX=rx,radZ=rz){const v=[],idx=[],n=80;for(let i=0;i<=n;i++){const a=a0+(a1-a0)*i/n,x=Math.sin(a)*radX,z=Math.cos(a)*radZ+cz;v.push(x,y0,z,x,y1,z);if(i<n){const k=i*2;idx.push(k,k+1,k+2,k+1,k+3,k+2);}}const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(v,3));g.setIndex(idx);g.computeVertexNormals();const m=material.clone();m.side=T.DoubleSide;return mesh(g,m);}
+// Outward winding keeps normalBias outside the shell instead of causing self-shadow stripes.
+function ringWall(y0,y1,a0,a1,material,radX=rx,radZ=rz){const v=[],idx=[],n=80;for(let i=0;i<=n;i++){const a=a0+(a1-a0)*i/n,x=Math.sin(a)*radX,z=Math.cos(a)*radZ+cz;v.push(x,y0,z,x,y1,z);if(i<n){const k=i*2;idx.push(k,k+2,k+1,k+1,k+2,k+3);}}const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(v,3));g.setIndex(idx);g.computeVertexNormals();const m=material.clone();m.side=T.DoubleSide;return mesh(g,m);}
 ringWall(.25,5.9,.245,Math.PI*2-.245,M.purple);
 ringWall(.25,.75,.245,Math.PI*2-.245,M.cream,14.08,10.08);
 ringWall(5.5,6.05,0,Math.PI*2,M.cream,14.15,10.15);
@@ -224,11 +225,11 @@ for(const side of [-1,1])for(let row=0;row<2;row++){const x=side*(16+row*.7);box
 function batch(geo,material,positions){const im=new T.InstancedMesh(geo,material,positions.length),o=new T.Object3D();positions.forEach(([x,y,z,side],i)=>{o.position.set(x,y,z);o.rotation.set(0,side?Math.PI/2:0,0);o.updateMatrix();im.setMatrixAt(i,o.matrix);});im.castShadow=true;im.receiveShadow=true;scene.add(im);}
 batch(new RoundedBoxGeometry(.55,.12,.48,3,.055),M.purple,seats);batch(new RoundedBoxGeometry(.53,.47,.14,3,.065),M.purple,backs);
 // Six existing shadowless lights, with recessed ivory diffusers rather than gold glow.
-const courtDiffuser=new T.MeshStandardMaterial({color:'#fff1d9',emissive:'#ffe6bd',emissiveIntensity:.45,roughness:.7});
+const courtDiffuser=new T.MeshStandardMaterial({color:'#fff1d9',emissive:'#ffe6bd',emissiveIntensity:.45,roughness:.7}),arenaLights=[];
 for(const x of [-8,8])for(const z of [-21,-30,-39]){
  box(3.2,.16,.72,x,10.24,z,M.deep,.06);
  const diffuser=box(3,.045,.55,x,10.14,z,courtDiffuser,.025);diffuser.castShadow=false;
- const lamp=new T.PointLight('#fff0d5',55,35,1.6);lamp.position.set(x,10,z);scene.add(lamp);
+ const lamp=new T.PointLight('#fff0d5',55,35,1.6);lamp.position.set(x,10,z);scene.add(lamp);arenaLights.push(lamp);
 }
 
 const projectSpace=buildProjectSpace({scene,box,mesh,sign,tex,M,interiorCream});
@@ -239,7 +240,7 @@ window.cardScreens=()=>projectSpace.cardMeshes.map(face=>{const v=face.getWorldP
 // Contact shadow belongs to scene; candidate remains a separate 2.5D image.
 const shadowTex=tex(128,128,c=>{const g=c.createRadialGradient(64,64,3,64,64,62);g.addColorStop(0,'rgba(36,22,44,.55)');g.addColorStop(1,'rgba(36,22,44,0)');c.fillStyle=g;c.fillRect(0,0,128,128);});
 const sh=mesh(new T.PlaneGeometry(1.65,.85),new T.MeshBasicMaterial({map:shadowTex,transparent:true,depthWrite:false}),2.3,.285,12.4);sh.rotation.x=-Math.PI/2;sh.castShadow=false;
-const weather=createWeather({scene,sun,hemisphere:scene.children.find(o=>o.isHemisphereLight&&o!==galleryAmbient)});
+const weather=createWeather({scene,sun,hemisphere:scene.children.find(o=>o.isHemisphereLight&&o!==galleryAmbient),arenaLights,courtDiffuser});
 const welcomeIntro=createWelcomeIntro();
 let sung;
 new GLTFLoader().load('sung-miniature-v1.glb',g=>{sung=g.scene;sung.scale.setScalar(.86);sung.position.set(2.3,.27,12.4);sung.rotation.y=-.18;sung.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});scene.add(sung);welcomeIntro.attach(sung);window.assetReady=true;document.querySelector('#status').textContent='3D Sung ready';},undefined,()=>{document.querySelector('#status').textContent='3D candidate could not load';});
