@@ -21,7 +21,7 @@ const heroFiles = [
   'project-media.js', 'project-showcase.css', 'project-showcase.js', 'project-space.js',
   'RoundedBoxGeometry.js', 'SkeletonUtils.js', 'spatial-data.js', 'stack-data.js',
   'stack-table.css', 'stack-table.js', 'sung-miniature-v1.glb', 'sungflix-poster.png',
-  'three.core.js', 'three.module.js', 'ui.css', 'ui.js', 'weather.css', 'weather.js',
+  'three.core.js', 'three.module.js', 'ui.css', 'ui.js', 'weather.css', 'weather.js', 'weather-effects.js',
   'welcome-intro.css', 'welcome-intro.js',
   'project-images/fridge.png', 'project-images/hand-battle.png',
   'project-images/portfolio-2.jpg', 'project-images/remembering-young-hoon.jpg',

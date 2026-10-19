@@ -1,6 +1,6 @@
 import {applyHero} from './hero.js';
 import {createWelcomeIntro} from './welcome-intro.js';
-import {createWeather} from './weather.js?v=fix13a1-lighting-1';
+import {createWeather} from './weather.js?v=fix13b1-effects-2';
 import {createLayrdEasterEgg} from './layrd-easter-egg.js';
 import {createFilmArchive} from './film.js';
 import * as T from './three.module.js';
@@ -92,7 +92,13 @@ for(let f=0;f<4;f++){limb([-.19+f*.035,4.18,.31],[-.18+f*.035,4.32,.35],.014,b,t
 ell(.255,.255,.255,.035,4.37,.34,b,tribute);
 for(const rot of [0,Math.PI/2]){const seam=mesh(new T.TorusGeometry(.257,.009,6,48),bronzeDark,.035,4.37,.34,tribute);seam.rotation.y=rot;}const seam=mesh(new T.TorusGeometry(.257,.009,6,48),bronzeDark,.035,4.37,.34,tribute);seam.rotation.x=Math.PI/2;
 // Sparse planted forms, benches and poles give the plaza scale.
-for(const [x,z]of [[-15,5],[15,5],[-14,12],[13,12]]){cyl(1.55,1.65,.4,x,.46,z,M.cream);cyl(1.4,1.4,.1,x,.7,z,mat('#7b846b'));cyl(.12,.2,2.7,x,1.8,z,M.bark);ell(1.15,1.6,1.05,x,3.8,z,M.leaf);ell(.78,.85,.8,x+.6,3.4,z-.1,M.leaf);}
+const weatherTrees=[];
+for(const [x,z]of [[-15,5],[15,5],[-14,12],[13,12]]){
+ cyl(1.55,1.65,.4,x,.46,z,M.cream);cyl(1.4,1.4,.1,x,.7,z,mat('#7b846b'));
+ // Preserve mesh positions at rest; only the planted trunk/crown pivot in wind.
+ const tree=new T.Group();tree.position.set(x,.7,z);scene.add(tree);weatherTrees.push(tree);
+ cyl(.12,.2,2.7,0,1.1,0,M.bark,tree);ell(1.15,1.6,1.05,0,3.1,0,M.leaf,tree);ell(.78,.85,.8,.6,2.7,-.1,M.leaf,tree);
+}
 for(const x of [-11.8,11.8]){box(2.6,.2,.7,x,.8,9,M.purple,.1);for(const d of [-.9,.9])box(.16,.6,.5,x+d,.44,9,M.deep,.035);}
 for(const x of [-4.7,4.7])for(const z of [12,16,19]){cyl(.11,.14,.65,x,.6,z,M.deep);ell(.14,.1,.14,x,.98,z,glow);}
 for(const x of [12]){cyl(.07,.08,6,x,3.2,5,M.deep);box(1.3,2.5,.06,x+.65,4.1,5,M.purple,.02);sign('77','HOME COURT',1.14,.9,x+.65,4.25,5.05);}
@@ -240,7 +246,7 @@ window.cardScreens=()=>projectSpace.cardMeshes.map(face=>{const v=face.getWorldP
 // Contact shadow belongs to scene; candidate remains a separate 2.5D image.
 const shadowTex=tex(128,128,c=>{const g=c.createRadialGradient(64,64,3,64,64,62);g.addColorStop(0,'rgba(36,22,44,.55)');g.addColorStop(1,'rgba(36,22,44,0)');c.fillStyle=g;c.fillRect(0,0,128,128);});
 const sh=mesh(new T.PlaneGeometry(1.65,.85),new T.MeshBasicMaterial({map:shadowTex,transparent:true,depthWrite:false}),2.3,.285,12.4);sh.rotation.x=-Math.PI/2;sh.castShadow=false;
-const weather=createWeather({scene,sun,hemisphere:scene.children.find(o=>o.isHemisphereLight&&o!==galleryAmbient),arenaLights,courtDiffuser});
+const weather=createWeather({scene,sun,hemisphere:scene.children.find(o=>o.isHemisphereLight&&o!==galleryAmbient),arenaLights,courtDiffuser,trees:weatherTrees});
 const welcomeIntro=createWelcomeIntro();
 let sung;
 new GLTFLoader().load('sung-miniature-v1.glb',g=>{sung=g.scene;sung.scale.setScalar(.86);sung.position.set(2.3,.27,12.4);sung.rotation.y=-.18;sung.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});scene.add(sung);welcomeIntro.attach(sung);window.assetReady=true;document.querySelector('#status').textContent='3D Sung ready';},undefined,()=>{document.querySelector('#status').textContent='3D candidate could not load';});
