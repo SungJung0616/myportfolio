@@ -1,0 +1,6 @@
+.layrd-shop-link{position:fixed;z-index:6;display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 13px;border:1px solid #520d1930;border-radius:6px;background:#f5eee3f5;color:#520d19;font:600 12px/1.3 'Segoe UI',sans-serif;text-decoration:none;white-space:nowrap;box-shadow:0 3px 10px #28142b18;transform:translateX(-50%);opacity:0;pointer-events:none;transition:opacity 150ms ease}
+.layrd-shop-link[hidden]{display:none}
+.layrd-shop-link.is-hovered,.layrd-shop-link:hover,.layrd-shop-link:focus-visible{opacity:1;pointer-events:auto}
+.layrd-shop-link:focus-visible{outline:2px solid #520d19;outline-offset:3px}
+@media(hover:none),(pointer:coarse){.layrd-shop-link{left:16px!important;top:auto!important;bottom:76px;transform:none;opacity:1;pointer-events:auto}}
+@media(prefers-reduced-motion:reduce){.layrd-shop-link{transition:none}}

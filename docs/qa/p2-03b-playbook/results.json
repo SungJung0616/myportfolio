@@ -1,0 +1,215 @@
+[
+  {
+    "device": "desktop",
+    "case": "label",
+    "stage": 1,
+    "overflow": false,
+    "heading": "Make label preparation easier to hand off.",
+    "visibleCourt": [
+      "0 0 100 60"
+    ],
+    "animations": 0
+  },
+  {
+    "device": "desktop",
+    "case": "label",
+    "stage": 2,
+    "overflow": false,
+    "heading": "Reduce repeated typing. Keep people in control.",
+    "visibleCourt": [
+      "0 0 100 60"
+    ],
+    "animations": 0
+  },
+  {
+    "device": "desktop",
+    "case": "label",
+    "stage": 3,
+    "overflow": false,
+    "heading": "Fewer entry errors. Easier handoffs.",
+    "visibleCourt": [],
+    "animations": 0
+  },
+  {
+    "device": "desktop",
+    "case": "qr",
+    "stage": 1,
+    "overflow": false,
+    "heading": "Find the right batch before taking the next step.",
+    "visibleCourt": [
+      "0 0 100 60"
+    ],
+    "animations": 0
+  },
+  {
+    "device": "desktop",
+    "case": "qr",
+    "stage": 2,
+    "overflow": false,
+    "heading": "Validate before selecting.",
+    "visibleCourt": [
+      "0 0 100 60"
+    ],
+    "animations": 0
+  },
+  {
+    "device": "desktop",
+    "case": "qr",
+    "stage": 3,
+    "overflow": false,
+    "heading": "Less searching. The checks stay.",
+    "visibleCourt": [],
+    "animations": 0
+  },
+  {
+    "device": "desktop",
+    "keyboard": true,
+    "touch": false,
+    "reducedMotion": true,
+    "errors": [],
+    "external": [],
+    "failed": []
+  },
+  {
+    "device": "tablet",
+    "case": "label",
+    "stage": 1,
+    "overflow": false,
+    "heading": "Make label preparation easier to hand off.",
+    "visibleCourt": [
+      "0 0 100 60"
+    ],
+    "animations": 0
+  },
+  {
+    "device": "tablet",
+    "case": "label",
+    "stage": 2,
+    "overflow": false,
+    "heading": "Reduce repeated typing. Keep people in control.",
+    "visibleCourt": [
+      "0 0 100 60"
+    ],
+    "animations": 0
+  },
+  {
+    "device": "tablet",
+    "case": "label",
+    "stage": 3,
+    "overflow": false,
+    "heading": "Fewer entry errors. Easier handoffs.",
+    "visibleCourt": [],
+    "animations": 0
+  },
+  {
+    "device": "tablet",
+    "case": "qr",
+    "stage": 1,
+    "overflow": false,
+    "heading": "Find the right batch before taking the next step.",
+    "visibleCourt": [
+      "0 0 100 60"
+    ],
+    "animations": 0
+  },
+  {
+    "device": "tablet",
+    "case": "qr",
+    "stage": 2,
+    "overflow": false,
+    "heading": "Validate before selecting.",
+    "visibleCourt": [
+      "0 0 100 60"
+    ],
+    "animations": 0
+  },
+  {
+    "device": "tablet",
+    "case": "qr",
+    "stage": 3,
+    "overflow": false,
+    "heading": "Less searching. The checks stay.",
+    "visibleCourt": [],
+    "animations": 0
+  },
+  {
+    "device": "tablet",
+    "keyboard": true,
+    "touch": true,
+    "reducedMotion": true,
+    "errors": [],
+    "external": [],
+    "failed": []
+  },
+  {
+    "device": "mobile",
+    "case": "label",
+    "stage": 1,
+    "overflow": false,
+    "heading": "Make label preparation easier to hand off.",
+    "visibleCourt": [
+      "0 0 60 86"
+    ],
+    "animations": 0
+  },
+  {
+    "device": "mobile",
+    "case": "label",
+    "stage": 2,
+    "overflow": false,
+    "heading": "Reduce repeated typing. Keep people in control.",
+    "visibleCourt": [
+      "0 0 60 86"
+    ],
+    "animations": 0
+  },
+  {
+    "device": "mobile",
+    "case": "label",
+    "stage": 3,
+    "overflow": false,
+    "heading": "Fewer entry errors. Easier handoffs.",
+    "visibleCourt": [],
+    "animations": 0
+  },
+  {
+    "device": "mobile",
+    "case": "qr",
+    "stage": 1,
+    "overflow": false,
+    "heading": "Find the right batch before taking the next step.",
+    "visibleCourt": [
+      "0 0 60 86"
+    ],
+    "animations": 0
+  },
+  {
+    "device": "mobile",
+    "case": "qr",
+    "stage": 2,
+    "overflow": false,
+    "heading": "Validate before selecting.",
+    "visibleCourt": [
+      "0 0 60 86"
+    ],
+    "animations": 0
+  },
+  {
+    "device": "mobile",
+    "case": "qr",
+    "stage": 3,
+    "overflow": false,
+    "heading": "Less searching. The checks stay.",
+    "visibleCourt": [],
+    "animations": 0
+  },
+  {
+    "device": "mobile",
+    "keyboard": true,
+    "touch": true,
+    "reducedMotion": true,
+    "errors": [],
+    "external": [],
+    "failed": []
+  }
+]

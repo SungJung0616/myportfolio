@@ -1,11 +1,16 @@
 import {applyHero} from './hero.js';
+import {createWelcomeIntro} from './welcome-intro.js';
 import {createWeather} from './weather.js';
+import {createLayrdEasterEgg} from './layrd-easter-egg.js';
 import {createFilmArchive} from './film.js';
 import * as T from './three.module.js';
 import {RoundedBoxGeometry} from './RoundedBoxGeometry.js';
 import {career} from './career-data.js';
+import {createCareerGallery} from './career-gallery.js';
+import {createCareerWalk} from './career-walk.js';
 import {GLTFLoader} from './GLTFLoader.js';
-import {buildProjectSpace} from './project-space.js';
+import {buildProjectSpace} from './project-space.js?v=film-entrance-plaque-1';
+import {buildArenaCourt} from './arena-court.js';
 import {layout,rail} from './spatial-data.js';
 const canvas=document.querySelector('#world'),scene=new T.Scene();
 scene.background=new T.Color('#cbdfea');scene.fog=new T.Fog('#cbdfea',160,300);
@@ -89,7 +94,8 @@ for(const rot of [0,Math.PI/2]){const seam=mesh(new T.TorusGeometry(.257,.009,6,
 for(const [x,z]of [[-15,5],[15,5],[-14,12],[13,12]]){cyl(1.55,1.65,.4,x,.46,z,M.cream);cyl(1.4,1.4,.1,x,.7,z,mat('#7b846b'));cyl(.12,.2,2.7,x,1.8,z,M.bark);ell(1.15,1.6,1.05,x,3.8,z,M.leaf);ell(.78,.85,.8,x+.6,3.4,z-.1,M.leaf);}
 for(const x of [-11.8,11.8]){box(2.6,.2,.7,x,.8,9,M.purple,.1);for(const d of [-.9,.9])box(.16,.6,.5,x+d,.44,9,M.deep,.035);}
 for(const x of [-4.7,4.7])for(const z of [12,16,19]){cyl(.11,.14,.65,x,.6,z,M.deep);ell(.14,.1,.14,x,.98,z,glow);}
-for(const x of [-12,12]){cyl(.07,.08,6,x,3.2,5,M.deep);box(1.3,2.5,.06,x+.65,4.1,5,M.purple,.02);sign('77','HOME COURT',1.14,.9,x+.65,4.25,5.05);}
+for(const x of [12]){cyl(.07,.08,6,x,3.2,5,M.deep);box(1.3,2.5,.06,x+.65,4.1,5,M.purple,.02);sign('77','HOME COURT',1.14,.9,x+.65,4.25,5.05);}
+const layrd=createLayrdEasterEgg({scene,canvas,camera,mesh,box,cyl,M});
 // A closed vestibule joins the wide gate to the narrower tunnel. All surfaces overlap.
 const interiorWall=mat('#a99db6'),interiorCream=mat('#e2daca');
 for(const x of [-3.67,3.67])box(1.2,4.8,3.8,x,2.59,6.65,M.purple,.06);
@@ -111,11 +117,16 @@ const galleryAmbient=new T.HemisphereLight('#c3b8cc','#65545c',.72);galleryAmbie
 // Real rear volume. Front facade/material language remains; old compact back is replaced.
 const beforeHall=new Set(scene.children);
 box(36,.2,43,0,.19,-25.5,M.pave,.08);
-for(const x of [-18,18])box(.4,11.2,43,x,5.9,-25.5,M.purple,.12);
+const arenaWall=mat('#665474'),arenaTrim=mat('#b7a7bc');
+for(const x of [-18,18]){
+ box(.4,11.2,43,x,5.9,-25.5,arenaWall,.12);
+ box(.12,1.55,34,x-Math.sign(x)*.25,1.08,-29,interiorCream,.035);
+ box(.14,.16,34,x-Math.sign(x)*.26,6.25,-29,arenaTrim,.04);
+}
 // Rear wall: a real door opening; the cinema is beyond the arena footprint.
-box(4.6,11.2,.4,-15.5,5.9,-47,M.purple,.12);
-box(28.6,11.2,.4,3.5,5.9,-47,M.purple,.12);
-box(2.4,7.1,.4,-12,7.95,-47,M.purple,.06);
+box(4.6,11.2,.4,-15.5,5.9,-47,arenaWall,.12);
+box(28.6,11.2,.4,3.5,5.9,-47,arenaWall,.12);
+box(2.4,7.1,.4,-12,7.95,-47,arenaWall,.06);
 box(36,.35,43,0,11.55,-25.5,M.cream,.12);
 // Rounded roof ribs create depth without raising or enlarging the hall.
 const ribMat=mat('#9a85a5'),innerRoofMat=mat('#e2d9c9');
@@ -130,63 +141,148 @@ for(const x of [-10,0,10]){const y=8.65+2.45*Math.cos(x/17.7*Math.PI/2);box(.16,
 for(const x of [-10.5,10.5])box(14.6,11.2,.4,x,5.9,-4,M.purple,.12);
 box(6.6,6.65,.4,0,8.05,-4,M.purple,.08);
 
-const careerMeshes=[],persistentGallery=new Set();
+const careerMeshes=[],careerLights=[],careerRims=[],careerOutlines=[],persistentGallery=new Set();
+let selectedCareer=null,hoveredCareer=null;
+const careerHint=document.createElement('span');careerHint.id='career-frame-hint';careerHint.textContent='Click frame to explore';careerHint.hidden=true;careerHint.setAttribute('role','tooltip');document.body.append(careerHint);
 career.forEach((record,i)=>{
-  const z=1.2-i*4.5,frame=new T.Group();frame.position.set(-2.78,2.55,z);frame.rotation.y=Math.PI/2;scene.add(frame);persistentGallery.add(frame);frame.name="career-frame-"+i;
-  box(2.15,2.25,.13,0,0,0,M.gold,.075,frame);
+  const z=layout.tunnel.frameCenters[i],frame=new T.Group();frame.position.set(-2.78,2.55,z);frame.rotation.y=Math.PI/2;frame.userData.careerIndex=i;scene.add(frame);persistentGallery.add(frame);frame.name="career-frame-"+i;
+  const rim=box(2.15,2.25,.13,0,0,0,M.gold.clone(),.075,frame);rim.material.emissive.set('#d7aa63');rim.material.emissiveIntensity=0;careerRims.push(rim);
+  const edge=new T.Shape();edge.moveTo(-1.087,-1.137);edge.lineTo(1.087,-1.137);edge.lineTo(1.087,1.137);edge.lineTo(-1.087,1.137);edge.closePath();
+  const hole=new T.Path();hole.moveTo(-1.075,-1.125);hole.lineTo(-1.075,1.125);hole.lineTo(1.075,1.125);hole.lineTo(1.075,-1.125);hole.closePath();edge.holes.push(hole);
+  const outline=mesh(new T.ShapeGeometry(edge),new T.MeshBasicMaterial({color:'#f3d78f',transparent:true,opacity:0,depthWrite:false}),0,0,.085,frame);outline.castShadow=false;outline.receiveShadow=false;careerOutlines.push(outline);
   const map=tex(1000,1100,c=>{
-    c.fillStyle='#f2eddf';c.fillRect(0,0,1000,1100);c.fillStyle='#665576';c.font='32px Arial';c.fillText(record.period,65,95);
-    c.fillStyle='#342c43';c.font='bold 77px Arial';c.fillText(record.company,65,211);c.font='35px Arial';c.fillText(record.role,65,275);
-    c.fillStyle='#675075';c.fillRect(65,325,85,7);c.fillStyle='#342c43';c.font='bold 59px Arial';record.lines.forEach((line,j)=>c.fillText(line,65,440+j*72));
-    record.steps.forEach((s,j)=>{const y=620+j*115;c.fillStyle=j===2?'#d4b36b':'#ded5e5';c.beginPath();c.roundRect(65,y,870,82,16);c.fill();c.fillStyle='#342c43';c.font='35px Arial';c.fillText(s,100,y+53);if(j<2){c.fillStyle='#806b91';c.fillRect(490,y+85,6,24);}});
-    c.fillStyle='#665576';c.font='28px Arial';c.fillText(record.note,65,1030);
+    c.fillStyle='#f2eddf';c.fillRect(0,0,1000,1100);c.fillStyle='#665576';c.font='40px Arial';c.fillText(record.period,65,95);
+    c.fillStyle='#342c43';c.font='bold 84px Arial';c.fillText(record.company,65,211);c.font='44px Arial';c.fillText(record.role,65,275);
+    c.fillStyle='#675075';c.fillRect(65,325,85,7);c.fillStyle='#342c43';c.font='bold 64px Arial';record.lines.forEach((line,j)=>c.fillText(line,65,440+j*72));
+    record.steps.forEach((s,j)=>{const y=620+j*115;c.fillStyle=j===2?'#d4b36b':'#ded5e5';c.beginPath();c.roundRect(65,y,870,82,16);c.fill();c.fillStyle='#342c43';c.font='43px Arial';c.fillText(s,100,y+53);if(j<2){c.fillStyle='#806b91';c.fillRect(490,y+85,6,24);}});
+    c.fillStyle='#665576';c.font='34px Arial';c.fillText(record.note,65,1030);
   });
   const face=mesh(new T.PlaneGeometry(2.02,2.12),new T.MeshStandardMaterial({map,roughness:.95}),0,0,.075,frame);face.userData.careerIndex=i;careerMeshes.push(face);
   box(1.2,.065,.2,0,1.27,.09,M.deep,.02,frame);
   box(1.05,.025,.13,0,1.23,.1,guideMat,.01,frame);
   frame.traverse(o=>o.layers.set(1));
-  const lamp=new T.SpotLight('#ffdab0',22,7,.8,.78,1.5);lamp.position.set(-1.85,3.97,z);lamp.target.position.set(-2.85,2.25,z);lamp.layers.set(1);scene.add(lamp,lamp.target);persistentGallery.add(lamp);persistentGallery.add(lamp.target);
+  const lamp=new T.SpotLight('#ffdab0',22,7,.8,.78,1.5);lamp.position.set(-1.85,3.97,z);lamp.target.position.set(-2.85,2.25,z);lamp.layers.set(1);scene.add(lamp,lamp.target);persistentGallery.add(lamp);persistentGallery.add(lamp.target);careerLights.push(lamp);
 });
 const dialog=document.querySelector('#career-dialog'),detail=document.querySelector('#career-detail');
-function openCareer(i){const r=career[i];detail.replaceChildren();const add=(tag,text)=>{const e=document.createElement(tag);e.textContent=text;detail.append(e);};add('p',r.period);add('h2',r.company);add('h3',r.role);add('p',r.summary);add('p',r.detail);add('p',r.result);add('small','Source: representative resume, September 2026. Diagram is illustrative.');dialog.showModal();}
+const careerGallery=createCareerGallery(career);
+function clearCareerHover(){careerHint.hidden=true;if(hoveredCareer!==null){hoveredCareer=null;canvas.style.cursor='';}}
+function openCareer(i){
+ careerWalk.cancel();
+ selectedCareer=i;clearCareerHover();
+ // Hold the view actually on screen, including when a frame is selected mid-scroll.
+ progress=window.arenaDiagnostics?.progress??progress;
+ scrollTo({top:progress*(document.querySelector('#rail').offsetHeight-innerHeight),behavior:'instant'});
+ careerGallery.open(i);
+}
+dialog.addEventListener('close',()=>{selectedCareer=null;clearCareerHover();});
+function updateCareerLighting(dt){
+ const amount=reduce.checked?1:1-Math.exp(-dt*16);
+ careerLights.forEach((lamp,i)=>{
+  const selected=selectedCareer===i,hovered=selectedCareer===null&&hoveredCareer===i;
+  lamp.intensity=T.MathUtils.lerp(lamp.intensity,selected?30:hovered?24:22,amount);
+  careerRims[i].material.emissiveIntensity=T.MathUtils.lerp(careerRims[i].material.emissiveIntensity,selected ? .22 : hovered ? .18 : 0,amount);
+  careerOutlines[i].material.opacity=T.MathUtils.lerp(careerOutlines[i].material.opacity,selected ? .9 : hovered ? .8 : 0,amount);
+ });
+}
 document.querySelector('#close-career').addEventListener('click',()=>dialog.close());
 document.querySelectorAll('[data-career]').forEach(b=>b.addEventListener('click',()=>openCareer(Number(b.dataset.career))));
 const panelRay=new T.Raycaster();
 panelRay.layers.enable(1);
-canvas.addEventListener('click',e=>{panelRay.setFromCamera(new T.Vector2(e.clientX/innerWidth*2-1,1-e.clientY/innerHeight*2),camera);const hit=panelRay.intersectObjects(scene.children,true)[0];if(hit&&careerMeshes.includes(hit.object)&&hit.distance<12)openCareer(hit.object.userData.careerIndex);});
-window.careerPanelScreens=()=>careerMeshes.map(face=>{const v=face.getWorldPosition(new T.Vector3()).project(camera);return {x:(v.x+1)*innerWidth/2,y:(1-v.y)*innerHeight/2};});
-// Bright little court: the same matte, rounded visual language as the exterior.
-const courtMap=tex(2048,1024,c=>{c.fillStyle='#ccaa77';c.fillRect(0,0,2048,1024);for(let y=0;y<1024;y+=32){c.fillStyle=y%64?'#c9a575':'#d2af7d';c.fillRect(0,y,2048,31);}c.fillStyle='#776186';c.fillRect(0,0,2048,58);c.fillRect(0,966,2048,58);c.fillRect(0,0,58,1024);c.fillRect(1990,0,58,1024);c.strokeStyle='#faf1da';c.lineWidth=6;c.strokeRect(80,80,1888,864);c.beginPath();c.moveTo(1024,80);c.lineTo(1024,944);c.stroke();c.beginPath();c.arc(1024,512,142,0,Math.PI*2);c.stroke();for(const side of [0,1]){const x=side?1968:80;c.strokeRect(side?1620:80,330,348,364);c.beginPath();c.arc(side?1620:428,512,182,0,Math.PI*2);c.stroke();c.beginPath();c.arc(x,512,370,side?Math.PI/2:-Math.PI/2,side?Math.PI*1.5:Math.PI/2);c.stroke();}c.font='700 70px Arial';c.textAlign='center';c.fillStyle='#735b84';c.fillText('SJ',1024,538);});
-const courtCenter=-29;
-box(25,.12,14,0,.25,courtCenter,M.purple,.16);box(24,.035,13,0,.33,courtCenter,new T.MeshStandardMaterial({map:courtMap,roughness:.83}),.025);
+function careerHit(e){
+ if(dialog.open||document.body.classList.contains('reading-mode'))return null;
+ panelRay.setFromCamera(new T.Vector2(e.clientX/innerWidth*2-1,1-e.clientY/innerHeight*2),camera);
+ const hit=panelRay.intersectObjects(scene.children,true).find(hit=>hit.object.visible&&hit.object.parent?.visible);
+ const index=hit?.object.userData.careerIndex??hit?.object.parent?.userData.careerIndex;
+ return hit&&Number.isInteger(index)&&hit.distance<12?index:null;
+}
+let careerPress=null,lastCareerHover=0;
+canvas.addEventListener('pointerdown',e=>{careerPress={x:e.clientX,y:e.clientY,scroll:scrollY};});
+canvas.addEventListener('click',e=>{
+ if(careerPress&&(Math.hypot(e.clientX-careerPress.x,e.clientY-careerPress.y)>8||Math.abs(scrollY-careerPress.scroll)>6))return;
+ const i=careerHit(e);if(i!==null){e.stopImmediatePropagation();openCareer(i);}
+});
+canvas.addEventListener('pointermove',e=>{
+ if(e.pointerType!=='mouse'||!matchMedia('(hover: hover)').matches)return;
+ if(dialog.open||(window.arenaDiagnostics?.progress??0)<.30||(window.arenaDiagnostics?.progress??0)>.54){clearCareerHover();return;}
+ const now=performance.now();if(now-lastCareerHover<80)return;lastCareerHover=now;
+ const i=careerHit(e);if(i!==hoveredCareer){hoveredCareer=i;canvas.style.cursor=i===null?'':'pointer';}
+ careerHint.hidden=i===null;if(i!==null){careerHint.style.left=Math.min(innerWidth-190,e.clientX+18)+'px';careerHint.style.top=Math.min(innerHeight-52,e.clientY+20)+'px';}
+});
+canvas.addEventListener('pointerleave',clearCareerHover);addEventListener('scroll',clearCareerHover,{passive:true});
+layrd.connect();
+window.careerPanelScreens=()=>careerMeshes.map((face,index)=>{
+ const v=face.getWorldPosition(new T.Vector3()).project(camera);
+ const corners=[[-1.075,-1.125],[1.075,-1.125],[-1.075,1.125],[1.075,1.125]].map(([x,y])=>face.parent.localToWorld(new T.Vector3(x,y,.075)).project(camera));
+ return {index,x:(v.x+1)*innerWidth/2,y:(1-v.y)*innerHeight/2,bounds:{left:Math.min(...corners.map(p=>(p.x+1)*innerWidth/2)),right:Math.max(...corners.map(p=>(p.x+1)*innerWidth/2)),top:Math.min(...corners.map(p=>(1-p.y)*innerHeight/2)),bottom:Math.max(...corners.map(p=>(1-p.y)*innerHeight/2))}};
+});
+// Markings and both goals use one uniform NBA-inspired coordinate system.
+buildArenaCourt({scene,box,mesh,tex,M});
 // Seating stays low at the outer edges, leaving broad circulation bands.
 const seats=[],backs=[];
 for(let row=0;row<3;row++){const y=.65+row*.48,z=-42-row*.7;box(20,.42,.76,4,y-.12,z,interiorCream,.12);for(let j=0;j<35;j++){const x=(j-17)*.77;if(x<-6.6)continue;seats.push([x,y+.13,z]);backs.push([x,y+.43,z-.18]);}}
 for(const side of [-1,1])for(let row=0;row<2;row++){const x=side*(16+row*.7);box(.75,.45,15,x,.55+row*.5,-29,interiorCream,.1);for(let j=0;j<18;j++){seats.push([x,.87+row*.5,-35.3+j*.75]);backs.push([x+side*.17,1.17+row*.5,-35.3+j*.75,side]);}}
 function batch(geo,material,positions){const im=new T.InstancedMesh(geo,material,positions.length),o=new T.Object3D();positions.forEach(([x,y,z,side],i)=>{o.position.set(x,y,z);o.rotation.set(0,side?Math.PI/2:0,0);o.updateMatrix();im.setMatrixAt(i,o.matrix);});im.castShadow=true;im.receiveShadow=true;scene.add(im);}
 batch(new RoundedBoxGeometry(.55,.12,.48,3,.055),M.purple,seats);batch(new RoundedBoxGeometry(.53,.47,.14,3,.065),M.purple,backs);
-// Higher lights reuse the same palette and luminaires, not extra decoration.
-for(const x of [-8,8])for(const z of [-21,-30,-39]){box(3,.1,.6,x,10.2,z,glow,.05);const lamp=new T.PointLight('#fff0d5',55,35,1.6);lamp.position.set(x,10,z);scene.add(lamp);}
-for(const side of [-1,1]){const x=side*10.65;box(.36,2.7,.45,x,1.7,courtCenter,M.cream,.12);box(.12,1.1,1.8,x,3.2,courtCenter,M.cream,.1);box(.135,.5,.8,x-side*.08,3.13,courtCenter,M.purple,.03);const rim=mesh(new T.TorusGeometry(.28,.035,8,40),M.gold,x-side*.52,2.88,courtCenter);rim.rotation.x=Math.PI/2;for(let i=0;i<10;i++){const a=i*Math.PI*2/10;limb([x-side*.52+Math.cos(a)*.26,2.86,courtCenter+Math.sin(a)*.26],[x-side*.52+Math.cos(a)*.16,2.48,courtCenter+Math.sin(a)*.16],.01,interiorCream,scene);}}
+// Six existing shadowless lights, with recessed ivory diffusers rather than gold glow.
+const courtDiffuser=new T.MeshStandardMaterial({color:'#fff1d9',emissive:'#ffe6bd',emissiveIntensity:.45,roughness:.7});
+for(const x of [-8,8])for(const z of [-21,-30,-39]){
+ box(3.2,.16,.72,x,10.24,z,M.deep,.06);
+ const diffuser=box(3,.045,.55,x,10.14,z,courtDiffuser,.025);diffuser.castShadow=false;
+ const lamp=new T.PointLight('#fff0d5',55,35,1.6);lamp.position.set(x,10,z);scene.add(lamp);
+}
 
 const projectSpace=buildProjectSpace({scene,box,mesh,sign,tex,M,interiorCream});
-const film=createFilmArchive({camera,renderer,screen:projectSpace.mediaScreen,room:projectSpace.room,onExit:()=>{const b=document.querySelectorAll('[data-stop]')[7];b.click();b.focus({preventScroll:true});}});
+const film=createFilmArchive({camera,renderer,screen:projectSpace.mediaScreen,room:projectSpace.room,onExit:()=>{const b=document.querySelector('[data-stop="0.74"]');b.click();b.focus({preventScroll:true});}});
 canvas.addEventListener('click',e=>{panelRay.setFromCamera(new T.Vector2(e.clientX/innerWidth*2-1,1-e.clientY/innerHeight*2),camera);const hit=panelRay.intersectObjects(scene.children,true)[0];if(hit)projectSpace.handleHit(hit);});
-const hallObjects=scene.children.filter(o=>!beforeHall.has(o)&&!persistentGallery.has(o));let insideMode=null;function setSpatialView(p){const next=p>.23;if(next===insideMode)return;insideMode=next;hallObjects.forEach(o=>o.visible=next);shellMaterials.forEach(m=>{m.clippingPlanes=next?[shellCut]:[];m.needsUpdate=true;});}setSpatialView(0);window.galleryState=()=>careerMeshes.map(m=>({visible:m.visible&&m.parent.visible,textureReady:!!m.material.map?.image,opacity:m.material.opacity}));
+const hallObjects=scene.children.filter(o=>!beforeHall.has(o)&&!persistentGallery.has(o));let insideMode=null;function setSpatialView(p){const next=p>.23;if(next===insideMode)return;insideMode=next;hallObjects.forEach(o=>o.visible=next);shellMaterials.forEach(m=>{m.clippingPlanes=next?[shellCut]:[];m.needsUpdate=true;});}setSpatialView(0);window.galleryState=()=>careerMeshes.map((m,i)=>({visible:m.visible&&m.parent.visible,textureReady:!!m.material.map?.image,opacity:m.material.opacity,selected:selectedCareer===i,hovered:hoveredCareer===i,light:careerLights[i].intensity,emphasis:careerRims[i].material.emissiveIntensity}));
 window.cardScreens=()=>projectSpace.cardMeshes.map(face=>{const v=face.getWorldPosition(new T.Vector3()).project(camera);return{x:(v.x+1)*innerWidth/2,y:(1-v.y)*innerHeight/2};});
 // Contact shadow belongs to scene; candidate remains a separate 2.5D image.
 const shadowTex=tex(128,128,c=>{const g=c.createRadialGradient(64,64,3,64,64,62);g.addColorStop(0,'rgba(36,22,44,.55)');g.addColorStop(1,'rgba(36,22,44,0)');c.fillStyle=g;c.fillRect(0,0,128,128);});
 const sh=mesh(new T.PlaneGeometry(1.65,.85),new T.MeshBasicMaterial({map:shadowTex,transparent:true,depthWrite:false}),2.3,.285,12.4);sh.rotation.x=-Math.PI/2;sh.castShadow=false;
 const weather=createWeather({scene,sun,hemisphere:scene.children.find(o=>o.isHemisphereLight&&o!==galleryAmbient)});
+const welcomeIntro=createWelcomeIntro();
 let sung;
-new GLTFLoader().load('sung-miniature-v1.glb',g=>{sung=g.scene;sung.scale.setScalar(.86);sung.position.set(2.3,.27,12.4);sung.rotation.y=-.18;sung.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});scene.add(sung);window.assetReady=true;document.querySelector('#status').textContent='실제 3D Sung 후보 · 정적';},undefined,()=>{document.querySelector('#status').textContent='3D 후보 로딩 실패';});
-// Continuous rail with a calm entrance hold. No wheel interception, automatic audio or character animation.
-window.leaveFilmRoom=()=>film.exit();const stops=rail;window.spatialLayout=layout;window.cameraRail=rail;
+new GLTFLoader().load('sung-miniature-v1.glb',g=>{sung=g.scene;sung.scale.setScalar(.86);sung.position.set(2.3,.27,12.4);sung.rotation.y=-.18;sung.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});scene.add(sung);welcomeIntro.attach(sung);window.assetReady=true;document.querySelector('#status').textContent='3D Sung ready';},undefined,()=>{document.querySelector('#status').textContent='3D candidate could not load';});
+// Continuous rail; welcome captions never own camera or scroll input.
+window.leaveFilmRoom=()=>film.exit({returnToCourt:false});const stops=rail;window.spatialLayout=layout;window.cameraRail=rail;
 const smooth=t=>t*t*(3-2*t);let progress=0,last=performance.now();const reduce=document.querySelector('#reduce');reduce.checked=matchMedia('(prefers-reduced-motion: reduce)').matches;
-function pose(p){let a=stops.findIndex((s,i)=>i<stops.length-1&&p<=stops[i+1].s);if(a<0)a=stops.length-2;const b=a+1,u=(p-stops[a].s)/(stops[b].s-stops[a].s),t=smooth(Math.max(0,Math.min(1,u)));camera.position.fromArray(stops[a].p).lerp(new T.Vector3(...stops[b].p),t);if(stops[a].via){const v=new T.Vector3(...stops[a].via);camera.position.copy(t<.5?new T.Vector3(...stops[a].p).lerp(v,t*2):v.lerp(new T.Vector3(...stops[b].p),(t-.5)*2));}const target=new T.Vector3(...stops[a].t).lerp(new T.Vector3(...stops[b].t),t);camera.fov=T.MathUtils.lerp(stops[a].fov,stops[b].fov,t);if(innerWidth<650){if(a===0){const k=1-t;camera.position.x*=.65;camera.position.y+=21*k;camera.position.z+=76*k+4*t;}else if(a===1){camera.position.x*=.65;camera.position.z+=4*(1-t);}else{camera.fov+=10;}const weight=smooth(Math.max(0,1-Math.abs(p-.64)/.06));camera.position.lerp(new T.Vector3(0,6.4,-13.8),weight);target.lerp(new T.Vector3(0,2.3,-32),weight);camera.fov=T.MathUtils.lerp(camera.fov,132,weight);camera.fov=T.MathUtils.lerp(camera.fov,116,smooth(Math.max(0,1-Math.abs(p-.88)/.04)));camera.fov=T.MathUtils.lerp(camera.fov,116,smooth(Math.max(0,(p-.94)/.06)));}camera.updateProjectionMatrix();camera.lookAt(target);}
+function pose(p){let a=stops.findIndex((s,i)=>i<stops.length-1&&p<=stops[i+1].s);if(a<0)a=stops.length-2;const b=a+1,u=(p-stops[a].s)/(stops[b].s-stops[a].s),t=smooth(Math.max(0,Math.min(1,u)));camera.position.fromArray(stops[a].p).lerp(new T.Vector3(...stops[b].p),t);if(stops[a].via){const v=new T.Vector3(...stops[a].via);camera.position.copy(t<.5?new T.Vector3(...stops[a].p).lerp(v,t*2):v.lerp(new T.Vector3(...stops[b].p),(t-.5)*2));}const target=new T.Vector3(...stops[a].t).lerp(new T.Vector3(...stops[b].t),t);camera.fov=T.MathUtils.lerp(stops[a].fov,stops[b].fov,t);if(innerWidth<650){if(a===0){const k=1-t;camera.position.x*=.65;camera.position.y+=21*k;camera.position.z+=76*k+4*t;}else if(a===1){camera.position.x*=.65;camera.position.z+=4*(1-t);}else{camera.fov+=10;}const weight=smooth(Math.max(0,1-Math.abs(p-.64)/.06));camera.position.lerp(new T.Vector3(0,6.4,-13.8),weight);target.lerp(new T.Vector3(0,2.3,-32),weight);camera.fov=T.MathUtils.lerp(camera.fov,132,weight);camera.fov=T.MathUtils.lerp(camera.fov,116,smooth(Math.max(0,1-Math.abs(p-.88)/.04)));camera.fov=T.MathUtils.lerp(camera.fov,116,smooth(Math.max(0,(p-.94)/.06)));}const galleryWeight=smooth(Math.min(1,Math.max(0,(p-.30)/.08),Math.max(0,(.55-p)/.04)));if(galleryWeight>0){const fitFov=Math.max(43,T.MathUtils.radToDeg(2*Math.atan(2.15/(2*4.18*camera.aspect*.78))));camera.fov=T.MathUtils.lerp(camera.fov,fitFov,galleryWeight);}camera.updateProjectionMatrix();camera.lookAt(target);}
 
 window.checkEnclosure=()=>{const ray=new T.Raycaster(),leaks=[];let rays=0;scene.updateMatrixWorld(true);camera.updateMatrixWorld(true);for(let y=-.9;y<=.9;y+=.15)for(let x=-.9;x<=.9;x+=.15){ray.setFromCamera(new T.Vector2(x,y),camera);const hits=ray.intersectObjects(scene.children,true);rays++;if(!hits.length||hits[0].object.name==='outside-ground')leaks.push([x,y]);}return {rays,leaks};};
-function resize(){renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();}resize();addEventListener('resize',resize);
+let readingFrameCached=false;
+function resize(){renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();readingFrameCached=false;}resize();addEventListener('resize',resize);
 document.querySelectorAll('[data-stop]').forEach(b=>b.addEventListener('click',()=>{const p=Number(b.dataset.stop);progress=p;scrollTo({top:p*(document.querySelector('#rail').offsetHeight-innerHeight),behavior:'instant'});}));
 const text=rail.map(r=>[r.title,r.headline,r.hint]);
-function tick(now){requestAnimationFrame(tick);const dt=Math.min(.05,(now-last)/1000);last=now;const goal=Math.max(0,Math.min(1,scrollY/(document.querySelector('#rail').offsetHeight-innerHeight)));if(!dialog.open&&!projectSpace.dialog.open)progress+=(goal-progress)*(1-Math.exp(-dt*8));const nearest=stops.reduce((a,b)=>Math.abs(a.s-goal)<Math.abs(b.s-goal)?a:b).s;const p=reduce.checked?nearest:progress;setSpatialView(p);if(!document.body.classList.contains('reading-mode'))film.update(p);pose(film.active?1:p);camera.clearViewOffset();applyHero(camera,p);if(film.active)film.applyCamera();const i=stops.reduce((best,s,j)=>Math.abs(s.s-p)<Math.abs(stops[best].s-p)?j:best,0);document.body.classList.toggle('tunnel',p>.34);document.querySelector('#career-actions').hidden=!(i===3||i===4);document.querySelector('#project-controls').hidden=i!==8;['stage','headline','hint'].forEach((id,j)=>document.getElementById(id).textContent=text[i][j]);document.querySelector('.progress i').style.width=goal*100+'%';document.querySelectorAll('[data-stop]').forEach((b,j)=>b.setAttribute('aria-current',String(Number(b.dataset.stop)===stops[i].s)));if(window.inspectionCamera){camera.position.fromArray(window.inspectionCamera.p);camera.lookAt(new T.Vector3(...window.inspectionCamera.t));camera.fov=65;camera.updateProjectionMatrix();}weather.update(p,dt);renderer.render(scene,camera);window.arenaDiagnostics={progress:p,camera:camera.position.toArray(),drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles,contextLost:renderer.getContext().isContextLost()};}async function prepareScene(){const start=performance.now();const textures=new Set();scene.traverse(o=>{for(const m of (Array.isArray(o.material)?o.material:[o.material]))if(m)for(const k of ['map','emissiveMap','alphaMap'])if(m[k])textures.add(m[k]);});textures.forEach(t=>renderer.initTexture(t));const target=new T.WebGLRenderTarget(64,64);renderer.setRenderTarget(target);for(const p of [0,.26]){setSpatialView(p);pose(p);await renderer.compileAsync(scene,camera);renderer.render(scene,camera);}renderer.setRenderTarget(null);target.dispose();setSpatialView(0);pose(0);window.preparation={milliseconds:performance.now()-start,textures:textures.size};window.sceneReady=true;last=performance.now();requestAnimationFrame(tick);}prepareScene().catch(e=>{document.querySelector('#failure').hidden=false;console.error(e);});
+const railElement=document.querySelector('#rail'),careerActions=document.querySelector('#career-actions'),projectControls=document.querySelector('#project-controls'),progressBar=document.querySelector('.progress i');
+const careerWalk=createCareerWalk({stops,railElement,isReduced:()=>reduce.checked});
+const stageLabels=['stage','headline','hint'].map(id=>document.getElementById(id)),stopButtons=[...document.querySelectorAll('[data-stop]')];
+let lastUiStop=-1,lastUiGoal=-1;
+function tick(now){
+ requestAnimationFrame(tick);const dt=Math.min(.05,(now-last)/1000);last=now;
+ const railEnd=railElement.offsetHeight-innerHeight,goal=welcomeIntro.arrivalTarget??Math.max(0,Math.min(1,scrollY/railEnd));
+ if(!dialog.open&&!projectSpace.dialog.open&&!welcomeIntro.holdingCamera){if(scrollY>=railEnd)progress=1;else progress+=(goal-progress)*(1-Math.exp(-dt*8));}
+ const reading=document.body.classList.contains('reading-mode');
+ welcomeIntro.update(progress,goal,dt,reduce.checked);
+ const nearest=stops.reduce((a,b)=>Math.abs(a.s-goal)<Math.abs(b.s-goal)?a:b).s,p=reduce.checked?nearest:progress;
+ // Navigation's editorial visibility owns the handoff, not the earlier rail endpoint.
+ // Reconcile Film UI before sleeping; keep rendering while editorial content only
+ // partially covers the arena so wheel re-entry never exposes stale controls/frames.
+ film.update(p,{allowEntry:!reading});
+ if(reading&&readingFrameCached&&Math.abs((window.filmState?.light??15)-15)<.05){if(window.arenaDiagnostics){window.arenaDiagnostics.progress=p;window.arenaDiagnostics.rendering=false;}return;}
+ setSpatialView(p);pose(p);camera.clearViewOffset();applyHero(camera,p);
+ if(p>.95)film.applyCamera(smooth(Math.min(1,(p-.95)/.05)));
+ projectSpace.filmEntrance.update(p,reduce.checked);
+ welcomeIntro.positionBubble(camera);
+ layrd.update(p);
+ const nearestIndex=stops.reduce((best,s,j)=>Math.abs(s.s-p)<Math.abs(stops[best].s-p)?j:best,0);
+ const isCareer=Number.isInteger(stops[nearestIndex].careerIndex),settledCareer=isCareer&&Math.abs(p-stops[nearestIndex].s)<.002&&Math.abs(goal-stops[nearestIndex].s)<.003;
+ const i=isCareer&&!settledCareer?-2:nearestIndex;
+ document.body.classList.toggle('career-view',p>.31&&p<.535);
+ document.body.classList.toggle('tunnel',p>.34);
+ if(i!==lastUiStop){const stop=i>=0?stops[i]:null,careerIndex=stop?.careerIndex;careerActions.hidden=!Number.isInteger(careerIndex);careerActions.querySelectorAll('[data-career]').forEach(b=>{b.hidden=Number(b.dataset.career)!==careerIndex;b.textContent='Explore this experience';b.setAttribute('aria-label','Explore '+career[Number(b.dataset.career)].role+' at '+career[Number(b.dataset.career)].company);});projectControls.hidden=stop?.s!==.83;stageLabels.forEach((node,j)=>node.textContent=(i>=0?text[i]:['Career Walk','','Scroll to explore.'])[j]);stopButtons.forEach(b=>b.setAttribute('aria-current',String(Number(b.dataset.stop)===stop?.s)));lastUiStop=i;}
+ if(Math.abs(goal-lastUiGoal)>.00001){progressBar.style.width=goal*100+'%';lastUiGoal=goal;}
+ if(window.inspectionCamera){camera.position.fromArray(window.inspectionCamera.p);camera.lookAt(new T.Vector3(...window.inspectionCamera.t));camera.fov=65;camera.updateProjectionMatrix();}
+ weather.update(p,dt);updateCareerLighting(dt);renderer.render(scene,camera);readingFrameCached=reading;
+ window.arenaDiagnostics={progress:p,camera:camera.position.toArray(),filmDoorOpen:projectSpace.filmEntrance.openFraction,drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles,contextLost:renderer.getContext().isContextLost(),rendering:!reading};
+}
+async function prepareScene(){const start=performance.now();const textures=new Set();scene.traverse(o=>{for(const m of (Array.isArray(o.material)?o.material:[o.material]))if(m)for(const k of ['map','emissiveMap','alphaMap'])if(m[k])textures.add(m[k]);});textures.forEach(t=>renderer.initTexture(t));const target=new T.WebGLRenderTarget(64,64);renderer.setRenderTarget(target);for(const p of [0,.26]){setSpatialView(p);pose(p);await renderer.compileAsync(scene,camera);renderer.render(scene,camera);}renderer.setRenderTarget(null);target.dispose();setSpatialView(0);pose(0);window.preparation={milliseconds:performance.now()-start,textures:textures.size};window.sceneReady=true;last=performance.now();requestAnimationFrame(tick);}prepareScene().catch(e=>{document.querySelector('#failure').hidden=false;console.error(e);});

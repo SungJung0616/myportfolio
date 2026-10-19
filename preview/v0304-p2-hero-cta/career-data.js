@@ -20,7 +20,8 @@ export const career = [
     note:'Release QA · Workflow diagram'
   },
   {
-    id:'operations', period:'2024 – Present', company:'GPS Logix', role:'Operations Manager',
+    // Current title confirmed directly by Sung on 2026-10-16.
+    id:'operations', period:'2024 – Present', company:'GPS Logix', role:'Senior Operations Manager',
     summary:'Connected warehouse workflows, system requirements and daily operational execution.',
     lines:['From warehouse','to workflow.'],
     detail:'Helped establish a new 3PL operation with account-specific locations, picking and packing flows, and work instructions. Designed an Excel-based SKU batching workflow and partnered with the AcrossB development team until automated SKU separation was added to Workpad.',

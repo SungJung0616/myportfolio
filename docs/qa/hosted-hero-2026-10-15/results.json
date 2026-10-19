@@ -1,0 +1,639 @@
+{
+  "browser": "155.0.8059.40",
+  "url": "https://deploy-preview-1--sj-personalportfolio.netlify.app/",
+  "runs": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 960,
+      "errors": [],
+      "console": [
+        {
+          "type": "error",
+          "text": "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-dH+oOZOdDv+MWU0F8bCZOoFHX0jFM4+bwNqOKujbv90='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked."
+        },
+        {
+          "type": "error",
+          "text": "Framing 'https://app.netlify.com/' violates the following Content Security Policy directive: \"default-src 'none'\". The request has been blocked. Note that 'frame-src' was not explicitly set, so 'default-src' is used as a fallback.\n"
+        },
+        {
+          "type": "warning",
+          "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+        },
+        {
+          "type": "error",
+          "text": "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-dH+oOZOdDv+MWU0F8bCZOoFHX0jFM4+bwNqOKujbv90='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked."
+        },
+        {
+          "type": "error",
+          "text": "Framing 'https://app.netlify.com/' violates the following Content Security Policy directive: \"default-src 'none'\". The request has been blocked. Note that 'frame-src' was not explicitly set, so 'default-src' is used as a fallback.\n"
+        },
+        {
+          "type": "warning",
+          "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+        }
+      ],
+      "failed": [
+        {
+          "url": "https://deploy-preview-1--sj-personalportfolio.netlify.app/sungflix-demo.webm",
+          "failure": {
+            "errorText": "net::ERR_ABORTED"
+          }
+        },
+        {
+          "url": "https://deploy-preview-1--sj-personalportfolio.netlify.app/sungflix-demo.webm",
+          "failure": {
+            "errorText": "net::ERR_ABORTED"
+          }
+        }
+      ],
+      "http": [],
+      "destinations": [
+        {
+          "id": "career",
+          "overflow": false
+        },
+        {
+          "id": "playbook",
+          "overflow": false
+        },
+        {
+          "id": "results",
+          "overflow": false
+        },
+        {
+          "id": "film",
+          "overflow": false
+        },
+        {
+          "id": "work",
+          "overflow": false
+        },
+        {
+          "id": "archive",
+          "overflow": false
+        },
+        {
+          "id": "stack",
+          "overflow": false
+        },
+        {
+          "id": "contact",
+          "overflow": false
+        },
+        {
+          "id": "home",
+          "overflow": false
+        }
+      ],
+      "initial": {
+        "overflow": false,
+        "weather": {
+          "status": "connected",
+          "mode": "live",
+          "outside": true,
+          "night": false,
+          "rain": false,
+          "clouds": false,
+          "sun": 4.2,
+          "hemisphere": 2.2,
+          "temperature": 31.3,
+          "sourceTime": 1792089000
+        },
+        "diagnostics": {
+          "progress": 0,
+          "camera": [
+            23,
+            18,
+            31
+          ],
+          "drawCalls": 700,
+          "triangles": 757624,
+          "contextLost": false
+        },
+        "hero": [
+          {
+            "selector": "intro-hero",
+            "text": "Sung JungI Make Complex Work Feel Simple.I find friction, connect people and systems, and build practical solutions that make everyday work easier.Make the Next Play Easier.Operations · QA · AutomationSee How I Solve ProblemsExplore the Arena",
+            "rect": {
+              "x": 0,
+              "y": 72,
+              "width": 590.390625,
+              "height": 888,
+              "top": 72,
+              "right": 590.390625,
+              "bottom": 960,
+              "left": 0
+            },
+            "font": "16px"
+          },
+          {
+            "selector": "hero-title",
+            "text": "I Make Complex Work Feel Simple.",
+            "rect": {
+              "x": 72,
+              "y": 299.546875,
+              "width": 486.390625,
+              "height": 202.125,
+              "top": 299.546875,
+              "right": 558.390625,
+              "bottom": 501.671875,
+              "left": 72
+            },
+            "font": "64.8px"
+          },
+          {
+            "selector": "hero-description",
+            "text": "I find friction, connect people and systems, and build practical solutions that make everyday work easier.",
+            "rect": {
+              "x": 72,
+              "y": 529.671875,
+              "width": 368.71875,
+              "height": 86.390625,
+              "top": 529.671875,
+              "right": 440.71875,
+              "bottom": 616.0625,
+              "left": 72
+            },
+            "font": "18px"
+          },
+          {
+            "selector": "hero-actions",
+            "text": "See How I Solve ProblemsExplore the Arena",
+            "rect": {
+              "x": 72,
+              "y": 731.453125,
+              "width": 486.390625,
+              "height": 46,
+              "top": 731.453125,
+              "right": 558.390625,
+              "bottom": 777.453125,
+              "left": 72
+            },
+            "font": "16px"
+          },
+          {
+            "selector": "hero-primary",
+            "text": "See How I Solve Problems",
+            "rect": {
+              "x": 72,
+              "y": 731.453125,
+              "width": 198.859375,
+              "height": 46,
+              "top": 731.453125,
+              "right": 270.859375,
+              "bottom": 777.453125,
+              "left": 72
+            },
+            "font": "14px"
+          },
+          {
+            "selector": "hero-explore",
+            "text": "Explore the Arena",
+            "rect": {
+              "x": 282.859375,
+              "y": 731.453125,
+              "width": 146.9375,
+              "height": 46,
+              "top": 731.453125,
+              "right": 429.796875,
+              "bottom": 777.453125,
+              "left": 282.859375
+            },
+            "font": "14px"
+          }
+        ]
+      },
+      "firstTab": "<a class=\"skip-work\" href=\"#work\">작업 내용으로 바로가기</a>",
+      "primary": true,
+      "explore": true,
+      "reducedMotion": {
+        "matches": true,
+        "progress": 0.14,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "errors": [],
+      "console": [
+        {
+          "type": "error",
+          "text": "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-dH+oOZOdDv+MWU0F8bCZOoFHX0jFM4+bwNqOKujbv90='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked."
+        },
+        {
+          "type": "error",
+          "text": "Framing 'https://app.netlify.com/' violates the following Content Security Policy directive: \"default-src 'none'\". The request has been blocked. Note that 'frame-src' was not explicitly set, so 'default-src' is used as a fallback.\n"
+        },
+        {
+          "type": "warning",
+          "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+        },
+        {
+          "type": "error",
+          "text": "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-dH+oOZOdDv+MWU0F8bCZOoFHX0jFM4+bwNqOKujbv90='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked."
+        },
+        {
+          "type": "error",
+          "text": "Framing 'https://app.netlify.com/' violates the following Content Security Policy directive: \"default-src 'none'\". The request has been blocked. Note that 'frame-src' was not explicitly set, so 'default-src' is used as a fallback.\n"
+        },
+        {
+          "type": "warning",
+          "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+        }
+      ],
+      "failed": [
+        {
+          "url": "https://deploy-preview-1--sj-personalportfolio.netlify.app/sungflix-demo.webm",
+          "failure": {
+            "errorText": "net::ERR_ABORTED"
+          }
+        },
+        {
+          "url": "https://deploy-preview-1--sj-personalportfolio.netlify.app/sungflix-demo.webm",
+          "failure": {
+            "errorText": "net::ERR_ABORTED"
+          }
+        }
+      ],
+      "http": [],
+      "destinations": [
+        {
+          "id": "career",
+          "overflow": false
+        },
+        {
+          "id": "playbook",
+          "overflow": false
+        },
+        {
+          "id": "results",
+          "overflow": false
+        },
+        {
+          "id": "film",
+          "overflow": false
+        },
+        {
+          "id": "work",
+          "overflow": false
+        },
+        {
+          "id": "archive",
+          "overflow": false
+        },
+        {
+          "id": "stack",
+          "overflow": false
+        },
+        {
+          "id": "contact",
+          "overflow": false
+        },
+        {
+          "id": "home",
+          "overflow": false
+        }
+      ],
+      "initial": {
+        "overflow": false,
+        "weather": {
+          "status": "connected",
+          "mode": "live",
+          "outside": true,
+          "night": false,
+          "rain": false,
+          "clouds": false,
+          "sun": 4.2,
+          "hemisphere": 2.2,
+          "temperature": 31.3,
+          "sourceTime": 1792089000
+        },
+        "diagnostics": {
+          "progress": 0,
+          "camera": [
+            20,
+            32,
+            76
+          ],
+          "drawCalls": 732,
+          "triangles": 777162,
+          "contextLost": false
+        },
+        "hero": [
+          {
+            "selector": "intro-hero",
+            "text": "Sung JungI Make Complex Work Feel Simple.I find friction, connect people and systems, and build practical solutions that make everyday work easier.Make the Next Play Easier.Operations · QA · AutomationSee How I Solve ProblemsExplore the Arena",
+            "rect": {
+              "x": 0,
+              "y": 64,
+              "width": 390,
+              "height": 340.71875,
+              "top": 64,
+              "right": 390,
+              "bottom": 404.71875,
+              "left": 0
+            },
+            "font": "16px"
+          },
+          {
+            "selector": "hero-title",
+            "text": "I Make Complex Work Feel Simple.",
+            "rect": {
+              "x": 22,
+              "y": 108.796875,
+              "width": 324,
+              "height": 68.78125,
+              "top": 108.796875,
+              "right": 346,
+              "bottom": 177.578125,
+              "left": 22
+            },
+            "font": "32.76px"
+          },
+          {
+            "selector": "hero-description",
+            "text": "I find friction, connect people and systems, and build practical solutions that make everyday work easier.",
+            "rect": {
+              "x": 22,
+              "y": 191.578125,
+              "width": 324,
+              "height": 69.5625,
+              "top": 191.578125,
+              "right": 346,
+              "bottom": 261.140625,
+              "left": 22
+            },
+            "font": "16px"
+          },
+          {
+            "selector": "hero-actions",
+            "text": "See How I Solve ProblemsExplore the Arena",
+            "rect": {
+              "x": 22,
+              "y": 338.71875,
+              "width": 324,
+              "height": 44,
+              "top": 338.71875,
+              "right": 346,
+              "bottom": 382.71875,
+              "left": 22
+            },
+            "font": "16px"
+          },
+          {
+            "selector": "hero-primary",
+            "text": "See How I Solve Problems",
+            "rect": {
+              "x": 22,
+              "y": 338.71875,
+              "width": 179.09375,
+              "height": 44,
+              "top": 338.71875,
+              "right": 201.09375,
+              "bottom": 382.71875,
+              "left": 22
+            },
+            "font": "13px"
+          },
+          {
+            "selector": "hero-explore",
+            "text": "Explore the Arena",
+            "rect": {
+              "x": 209.09375,
+              "y": 338.71875,
+              "width": 136.90625,
+              "height": 44,
+              "top": 338.71875,
+              "right": 346,
+              "bottom": 382.71875,
+              "left": 209.09375
+            },
+            "font": "13px"
+          }
+        ]
+      },
+      "firstTab": "<a class=\"skip-work\" href=\"#work\">작업 내용으로 바로가기</a>",
+      "primary": true,
+      "explore": true,
+      "reducedMotion": {
+        "matches": true,
+        "progress": 0.14,
+        "contextLost": false
+      }
+    },
+    {
+      "name": "tablet",
+      "width": 768,
+      "height": 1024,
+      "errors": [],
+      "console": [
+        {
+          "type": "error",
+          "text": "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-dH+oOZOdDv+MWU0F8bCZOoFHX0jFM4+bwNqOKujbv90='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked."
+        },
+        {
+          "type": "error",
+          "text": "Framing 'https://app.netlify.com/' violates the following Content Security Policy directive: \"default-src 'none'\". The request has been blocked. Note that 'frame-src' was not explicitly set, so 'default-src' is used as a fallback.\n"
+        },
+        {
+          "type": "warning",
+          "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+        },
+        {
+          "type": "error",
+          "text": "Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-dH+oOZOdDv+MWU0F8bCZOoFHX0jFM4+bwNqOKujbv90='), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked."
+        },
+        {
+          "type": "error",
+          "text": "Framing 'https://app.netlify.com/' violates the following Content Security Policy directive: \"default-src 'none'\". The request has been blocked. Note that 'frame-src' was not explicitly set, so 'default-src' is used as a fallback.\n"
+        },
+        {
+          "type": "warning",
+          "text": "THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead."
+        }
+      ],
+      "failed": [
+        {
+          "url": "https://deploy-preview-1--sj-personalportfolio.netlify.app/sungflix-demo.webm",
+          "failure": {
+            "errorText": "net::ERR_ABORTED"
+          }
+        },
+        {
+          "url": "https://deploy-preview-1--sj-personalportfolio.netlify.app/sungflix-demo.webm",
+          "failure": {
+            "errorText": "net::ERR_ABORTED"
+          }
+        }
+      ],
+      "http": [],
+      "destinations": [
+        {
+          "id": "career",
+          "overflow": false
+        },
+        {
+          "id": "playbook",
+          "overflow": false
+        },
+        {
+          "id": "results",
+          "overflow": false
+        },
+        {
+          "id": "film",
+          "overflow": false
+        },
+        {
+          "id": "work",
+          "overflow": false
+        },
+        {
+          "id": "archive",
+          "overflow": false
+        },
+        {
+          "id": "stack",
+          "overflow": false
+        },
+        {
+          "id": "contact",
+          "overflow": false
+        },
+        {
+          "id": "home",
+          "overflow": false
+        }
+      ],
+      "initial": {
+        "overflow": false,
+        "weather": {
+          "status": "connected",
+          "mode": "live",
+          "outside": true,
+          "night": false,
+          "rain": false,
+          "clouds": false,
+          "sun": 4.2,
+          "hemisphere": 2.2,
+          "temperature": 31.3,
+          "sourceTime": 1792089000
+        },
+        "diagnostics": {
+          "progress": 0,
+          "camera": [
+            20,
+            32,
+            76
+          ],
+          "drawCalls": 737,
+          "triangles": 780170,
+          "contextLost": false
+        },
+        "hero": [
+          {
+            "selector": "intro-hero",
+            "text": "Sung JungI Make Complex Work Feel Simple.I find friction, connect people and systems, and build practical solutions that make everyday work easier.Make the Next Play Easier.Operations · QA · AutomationSee How I Solve ProblemsExplore the Arena",
+            "rect": {
+              "x": 0,
+              "y": 64,
+              "width": 768,
+              "height": 341.125,
+              "top": 64,
+              "right": 768,
+              "bottom": 405.125,
+              "left": 0
+            },
+            "font": "16px"
+          },
+          {
+            "selector": "hero-title",
+            "text": "I Make Complex Work Feel Simple.",
+            "rect": {
+              "x": 22,
+              "y": 108.796875,
+              "width": 520,
+              "height": 92.375,
+              "top": 108.796875,
+              "right": 542,
+              "bottom": 201.171875,
+              "left": 22
+            },
+            "font": "44px"
+          },
+          {
+            "selector": "hero-description",
+            "text": "I find friction, connect people and systems, and build practical solutions that make everyday work easier.",
+            "rect": {
+              "x": 22,
+              "y": 215.171875,
+              "width": 379.5,
+              "height": 46.375,
+              "top": 215.171875,
+              "right": 401.5,
+              "bottom": 261.546875,
+              "left": 22
+            },
+            "font": "16px"
+          },
+          {
+            "selector": "hero-actions",
+            "text": "See How I Solve ProblemsExplore the Arena",
+            "rect": {
+              "x": 22,
+              "y": 339.125,
+              "width": 702,
+              "height": 44,
+              "top": 339.125,
+              "right": 724,
+              "bottom": 383.125,
+              "left": 22
+            },
+            "font": "16px"
+          },
+          {
+            "selector": "hero-primary",
+            "text": "See How I Solve Problems",
+            "rect": {
+              "x": 22,
+              "y": 339.125,
+              "width": 179.09375,
+              "height": 44,
+              "top": 339.125,
+              "right": 201.09375,
+              "bottom": 383.125,
+              "left": 22
+            },
+            "font": "13px"
+          },
+          {
+            "selector": "hero-explore",
+            "text": "Explore the Arena",
+            "rect": {
+              "x": 209.09375,
+              "y": 339.125,
+              "width": 130.859375,
+              "height": 44,
+              "top": 339.125,
+              "right": 339.953125,
+              "bottom": 383.125,
+              "left": 209.09375
+            },
+            "font": "13px"
+          }
+        ]
+      },
+      "firstTab": "<a class=\"skip-work\" href=\"#work\">작업 내용으로 바로가기</a>",
+      "primary": true,
+      "explore": true,
+      "reducedMotion": {
+        "matches": true,
+        "progress": 0.14,
+        "contextLost": false
+      }
+    }
+  ]
+}

@@ -9,7 +9,7 @@ Full-height portrait beside stacked profile, strengths, and playing-style boards
 
 Built-in image editing prompt: preserve facial identity, smile, cap, gold Lakers 77 jersey, basketball and Nike sneakers; replace shorts with black baggy cargo pants; reduce head/cap about 20 percent relative to body, use 7.5–8-head adult proportions, longer legs and slim natural arms; full body visible against subtle purple geometry. Image generation follows this as art direction, not an exact measured anatomical guarantee.
 
-[Notion planning and progress](https://app.notion.com/p/3db5389c4d398165a28ee21d004131c8)
+Historical planning and progress documentation is retained privately and is not included in this public repository.
 
 Local design prototype on `portfolio-v2`. Existing production remains on `master`.
 
