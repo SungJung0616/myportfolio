@@ -1,0 +1,549 @@
+{
+  "changed": [
+    "hero.css",
+    "hero.js"
+  ],
+  "applyHero": "byte-identical",
+  "results": [
+    {
+      "width": 1440,
+      "height": 960,
+      "maxCameraDelta": 0.0000032216711982613333,
+      "railSamples": 14,
+      "navigation": "9 destinations passed",
+      "keyboard": "passed",
+      "overflow": "none",
+      "hero": "fits",
+      "reducedMotion": false,
+      "poses": {
+        "before": [
+          {
+            "p": 0,
+            "camera": [
+              23,
+              18,
+              31
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.13993040221568626,
+            "camera": [
+              2.4000320181055903,
+              5.200021197171297,
+              23.00001556435578
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.26002493928895115,
+            "camera": [
+              0.3000001684263638,
+              2.400000019433811,
+              6.799999520632657
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.3800345907121002,
+            "camera": [
+              1.5999997196470797,
+              2.549999971964708,
+              3.0999952900709373
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.460069356739983,
+            "camera": [
+              1.0999980412316124,
+              2.5,
+              -5.300009793841938
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.5499998899484052,
+            "camera": [
+              4.934275210644046e-12,
+              2.5,
+              -10.79999999997533
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.6399304570857969,
+            "camera": [
+              0,
+              4.599996240435626,
+              -15.199992122817502
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.739930445972613,
+            "camera": [
+              0,
+              3.0000023210493536,
+              -28.999979980949327
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.8300346234834021,
+            "camera": [
+              7.5999896472738975,
+              3.3000014378786253,
+              -36.000008627271754
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.880034661084104,
+            "camera": [
+              -0.00001764726120725687,
+              4.39999823527388,
+              -37.80000323533122
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.9499999143121987,
+            "camera": [
+              -12,
+              3.2,
+              -41.999999999982016
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.9999999352369467,
+            "camera": [
+              -12,
+              3.6,
+              -49.8
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.3800351163669354,
+            "camera": [
+              1.5999997110628845,
+              2.5499999711062884,
+              3.0999951458564596
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 4.167865490256365e-7,
+            "camera": [
+              23.000000000053177,
+              18.000000000079766,
+              31.000000000132943
+            ],
+            "contextLost": false
+          }
+        ],
+        "after": [
+          {
+            "p": 0,
+            "camera": [
+              23,
+              18,
+              31
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.13993039364293255,
+            "camera": [
+              2.4000320259924677,
+              5.200021202392702,
+              23.000015568189678
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.26006930509839743,
+            "camera": [
+              0.300001300364893,
+              2.400000150042103,
+              6.799996298961458
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.38003459086584473,
+            "camera": [
+              1.5999997196445879,
+              2.549999971964459,
+              3.0999952900290753
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.4600693517625844,
+            "camera": [
+              1.0999980415126729,
+              2.5,
+              -5.3000097924366365
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.5499998958586245,
+            "camera": [
+              4.418465593403198e-12,
+              2.5,
+              -10.799999999977908
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.6399304513308204,
+            "camera": [
+              0,
+              4.599996239813521,
+              -15.199992121514043
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.7399304460602381,
+            "camera": [
+              0,
+              3.0000023210435067,
+              -28.999979980999754
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.8300346178797822,
+            "camera": [
+              7.5999896506239155,
+              3.3000014374133446,
+              -36.00000862448007
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.8800346674306906,
+            "camera": [
+              -0.000017653723303251086,
+              4.39999823462767,
+              -37.800003236515934
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.9499999233300054,
+            "camera": [
+              -12,
+              3.2,
+              -41.999999999985604
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.9999999388129786,
+            "camera": [
+              -12,
+              3.6,
+              -49.8
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.38003509519973644,
+            "camera": [
+              1.5999997114110558,
+              2.5499999711411054,
+              3.099995151705734
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 4.164532299269302e-7,
+            "camera": [
+              23.00000000005309,
+              18.000000000079638,
+              31.00000000013273
+            ],
+            "contextLost": false
+          }
+        ]
+      }
+    },
+    {
+      "width": 390,
+      "height": 960,
+      "maxCameraDelta": 0,
+      "railSamples": 14,
+      "navigation": "9 destinations passed",
+      "keyboard": "passed",
+      "overflow": "none",
+      "hero": "fits",
+      "reducedMotion": true,
+      "poses": {
+        "before": [
+          {
+            "p": 0,
+            "camera": [
+              20,
+              32,
+              76
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.14,
+            "camera": [
+              1.5599999999999992,
+              5.199999999999999,
+              27
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.26,
+            "camera": [
+              0.1949999999999999,
+              2.4,
+              6.800000000000001
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.38,
+            "camera": [
+              1.6,
+              2.55,
+              3.1
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.46,
+            "camera": [
+              1.1,
+              2.5,
+              -5.300000000000001
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.55,
+            "camera": [
+              0,
+              2.5,
+              -10.8
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.64,
+            "camera": [
+              0,
+              6.4,
+              -13.8
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.74,
+            "camera": [
+              0,
+              3,
+              -29
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.83,
+            "camera": [
+              7.6,
+              3.3,
+              -36
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.88,
+            "camera": [
+              0,
+              4.4,
+              -37.8
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.95,
+            "camera": [
+              -12,
+              3.2,
+              -42
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 1,
+            "camera": [
+              -12,
+              3.6,
+              -49.8
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.38,
+            "camera": [
+              1.6,
+              2.55,
+              3.1
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0,
+            "camera": [
+              20,
+              32,
+              76
+            ],
+            "contextLost": false
+          }
+        ],
+        "after": [
+          {
+            "p": 0,
+            "camera": [
+              20,
+              32,
+              76
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.14,
+            "camera": [
+              1.5599999999999992,
+              5.199999999999999,
+              27
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.26,
+            "camera": [
+              0.1949999999999999,
+              2.4,
+              6.800000000000001
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.38,
+            "camera": [
+              1.6,
+              2.55,
+              3.1
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.46,
+            "camera": [
+              1.1,
+              2.5,
+              -5.300000000000001
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.55,
+            "camera": [
+              0,
+              2.5,
+              -10.8
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.64,
+            "camera": [
+              0,
+              6.4,
+              -13.8
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.74,
+            "camera": [
+              0,
+              3,
+              -29
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.83,
+            "camera": [
+              7.6,
+              3.3,
+              -36
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.88,
+            "camera": [
+              0,
+              4.4,
+              -37.8
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.95,
+            "camera": [
+              -12,
+              3.2,
+              -42
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 1,
+            "camera": [
+              -12,
+              3.6,
+              -49.8
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0.38,
+            "camera": [
+              1.6,
+              2.55,
+              3.1
+            ],
+            "contextLost": false
+          },
+          {
+            "p": 0,
+            "camera": [
+              20,
+              32,
+              76
+            ],
+            "contextLost": false
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [],
+  "weather": "API blocked equally for deterministic comparison; fallback exercised"
+}
