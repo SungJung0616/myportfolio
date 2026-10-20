@@ -63,3 +63,12 @@
 @media(max-width:850px){#work .build-row-title{gap:15px}#work .build-row-thumbnail{width:68px;height:50px}}
 @media(max-width:540px){#work .build-row-title{gap:12px}#work .build-row-thumbnail{width:60px;height:46px}#work .build-row-title:has(.build-row-thumbnail){font-size:22px}}
 html[data-input=keyboard] #work .build-chevron{transition:none}
+#work .build-featured{position:static;inset:auto;z-index:auto;display:flex;flex-wrap:wrap;gap:4px 24px;margin:24px 0;padding:0;width:auto;background:none;border:0}
+#work .build-featured a{display:inline-flex;align-items:center;min-height:44px;color:#573970;font-size:15px;text-underline-offset:5px}
+#work .build-workflow-context{border-top:1px solid var(--build-rule);padding-top:10px;color:var(--build-muted);font:15px/1.65 'Segoe UI',sans-serif}
+#work .build-workflow-context summary{cursor:pointer;min-height:44px;padding:10px 0}
+#work .build-workflow-context p{max-width:70ch;margin:8px 0 0}
+#work .build-workflow{margin:20px 0;max-width:65ch}
+#work .build-workflow dt{font-weight:650;color:#573970;margin-top:12px}
+#work .build-workflow dd{margin:2px 0 0}
+#work .build-media-description,#work .build-workflow-note{font-size:15px;line-height:1.65;color:var(--build-muted);max-width:70ch;margin-top:16px}

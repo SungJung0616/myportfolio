@@ -5,7 +5,7 @@ import {archive} from './navigation-data.js';
 // src/components/*CaseStudy.js, MyProjects.js, and the existing preview modules.
 // FIX 09B reuses the source audit and verifies Market against its public repository.
 // Notion evidence may inform a sanitized summary without exposing internal documents.
-const caseStudy=slug=>({label:'Case study',url:`https://sj-personalportfolio.netlify.app/case-studies/${slug}`});
+const caseStudy=slug=>({label:'Archived case study',url:`https://sungjung-portfolio-v1.netlify.app/case-studies/${slug}`});
 const github=repo=>({label:'GitHub',url:`https://github.com/SungJung0616/${repo}`});
 const defaults={poster:null,video:null,mediaNote:'Text-led overview, not a product screenshot or demo.',featured:false,role:'',approach:[],implementedScope:[],validation:'',limitations:'',evidence:'',evidenceType:[],evidenceRefs:[],repositoryUrl:null,demoUrl:null,nextMilestone:'',results:null,group:'archive'};
 const professional={film:false,work:true,personal:false};
@@ -58,18 +58,21 @@ const professionalProjects=[
  }),
  record({
   id:'qr',title:'AcrossB Flow QR Helper',type:'Professional workflow · Browser extension',category:'professional',status:'Prototype',demoCandidate:true,
-  statusNote:'Public implementation reviewed. Its equivalence to the version used for reported operational observations is unverified.',
+  statusNote:'Owner-provided recording shows the operational helper selecting rows. Exact equivalence to the public source version remains unverified.',
   description:'Find one matching batch, validate it, and select it deliberately.',
   problem:'Manual batch searches required staff to identify the intended row and verify the selection.',
   technologies:['JavaScript','Chrome Manifest V3','QR text parsing','DOM validation'],featured:true,group:'featured',visibility:screening,
-  role:'The implementation and reported workflow are documented; the exact individual contribution and collaboration scope remain to be confirmed.',
-  approach:['Parse the QR identifier and inspect the displayed work list.','Require exactly one valid match; stop on ambiguity or an incomplete list.','Preview with dry-run by default, then require a deliberate live selection.'],
+  role:'Designed the date-and-batch QR handoff and built the helper for the warehouse workflow, as confirmed by the owner. Detailed code authorship and collaboration scope are not independently verified.',
+  approach:['Print a date-and-batch QR on the packing cover for the shipping team.','Read the identifier and validate the work list before selecting a matching row.','Keep quantity reconciliation and the final work-completion action with the operator.'],
   implementedScope:['QR identifier parsing and visible-list validation.','Dry-run by default; stop for ambiguous or incomplete matches.','Explicit live selection of a validated row with limited undo.'],
-  validation:'Source and historical parser/fake-DOM test records reviewed, not rerun. Physical scanners and operational release equivalence remain unverified.',
-  limitations:'Selects a validated checkbox; it does not submit work, adjust inventory, or complete fulfillment. Physical-scanner and operational behavior are not established by fake-DOM test records. This is a separate product from Label Helper.',
-  evidence:'Public source, parser tests, and historical fake-DOM test records. Reported timing is not an audited benchmark or a claim about every batch.',
+  validation:'Owner recording shows a partial-list warning and subsequent row-selection confirmations. Physical scanner hardware, undo behavior and equivalence to the public source version are not independently verified.',
+  limitations:'The helper selects rows; the operator compares cover quantities with overall quantities and clicks work completion. WMS batch linkage is owner-reported, not demonstrated end-to-end here. No automatic ship-out is claimed. Separate from Label Helper.',
+  evidence:'Public source, historical test records and a cropped, redacted owner recording. The video demonstrates UI behavior, not the reported daily time saving.',
   evidenceType:['Public source','Repository test records','User-reported operational observation'],evidenceRefs:[github('acrossb-flow-qr-helper')],
-  results:{label:'Batch identification and verification time',before:'~20 min',after:'~5 min',note:'User-reported representative task; not independently audited.'},
+  results:{label:'Daily batch organization — approximately 150 batches',before:'~50 min',after:'~20–30 min',note:'Owner-reported workflow comparison; not independently measured. Includes human quantity checks. The short demo is not a benchmark.'},
+  demoVideo:'project-demos/qr-review.webm',posterImage:'project-demos/qr-review.jpg',demoDuration:18,
+  demoCaption:'Real owner recording, cropped and opaquely redacted. Row selection only; quantity checks and work completion remain manual. Prepared for local publication review.',evidenceStatus:'sanitized-user-recording',
+  projectJourney:[{title:'Packing-to-shipping handoff',description:'Owner-reported: date-and-batch QR codes on packing covers replaced visual batch lookup.'},{title:'Observed helper behavior',description:'The supplied recording shows list-validation warnings and successful row selection. It does not show automatic fulfillment.'}],
   links:[github('acrossb-flow-qr-helper')]
  }),
  record({
@@ -133,18 +136,22 @@ const professionalProjects=[
 
 // A distinct resume-reported workflow, not Label Helper or the newer GPS THE DOT app.
 professionalProjects.push(record({
- id:'google-sheets-automation',title:'Google Sheets Automation',type:'Operational workflow · Resume-reported implementation',category:'professional',status:'Prototype',group:'related',visibility:professional,demoCandidate:true,
- description:'Organize operational communications and daily summaries with a bounded Gmail, Google Sheets, and Apps Script workflow.',
- problem:'Operational communications and inbound/outbound information need to become usable daily records.',
- role:'AI-assisted workflow implementation is reported in the career record. Detailed authorship and current implementation version still require confirmation.',
- technologies:['Gmail','Google Sheets','Google Apps Script'],
- implementedScope:['Communication classification and inbound/outbound records reported in the career record.','Daily operational summaries reported in the career record.'],
- approach:[],validation:'Resume-reported implementation; no version-matched public source, sanitized demonstration, or independent runtime check is available.',
- statusNote:'Conservative prototype classification pending implementation evidence. No operational impact metric is claimed.',
- limitations:'This record is distinct from Label Helper browser entry and GPS THE DOT application development. API architecture, unattended behavior, and deployment scope are not established.',
- evidence:'A verified career-record entry describes the bounded workflow. Internal correspondence and Sheets content are withheld.',
- evidenceType:['Career record'],evidenceRefs:[{label:'Career record reviewed; internal operational materials withheld'}],links:[],
- nextMilestone:'Confirm the exact workflow version and provide a sanitized recording using fictional records.',
+ id:'google-sheets-automation',title:'Google Sheets Packing Cover Automation',type:'Operational workflow · Packing preparation',category:'professional',status:'Prototype',group:'related',visibility:professional,demoCandidate:true,
+ description:'Prepare packing covers with SKU quantities, box guidance and a date-and-batch QR for the shipping handoff.',
+ problem:'Packers needed an accurate cover for each batch. Repeatedly copying SKU quantities and checking label details created manual work and opportunities for error.',
+ role:'Built the packing-cover workflow and automated SKU-combination box guidance with Apps Script, as confirmed by the owner. Detailed code authorship and collaboration scope are not independently verified.',
+ technologies:['Google Sheets','Google Apps Script'],
+ implementedScope:['Packing covers contain SKU quantities and the last four digits of shipment labels, as described by the owner.','Apps Script supplies box guidance for SKU combinations, reducing repeated copy-and-paste.','Printed date-and-batch QR codes prepare the handoff to the QR selection helper.'],
+ approach:['Bring batch information into the packing-cover worksheet.','Use SKU combinations for box guidance; resolve unknown combinations manually.','Print the cover and QR, then reconcile quantities before manually completing work in the shipping workflow.'],
+ validation:'The owner recording shows worksheet updates and box-size exception handling. The full source and data-transfer mechanism were not inspected. Script-running/completion messages occur in the original, outside this shortened public-review excerpt.',
+ statusNote:'Operational use is owner-reported. The redacted recording illustrates the worksheet, not end-to-end correctness or a measured speed improvement.',
+ limitations:'PDF compatibility is an owner-reported constraint; its exact scope needs clarification. Only the last four shipment-label digits are recorded. Gmail classification and daily-summary behavior are not demonstrated by this recording and are not claimed here. Separate from Label Helper and GPS THE DOT.',
+ evidence:'Owner workflow clarification and real recording. All operational values and QR payloads are masked in the local review copy; original recordings remain private.',
+ evidenceType:['Owner-provided recording','Owner workflow clarification'],evidenceRefs:[{label:'Private source recording reviewed; public-review copy is cropped and redacted'}],links:[],
+ demoVideo:'project-demos/packing-review.webm',posterImage:'project-demos/packing-review.jpg',demoDuration:10,
+ demoCaption:'Real owner recording with operational fields masked. Packing-cover excerpt; explanatory captions include owner-reported architecture. Prepared for local publication review.',evidenceStatus:'sanitized-user-recording',
+ projectJourney:[{title:'Repeated packing preparation',description:'Owner-reported: covers were assembled for packers with SKU quantities and shipment-label suffixes.'},{title:'Structured packing cover',description:'Apps Script box guidance and a date-and-batch QR connect preparation to the shipping helper. Full end-to-end execution is not independently verified.'}],
+ nextMilestone:'Approve the redacted local demo and clarify the PDF compatibility constraint before publication.',
 }));
 
 const newPersonalProjects=[
@@ -377,7 +384,7 @@ const legacyProjects=archive.map(item=>{
   limitations:'No additional implementation, ownership, or outcome claims are inferred from the catalog entry.',
   evidence:'Existing portfolio project record.',
   evidenceType:['Existing portfolio record'],evidenceRefs:[item.link&&{label:'Existing project source',url:item.link}].filter(Boolean),
-  links:[item.link&&{label:'GitHub',url:item.link},item.liveLink&&{label:'Visit project',url:item.liveLink},item.caseStudy&&{label:'Case study',url:`https://sj-personalportfolio.netlify.app${item.caseStudy}`}].filter(Boolean),
+  links:[item.link&&{label:'GitHub',url:item.link},item.liveLink&&{label:'Visit project',url:item.liveLink},item.caseStudy&&{label:'Archived case study',url:`https://sungjung-portfolio-v1.netlify.app${item.caseStudy}`}].filter(Boolean),
   ...extra
  });
 });
@@ -398,6 +405,47 @@ projects.forEach(project=>{
 });
 export const getProject=id=>projects.find(project=>project.id===id);
 // One session selection shared by the immersive and editorial views.
+// RC1: related operational tools, not an asserted technical integration.
+export const featuredAutomationIds=['google-sheets-automation','label','qr'];
+export const automationContext='Historical owner-reported observation: approximately 150 batches per day; broader daily preparation reportedly decreased from about 50 minutes manually to 20–30 minutes using the tools. Measurement period and methodology are unverified. This is not a QR-only result, a recording-duration benchmark, or proof that the tools are technically integrated.';
+const journalBase='https://github.com/SungJung0616/myportfolio/blob/30805a89fa6007db7a23f8f104f58a7174354a12/docs/portfolio-2/engineering-journal/';
+const journalRefs=[{label:'Portfolio engineering: shared evidence and media policy (FIX 09; not an automation-tool test)',url:journalBase+'FIX-09.md'},{label:'Portfolio engineering: selection synchronization and STEP 03B packaging (not warehouse validation)',url:journalBase+'FIX-10.md#step-03b--film-viewing-interval-and-preview-packaging'}];
+const stories={
+ 'google-sheets-automation':{
+  previous:'Prepare a batch, print its shipment labels, and repeatedly copy SKU quantities and label suffixes into a cover for packers.',
+  demonstrated:'The private source shows worksheet updates, box guidance and script status. The approved excerpt keeps only the redacted worksheet. Hidden values and end-to-end correctness cannot be checked from that excerpt.',
+  flow:{Input:'Batch information, SKU quantities and shipment-label suffixes.',Processing:'Packing-cover preparation and owner-reported Apps Script box guidance. Parsing sources and algorithms are not verified.',Output:'A packing cover with box guidance and date/batch QR information; printing is not guaranteed by this demonstration.','Human verification':'Check SKU quantities, correct unknown box sizes, and review the cover, label suffixes and QR before use.'},
+  human:'The operator confirms the batch, SKU quantities, box choice and printed cover. PDF compatibility is an owner-reported constraint whose exact scope remains unverified.',
+  outcome:'Less repeated preparation is owner-reported; no separate measured saving is attributed to this tool. See the broader daily workflow context above.'
+ },
+ label:{
+  previous:'Managers transferred selected batch information into the label worksheet by hand, then reviewed the cover before printing.',
+  demonstrated:'The public source prepares writes to designated Sheets cells through browser interaction. The original packing recording includes this wider workflow, but the current heavily cropped excerpt is not a legible standalone demonstration of the extension.',
+  flow:{Input:'Selected, rendered batch rows and their displayed fields.',Processing:'Validate the target and prepare permitted cell writes through browser interaction, not the Sheets API.',Output:'Worksheet input actions and status feedback; not a verified saved or printed label.','Human verification':'Confirm compatible batch selection, inspect final saved values, and review cover, shipment labels and QR before printing.'},
+  human:'Do not assume partial writes roll back. Inspect and correct the worksheet after errors; final save and print success require human review.',
+  outcome:'Historical owner-reported error reduction is shown below with its original uncertainty. No independent benchmark or zero-error guarantee exists.'
+ },
+ qr:{
+  previous:'Locate batch numbers visually in the work list and compare the intended batch and quantities before completing work.',
+  demonstrated:'The source recording shows a partial-list warning and later selection confirmations. The redacted excerpt preserves selection indicators, not readable live identifiers or a physical scanner test.',
+  flow:{Input:'Date/batch QR text and the displayed work list.',Processing:'The reviewed public version validates the list and exact match; dry-run previews a match without selecting. Operational behavior is recorded separately and version equivalence is unverified.',Output:'A match result or a selected row and activity feedback, not automatic fulfillment.','Human verification':'Confirm the batch and reconcile cover quantities with overall quantities, then explicitly click work completion.'},
+  human:'The helper selects rows only. The operator owns quantity reconciliation and final completion. WMS batch linkage is owner-reported, not verified end-to-end here.',
+  outcome:'The recording supports row-selection assistance, not a QR-only time-saving metric. The broader daily workflow observation is reported once above.'
+ }
+};
+for(const id of featuredAutomationIds){
+ const project=projects.find(p=>p.id===id);project.caseStudy=stories[id];
+ project.role=id==='google-sheets-automation'?'Defined the packing-cover requirements and built the owner-described Apps Script box guidance with AI-assisted development. Detailed authorship and the full script implementation are not independently verified.':'Defined the operational problem, workflow requirements, decisions and human acceptance checks, with AI-assisted development. Exact individual code authorship and public/operational release equivalence are not independently verified.';
+ project.evidenceRefs=[...(project.evidenceRefs||[]),...journalRefs];
+ project.projectJourney?.forEach(step=>{step.state=step.title==='Observed helper behavior'?'recording-observed':'owner-reported';});
+ if(id==='google-sheets-automation')project.demoCaption='Batch information → cover preparation → worksheet output → human cover and QR review. Real redacted excerpt; hidden values are not validated.';
+ if(id==='qr')project.demoCaption='Date/batch identifier → list validation → row selection → human quantity check and completion. Real redacted excerpt, not automatic ship-out.';
+}
+const qrProject=projects.find(p=>p.id==='qr');qrProject.results=null;
+const labelProject=projects.find(p=>p.id==='label');
+labelProject.results.note='Historical owner report per approximately 150 batches. Measurement period, methodology and version equivalence are unverified; not independently benchmarked.';
+labelProject.statusNote='Public-source browser input workflow; operational/public version equivalence is unverified. Final saved values and print output remain human checks.';
+// Keep the intended representative order in Film as well as Work without new IDs.
 let selectedProjectId=null;
 export const getSelectedProject=()=>getProject(selectedProjectId);
 export function selectProject(id,origin){
@@ -411,5 +459,5 @@ export const demoCandidates=['qr','google-sheets-automation','label','return-sca
 // One scrollable selector: adding a project does not displace existing selections.
 // Screenshots and reviewed demos resolve to the same records used by Work.
 const readyDemos=demoCandidates.filter(p=>p.demoVideo&&p.evidenceStatus==='sanitized-user-recording').map(p=>p.id);
-export const filmProjects=[...new Set([...readyDemos,'sungflix','dice','coupang','label','qr','portfolio','memorial','simon-game','hand-battle'])].map(getProject);
+export const filmProjects=[...new Set([...featuredAutomationIds,...readyDemos,'sungflix','dice','coupang','label','qr','portfolio','memorial','simon-game','hand-battle'])].map(getProject);
 projects.forEach(p=>{p.visibility={...p.visibility,work:true,film:filmProjects.includes(p)};});

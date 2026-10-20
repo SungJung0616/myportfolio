@@ -58,4 +58,11 @@ P2-03 letters and later FIX numbers are different workstreams, not equivalent ve
 
 ## Next use
 
+### RC1 supplement
+
+[RC1 — Content clarity and production readiness](RC1-CONTENT-AND-RELEASE.md), recorded
+2026-10-20, documents the locally implemented content and isolated production
+packaging after `30805a8`. It preserves the historical entries above. Local checks
+are not automation-tool certification, PR inclusion, or a hosted V2 deployment.
+
 The approved accumulated baseline is now identifiable as `2fd0304`. Keep future entries small: problem, decision, changed paths, verification result, limitations, and exact commit/PR/deployment references when independently checked. Do not convert the reconstructed entries into invented historical commits.

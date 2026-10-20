@@ -1,11 +1,13 @@
-// Deploy Preview packaging only. Canonical source and the production build stay untouched.
+// Isolated V2 outputs. Canonical sources and the V1 archive stay untouched.
 const fs = require('node:fs');
 const path = require('node:path');
 
 const root = path.resolve(__dirname, '..');
 const hero = path.join(root, 'preview/v0304-p2-hero-cta');
 const playbook = path.join(root, 'preview/p2-03b-playbook');
-const output = path.join(root, '.netlify/portfolio-2-preview');
+const production = process.argv.includes('--production');
+const outputName = production ? 'portfolio-2-production' : 'portfolio-2-preview';
+const output = path.join(root, '.netlify', outputName);
 const checkOnly = process.argv.includes('--check');
 
 // Explicit runtime allowlist: no QA captures, development notes, or disabled demo video.
@@ -27,13 +29,19 @@ const heroFiles = [
   'project-images/portfolio-2.jpg', 'project-images/remembering-young-hoon.jpg',
   'project-images/shopping.png', 'project-images/simon-game.png',
   'project-images/tasks.png', 'project-images/weather-app.png',
+  'project-demos/packing-review.webm', 'project-demos/packing-review.jpg',
+  'project-demos/qr-review.webm', 'project-demos/qr-review.jpg',
 ];
 const playbookFiles = ['index.html', 'prototype.css', 'prototype.js', 'coupang.js', 'interaction.js'];
 const files = [
   ...heroFiles.map(file => ({source: path.join(hero, file), target: file})),
   ...playbookFiles.map(file => ({source: path.join(playbook, file), target: `p2-03b-playbook/${file}`})),
+  {source:path.join(root,'public/resume/Sung_Jung_Resume.pdf'),target:'resume/Sung_Jung_Resume.pdf'},
 ];
 const targets = new Set(files.map(file => file.target));
+targets.add('_redirects');
+const legacyRoutes=['eternights-qa','gps-order-automation','gps-3pl-operations','layrd-operations','market-intelligence-lab','remembering-young-hoon'];
+const redirects=legacyRoutes.map(slug=>`/case-studies/${slug} https://sungjung-portfolio-v1.netlify.app/case-studies/${slug} 302`).join('\n')+'\n';
 let totalBytes = 0;
 
 function requireTarget(reference, base) {
@@ -71,7 +79,7 @@ if (!checkOnly) {
   // Clean only this generated preview. Unknown files or redirected paths require review.
   const parent = path.join(root, '.netlify');
   const canonicalParent = path.join(fs.realpathSync(root), '.netlify');
-  if (path.relative(root, output) !== path.join('.netlify', 'portfolio-2-preview')) {
+  if (path.relative(root, output) !== path.join('.netlify', outputName)) {
     throw new Error('Unexpected preview output path.');
   }
   if (fs.existsSync(parent)) {
@@ -96,7 +104,7 @@ if (!checkOnly) {
   }
   if (fs.existsSync(output)) {
     inspectOutput();
-    if (fs.realpathSync(output) !== path.join(canonicalParent, 'portfolio-2-preview')) {
+    if (fs.realpathSync(output) !== path.join(canonicalParent, outputName)) {
       throw new Error('Preview output resolves outside its designated build directory.');
     }
     const canonicalOutput = fs.realpathSync(output);
@@ -112,8 +120,23 @@ if (!checkOnly) {
     const destination = path.join(output, file.target);
     fs.mkdirSync(path.dirname(destination), {recursive: true});
     fs.copyFileSync(file.source, destination, fs.constants.COPYFILE_EXCL);
+    if(['hero.js','navigation.js'].includes(file.target)){
+      // Source-folder preview retains its existing working public PDF link;
+      // both deployable outputs use their bundled canonical PDF instead.
+      const text=fs.readFileSync(destination,'utf8').replaceAll('https://sj-personalportfolio.netlify.app/resume/Sung_Jung_Resume.pdf','/resume/Sung_Jung_Resume.pdf');
+      fs.writeFileSync(destination,text);
+    }
+    if(production&&file.target==='index.html'){
+      let html=fs.readFileSync(destination,'utf8').replace('<meta name="robots" content="noindex,nofollow">','<meta name="robots" content="index,follow">').replace("Sung's home court — UI Preview",'Sung Jung — Operations, QA & Automation');
+      fs.writeFileSync(destination,html);
+    }
+    if(production&&file.target==='_headers'){
+      fs.writeFileSync(destination,fs.readFileSync(destination,'utf8').replace(/^\s*X-Robots-Tag:.*\r?\n/gm,''));
+    }
+    if(production&&file.target==='robots.txt')fs.writeFileSync(destination,'User-agent: *\nAllow: /\n');
   }
+  fs.writeFileSync(path.join(output,'_redirects'),redirects,{flag:'wx'});
 }
-console.log(`${checkOnly ? 'Validated' : 'Packaged'} ${files.length} runtime files (${totalBytes} bytes).`);
-console.log('Publish directory: .netlify/portfolio-2-preview');
+console.log(`${checkOnly ? 'Validated' : 'Packaged'} ${targets.size} runtime/config files (${totalBytes} canonical bytes plus generated redirects).`);
+console.log(`Publish directory: .netlify/${outputName}`);
 console.log(`Playbook URL: ${new URL(iframe[1], 'https://preview.invalid/').pathname}`);

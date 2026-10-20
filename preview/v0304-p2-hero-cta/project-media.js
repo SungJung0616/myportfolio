@@ -87,7 +87,12 @@ export function createProjectMediaFigure(project, {className='', owner='work'} =
     content.alt=project.title+' — existing project screenshot';content.loading='lazy';
     content.onerror=()=>fallback('The project image is unavailable. Read the documented scope below.');
   }
-  figure.append(content,caption);return figure;
+  figure.append(content,caption);
+  if(project.caseStudy){
+    const description=document.createElement('p');description.className='build-media-description';
+    description.textContent=project.caseStudy.demonstrated;figure.append(description);
+  }
+  return figure;
 }
 if(typeof document!=='undefined'){
   document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseProjectMedia();});

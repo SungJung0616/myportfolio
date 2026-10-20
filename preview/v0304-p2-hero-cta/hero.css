@@ -16,5 +16,7 @@
 #intro-hero .hero-actions :focus-visible{outline:3px solid #34243f;outline-offset:4px}
 @media(hover:hover){#intro-hero .hero-primary:hover{background:#50316d}#intro-hero .hero-explore:hover{background:#e8dfed}}
 /* Tablet-only editorial placement; scene and camera remain unchanged. */
+#intro-hero .hero-utility{display:flex;flex-basis:100%;gap:20px}
+#intro-hero .hero-utility a{min-height:44px;padding:8px 0;border:0;border-radius:0;color:#573970;font-size:13px;text-decoration:underline;text-underline-offset:4px}
 @media(max-width:799px){#intro-hero{min-height:0;padding-top:18px;padding-bottom:22px}#intro-hero .hero-name{margin-bottom:10px}#intro-hero .hero-description{margin-top:14px;line-height:1.45}#intro-hero .hero-philosophy{margin-top:14px}#intro-hero .hero-specialty{margin-top:6px}#intro-hero .hero-actions{margin-top:16px;gap:8px}#intro-hero .hero-actions a,#intro-hero .hero-actions button{min-height:44px;font-size:13px;padding:10px 12px}}
 @media(min-width:600px) and (max-width:799px){#intro-hero{padding-top:clamp(66px,10.5vh,110px);padding-left:32px;padding-right:48px}}

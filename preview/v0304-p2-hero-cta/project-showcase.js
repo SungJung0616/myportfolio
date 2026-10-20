@@ -1,4 +1,4 @@
-import {projects, selectProject} from './project-catalog.js';
+import {projects, featuredAutomationIds, automationContext, selectProject} from './project-catalog.js';
 import {createProjectMediaFigure, projectMedia, pauseProjectMedia, releaseMediaWithin} from './project-media.js';
 
 const style = document.createElement('link');
@@ -40,9 +40,10 @@ function bullets(parent, title, items) {
 }
 function evidenceSection(project) {
   const section = element('div', 'build-detail-evidence');
-  if (project.results) section.append(element('h3', '', 'Reported outcome'), metric(project));
+  if (project.caseStudy) paragraph(section,'Outcome',project.caseStudy.outcome);
+  if (project.results) section.append(element('h3', '', project.caseStudy?'Historical reported outcome':'Reported outcome'), metric(project));
   paragraph(section, 'Evidence', project.evidence);
-  paragraph(section, 'Validation & use', project.validation || project.statusNote);
+  paragraph(section, project.caseStudy?'Verification':'Validation & use', project.validation || project.statusNote);
   const scope = element('details', 'build-scope');
   scope.append(element('summary', '', 'Scope & limitations'), element('p', '', project.limitations));
   if (project.evidenceRefs?.length) {
@@ -67,7 +68,18 @@ function projectContent(project) {
   else if(project.demoCandidate)detailBody.append(element('p','build-demo-pending','Demo recording pending. No video has been supplied and cleared for public use.'));
   const story = element('div', 'build-detail-story'), narrative = element('div');
   const learning = project.group === 'learning', building = project.group === 'building';
-  if (learning) {
+  if (project.caseStudy) {
+    paragraph(narrative,'Problem',project.problem);
+    paragraph(narrative,'My responsibility',project.role);
+    paragraph(narrative,'Previous workflow',project.caseStudy.previous);
+    bullets(narrative,'Solution & technical decisions',project.approach);
+    paragraph(narrative,'Demonstrated workflow',project.caseStudy.demonstrated);
+    narrative.append(element('p','build-workflow-note','Workflow explanation — not additional recording evidence or proof of technical integration.'));
+    const flow=element('dl','build-workflow');
+    for(const [label,value]of Object.entries(project.caseStudy.flow))flow.append(element('dt','',label),element('dd','',value));
+    narrative.append(flow);
+    paragraph(narrative,'Human controls',project.caseStudy.human);
+  } else if (learning) {
     paragraph(narrative, 'The experiment', project.problem);
     bullets(narrative, 'What exists', project.implementedScope);
     paragraph(narrative, 'Next step', project.nextMilestone);
@@ -87,7 +99,7 @@ function projectContent(project) {
   if(project.projectJourney?.length){
     const journey=element('div','build-journey');journey.append(element('h3','','Project Journey'));
     const steps=element('ol');
-    const labels={'verified-implementation':'Source-verified implementation','user-described-learning':'User-described learning','planned-evidence':'Planned evidence','future-plan':'Future plan'};
+    const labels={'verified-implementation':'Source-verified implementation','user-described-learning':'User-described learning','owner-reported':'Owner-reported context','recording-observed':'Observed in private source recording','planned-evidence':'Planned evidence','future-plan':'Future plan'};
     project.projectJourney.forEach(step=>{
       const item=element('li');item.dataset.state=step.state;
       item.append(element('span','build-journey-state',labels[step.state]||'Not yet verified'),element('h4','',step.title),element('p','',step.description));steps.append(item);
@@ -124,8 +136,13 @@ export function openWorkProject(id,{origin='work',returnToFilm}={}){
 export const openProjectDetail=openWorkProject;
 export function createProjectShowcase(section){
  const intro=element('header','build-intro');intro.append(element('h2','',"Things I've Built."),element('p','','Practical tools, ongoing work, and experiments. Open a project to explore its purpose, implementation, and evidence.'));
+ const featured=element('nav','build-featured');featured.setAttribute('aria-label','Featured automation projects');
+ featuredAutomationIds.forEach(id=>{const p=projects.find(p=>p.id===id);const a=element('a','',p.title);a.href='#work-'+id;featured.append(a);});
+ const context=element('details','build-workflow-context');context.append(element('summary','','The broader daily workflow — reported context'),element('p','',automationContext));
+ intro.append(featured,context);
  const index=element('div','build-project-index');announcement=element('p','build-selection-announcement');announcement.setAttribute('role','status');
- projects.forEach((project,i)=>{
+ const ordered=[...featuredAutomationIds.map(id=>projects.find(p=>p.id===id)),...projects.filter(p=>!featuredAutomationIds.includes(p.id))];
+ ordered.forEach((project,i)=>{
   const article=element('article','build-project-row');article.id='work-'+project.id;
   const heading=element('h3','build-row-heading'),button=element('button','build-row-toggle');button.type='button';button.id='project-toggle-'+project.id;button.dataset.project=project.id;
   button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls','project-panel-'+project.id);
