@@ -9,6 +9,8 @@ const production = process.argv.includes('--production');
 const outputName = production ? 'portfolio-2-production' : 'portfolio-2-preview';
 const output = path.join(root, '.netlify', outputName);
 const checkOnly = process.argv.includes('--check');
+// Explicit local review opt-in; normal Netlify builds retain the approved public PDF.
+const resumeCandidate = process.argv.includes('--resume-candidate');
 
 // Explicit runtime allowlist: no QA captures, development notes, or disabled demo video.
 const heroFiles = [
@@ -36,7 +38,7 @@ const playbookFiles = ['index.html', 'prototype.css', 'prototype.js', 'coupang.j
 const files = [
   ...heroFiles.map(file => ({source: path.join(hero, file), target: file})),
   ...playbookFiles.map(file => ({source: path.join(playbook, file), target: `p2-03b-playbook/${file}`})),
-  {source:path.join(root,'public/resume/Sung_Jung_Resume.pdf'),target:'resume/Sung_Jung_Resume.pdf'},
+  {source:path.join(root,resumeCandidate?'resume/Sung_Jung_Business_Systems_Resume.pdf':'public/resume/Sung_Jung_Resume.pdf'),target:'resume/Sung_Jung_Resume.pdf'},
 ];
 const targets = new Set(files.map(file => file.target));
 targets.add('_redirects');
@@ -127,7 +129,8 @@ if (!checkOnly) {
       fs.writeFileSync(destination,text);
     }
     if(production&&file.target==='index.html'){
-      let html=fs.readFileSync(destination,'utf8').replace('<meta name="robots" content="noindex,nofollow">','<meta name="robots" content="index,follow">').replace("Sung's home court — UI Preview",'Sung Jung — Operations, QA & Automation');
+      let html=fs.readFileSync(destination,'utf8').replace('<meta name="robots" content="noindex,nofollow">','<meta name="robots" content="index,follow">').replace("Sung's home court — UI Preview",'Sung Jung — Business Systems & Process Improvement');
+      html=html.replace('</head>','<meta name="description" content="Operations and QA professional translating workflow problems into practical system improvements through requirements analysis, stakeholder collaboration, automation, and validation."><link rel="canonical" href="https://sj-personalportfolio.netlify.app/"><meta property="og:type" content="website"><meta property="og:title" content="Sung Jung — Business Systems &amp; Process Improvement"><meta property="og:description" content="Business systems, process improvement, and practical automation grounded in operations and QA."><meta property="og:url" content="https://sj-personalportfolio.netlify.app/"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Sung Jung — Business Systems &amp; Process Improvement"></head>');
       fs.writeFileSync(destination,html);
     }
     if(production&&file.target==='_headers'){

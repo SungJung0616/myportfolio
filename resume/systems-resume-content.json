@@ -1,0 +1,57 @@
+{
+  "name": "Sung Jung",
+  "headline": "Business Systems | Operations Systems | Process Improvement",
+  "contact": "Gardena, CA | 949-300-1641 | sungjung0616@gmail.com",
+  "links": [["LinkedIn", "https://www.linkedin.com/in/sungjung0616/"], ["Portfolio", "https://sj-personalportfolio.netlify.app/"], ["GitHub", "https://github.com/SungJung0616"]],
+  "summary": "Operations and QA professional translating warehouse and software workflows into practical system improvements. Experience in operational requirements, workflow analysis, stakeholder coordination, data validation, and release testing. Uses AI-assisted development and automation to reduce repetitive work while retaining human review and exception handling.",
+  "competencies": "Workflow analysis | Operational requirements | Process improvement | Stakeholder coordination | Work instructions | Data validation | Exception management | Defect reproduction | Regression testing | Fix verification",
+  "roles": [
+    {
+      "title": "Senior Operations Manager", "employer": "GPS Logix", "location": "Compton, CA", "dates": "2024 - Present",
+      "bullets": [
+        "Helped establish account-specific locations, picking and packing workflows, and work instructions across Extensiv WMS and Workpad OMS for a warehouse receiving approximately 10,000 orders daily.",
+        "Translated packing-floor constraints into operational requirements and coordinated with account stakeholders and AcrossB developers. Following a customer-led Workpad SKU-grouping update, addressed remaining information-transfer bottlenecks.",
+        "Used AI-assisted development to streamline packing-cover data transfer into Google Sheets and SKU-combination box guidance, with operators verifying shipment information before releasing batches to packing.",
+        "Refined screen clicks into a keyboard shortcut mapped to a programmable Logitech mouse button; addressed Korean/English information-retrieval inconsistencies with AI assistance.",
+        "Contributed to broader documentation and label-printing improvements that reduced daily work from approximately 180-200 to 150 minutes, an estimated 30-50 minutes saved based on operational experience.",
+        "Created a separate AI-assisted Gmail, Google Sheets and Apps Script workflow for daily operational summaries; developed a scanner-assisted returns intake workflow with item review before submission."
+      ]
+    },
+    {
+      "title": "QA Engineer", "employer": "Studio Sai", "location": "Remote from South Korea", "dates": "Dec 2021 - May 2024",
+      "bullets": [
+        "Supported Eternights development and PlayStation release QA through gameplay, functional, regression, localization, and release-focused testing.",
+        "Authored reproducible defect reports, clarified expected behavior with developers, and verified fixes through targeted regression checks.",
+        "Shortened a recurring regression workflow from approximately 8 hours to 4 by using developer-provided save states and checkpoints to reach targeted test scenarios.",
+        "Used Unity Test Framework features within the existing development environment for UI-focused validation alongside manual testing."
+      ]
+    },
+    {
+      "title": "Database Manager", "employer": "GPS Logix", "location": "Carson, CA", "dates": "Jun 2016 - Nov 2021", "pageBreak": true,
+      "bullets": [
+        "Analyzed recurring Coupang order preparation and implemented Python/openpyxl automation for field mapping, normalization, validation, and upload-ready shipping data.",
+        "Reduced daily order preparation from approximately 3 hours to 30 minutes based on operational observation, with exception review and final upload retained as manual controls.",
+        "Validated customs and contact fields, normalized postal and product data, handled options and bundle quantities, and separated incomplete or suspicious records for review. Helped strengthen pre-shipment address and customs-document checks."
+      ]
+    },
+    {
+      "title": "Owner - Operations & Systems (Part-time)", "employer": "LAYRD", "location": "Los Angeles, CA", "dates": "Jul 2025 - Present",
+      "bullets": [
+        "Co-own and help operate a Shopify home and tableware business, managing storefront systems, shipping-label workflows, fulfillment support, returns, and business administration with a partner.",
+        "Configure and troubleshoot domain, storefront, and shipping settings; maintain transaction and expense records for CPA review.",
+        "Completed trademark registration using AI-assisted research; support local consignment and customer-pickup partnerships with CLAEDO and Baking Room."
+      ]
+    }
+  ],
+  "projects": [
+    {"name": "AcrossB Flow QR Helper", "text": "Defined batch-identification requirements and human controls with AI-assisted development. The helper validates and selects work rows; operators reconcile quantities and complete work.", "url": "https://github.com/SungJung0616/acrossb-flow-qr-helper"},
+    {"name": "Remembering Young Hoon", "text": "Led requirements, bilingual submission-review workflows, administrative access decisions, AWS setup, validation, and deployment using AI-assisted development.", "url": "https://remembering-young-hoon.netlify.app/"}
+  ],
+  "skills": [
+    "Operational systems: Extensiv WMS, Workpad OMS, Excel, Google Sheets, Shopify; ECOUNT ERP (basic).",
+    "Automation and QA: Python/openpyxl; AI-assisted JavaScript and Google Apps Script; browser DOM workflows; manual, regression and localization testing; Unity Test Framework use.",
+    "Project experience: Git/GitHub, HTML/CSS, React and Node.js; AWS configuration and deployment with AI-assisted development; Selenium project work. SQL: basic knowledge."
+  ],
+  "education": "B.S. in Computer Science, California State University, Northridge",
+  "certifications": "ISTQB Certified Tester - Foundation Level; ISTQB Agile Tester; Microsoft Office Specialist"
+}

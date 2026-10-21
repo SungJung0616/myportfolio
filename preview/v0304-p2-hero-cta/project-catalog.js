@@ -69,7 +69,7 @@ const professionalProjects=[
   limitations:'The helper selects rows; the operator compares cover quantities with overall quantities and clicks work completion. WMS batch linkage is owner-reported, not demonstrated end-to-end here. No automatic ship-out is claimed. Separate from Label Helper.',
   evidence:'Public source, historical test records and a cropped, redacted owner recording. The video demonstrates UI behavior, not the reported daily time saving.',
   evidenceType:['Public source','Repository test records','User-reported operational observation'],evidenceRefs:[github('acrossb-flow-qr-helper')],
-  results:{label:'Daily batch organization — approximately 150 batches',before:'~50 min',after:'~20–30 min',note:'Owner-reported workflow comparison; not independently measured. Includes human quantity checks. The short demo is not a benchmark.'},
+  results:null,
   demoVideo:'project-demos/qr-review.webm',posterImage:'project-demos/qr-review.jpg',demoDuration:18,
   demoCaption:'Real owner recording, cropped and opaquely redacted. Row selection only; quantity checks and work completion remain manual. Prepared for local publication review.',evidenceStatus:'sanitized-user-recording',
   projectJourney:[{title:'Packing-to-shipping handoff',description:'Owner-reported: date-and-batch QR codes on packing covers replaced visual batch lookup.'},{title:'Observed helper behavior',description:'The supplied recording shows list-validation warnings and successful row selection. It does not show automatic fulfillment.'}],
@@ -407,7 +407,8 @@ export const getProject=id=>projects.find(project=>project.id===id);
 // One session selection shared by the immersive and editorial views.
 // RC1: related operational tools, not an asserted technical integration.
 export const featuredAutomationIds=['google-sheets-automation','label','qr'];
-export const automationContext='Historical owner-reported observation: approximately 150 batches per day; broader daily preparation reportedly decreased from about 50 minutes manually to 20–30 minutes using the tools. Measurement period and methodology are unverified. This is not a QR-only result, a recording-duration benchmark, or proof that the tools are technically integrated.';
+export const featuredWorkIds=['google-sheets-automation','qr','eternights','coupang'];
+export const automationContext='Across broader daily documentation and label printing, estimated time decreased from 180–200 minutes to about 150 minutes per day: roughly 30–50 minutes saved. This operational estimate covers several workflow improvements, not the performance of any one tool. The broader warehouse receives approximately 10,000 daily orders; this is not an individual tool capacity.';
 const journalBase='https://github.com/SungJung0616/myportfolio/blob/30805a89fa6007db7a23f8f104f58a7174354a12/docs/portfolio-2/engineering-journal/';
 const journalRefs=[{label:'Portfolio engineering: shared evidence and media policy (FIX 09; not an automation-tool test)',url:journalBase+'FIX-09.md'},{label:'Portfolio engineering: selection synchronization and STEP 03B packaging (not warehouse validation)',url:journalBase+'FIX-10.md#step-03b--film-viewing-interval-and-preview-packaging'}];
 const stories={
@@ -446,6 +447,67 @@ const labelProject=projects.find(p=>p.id==='label');
 labelProject.results.note='Historical owner report per approximately 150 batches. Measurement period, methodology and version equivalence are unverified; not independently benchmarked.';
 labelProject.statusNote='Public-source browser input workflow; operational/public version equivalence is unverified. Final saved values and print output remain human checks.';
 // Keep the intended representative order in Film as well as Work without new IDs.
+
+// Approved owner-confirmed positioning. IDs, source links and media paths stay intact.
+const packing=getProject('google-sheets-automation');
+Object.assign(packing,{
+ title:'Batch Preparation & Packing Cover Workflow',
+ description:'Improve the information handoff from batch preparation to physical packing.',
+ problem:'At approximately 10,000 daily orders across the warehouse, batch processing kept packing stations manageable. Handwritten instructions evolved into structured covers, but repeated information transfer into Google Sheets remained.',
+ role:'I defined the operational problem and requirements, coordinated workflow changes, and used AI-assisted development to improve information transfer and usability.',
+ approach:['Use structured covers for operational identification, SKU quantities, box preparation and QR information.','Improve repeated transfer into Google Sheets; address Korean/English retrieval inconsistencies with AI assistance.','Refine on-screen clicks into a keyboard shortcut mapped to a programmable Logitech mouse button.','Keep shipment verification and batch release with operators.'],
+ validation:'The approved redacted recording shows worksheet behavior. Operators verify shipment information before release; the excerpt does not establish hidden-value correctness or physical packing accuracy.',
+ limitations:'A customer-led Workpad update improved SKU grouping. Packing Cover, Label Helper and QR Helper are related operational improvements, not one integrated software product. PDF compatibility remains a documented constraint.',
+ evidence:'Owner-confirmed operational experience, the approved redacted recording and existing project references.',
+ statusNote:'Operational improvement with AI-assisted implementation and human release checks.',
+ nextMilestone:'Document the exact PDF compatibility constraint and a sanitized Korean/English retrieval regression example.'
+});
+Object.assign(packing.caseStudy,{
+ previous:'Handwritten instructions developed into structured batch covers. Repeated transfer into Google Sheets remained after a customer-led Workpad grouping improvement.',
+ demonstrated:'The approved excerpt shows the redacted worksheet. It illustrates interface behavior; hidden shipment values and physical packing are outside the demonstration.',
+ human:'Operators check shipment information, SKU quantities, box guidance and cover details before releasing batches to packing.',
+ outcome:'Estimated broader documentation and label-printing time fell from 180–200 to about 150 minutes daily. The 30–50-minute saving spans several improvements and is not attributed to this tool alone.'
+});
+packing.caseStudy.flow.Processing='AI-assisted information-transfer improvements and Apps Script box guidance; a shortcut and programmable mouse button reduce repeated interaction.';
+packing.caseStudy.flow['Human verification']=packing.caseStudy.human;
+packing.projectJourney=[{title:'Structured batch covers',state:'owner-reported',description:'Handwritten instructions evolved into covers for operational identification, SKU quantities, box preparation and QR information.'},{title:'Information-transfer improvements',state:'owner-reported',description:'AI-assisted improvements addressed remaining transfer work, Korean/English retrieval, keyboard shortcuts and programmable mouse input.'}];
+Object.assign(getProject('label'),{
+ role:'I defined the repetitive data-entry problem and acceptance checks, using AI-assisted development for browser-based worksheet input.',
+ validation:'Public-source review describes browser-driven cell entry. Final saved values and print output require operator review.',
+ limitations:'A separate browser helper within the broader workflow. Partial writes may need manual correction; final save and printing stay human-controlled.',
+ statusNote:'Browser-based worksheet input with final human review.'
+});
+Object.assign(getProject('qr'),{
+ role:'I defined the date-and-batch handoff, validation rules and human controls, using AI-assisted development.',
+ validation:'The recording shows list-validation feedback and row selection. Public parser and fake-DOM test records are separate evidence; a physical-scanner test is not included.',
+ limitations:'Row selection is assisted. Operators reconcile quantities and complete the work. WMS batch linkage is operational context, not an end-to-end integration demonstrated here.',
+ statusNote:'Validation and row-selection assistance; final completion remains human-controlled.'
+});
+getProject('qr').caseStudy.flow.Processing='The reviewed public version requires a complete list and one exact match, with dry-run before deliberate live selection. The recording shows operational UI behavior; exact release equivalence is still to be documented.';
+getProject('qr').caseStudy.outcome='The recording demonstrates row-selection assistance. No tool-specific time-saving metric is assigned.';
+getProject('label').caseStudy.outcome='Historical error counts are operational observations, not a zero-error guarantee.';
+getProject('label').results.note='Historical observation per approximately 150 batches. The counting method and period were not recorded; final review remains necessary.';
+Object.assign(getProject('eternights'),{
+ role:'QA Engineer: reproduced defects, clarified expected behavior with developers, performed targeted regression checks and verified fixes.',
+ limitations:'Developer-provided save states and checkpoints supported my testing within the existing environment.',
+ statusNote:'Studio Sai QA contribution, December 2021–May 2024.',
+ validation:'Reproducible defect reports, fix verification and targeted regression testing within the existing development environment.'
+});
+getProject('eternights').results.note='Approximate time for a particular recurring workflow using developer-provided save states and checkpoints; not the entire QA process or a claim of identical total coverage.';
+Object.assign(getProject('gps-3pl'),{
+ role:'Senior Operations Manager: operational requirements, work instructions, account coordination and system handoffs.',
+ description:'Translate warehouse constraints into requirements and practical workflow improvements.',
+ approach:['Define operational requirements and work instructions.','Coordinate with account stakeholders and the AcrossB development team.','Improve remaining documentation and information-transfer bottlenecks after a customer-led Workpad SKU-grouping update.'],
+ limitations:'AcrossB developed Workpad; the SKU-grouping update was customer-led. Approximately 10,000 daily orders describes the warehouse, not an individual automation capacity.'
+});
+// Keep uncertainty specific and actionable rather than implying an external audit.
+for(const p of projects){
+ for(const key of ['role','validation','evidence','limitations','statusNote']){
+  p[key]=p[key].replaceAll('not independently verified','not covered by the available source or demonstration').replaceAll('not independently audited','estimated from operational experience').replaceAll('not independently benchmarked','an operational estimate, not a controlled benchmark');
+ }
+ p.summary=p.description;
+}
+
 let selectedProjectId=null;
 export const getSelectedProject=()=>getProject(selectedProjectId);
 export function selectProject(id,origin){

@@ -1,4 +1,4 @@
-import {projects, featuredAutomationIds, automationContext, selectProject} from './project-catalog.js';
+import {projects, featuredWorkIds, automationContext, selectProject} from './project-catalog.js';
 import {createProjectMediaFigure, projectMedia, pauseProjectMedia, releaseMediaWithin} from './project-media.js';
 
 const style = document.createElement('link');
@@ -135,15 +135,16 @@ export function openWorkProject(id,{origin='work',returnToFilm}={}){
 }
 export const openProjectDetail=openWorkProject;
 export function createProjectShowcase(section){
- const intro=element('header','build-intro');intro.append(element('h2','',"Things I've Built."),element('p','','Practical tools, ongoing work, and experiments. Open a project to explore its purpose, implementation, and evidence.'));
- const featured=element('nav','build-featured');featured.setAttribute('aria-label','Featured automation projects');
- featuredAutomationIds.forEach(id=>{const p=projects.find(p=>p.id===id);const a=element('a','',p.title);a.href='#work-'+id;featured.append(a);});
- const context=element('details','build-workflow-context');context.append(element('summary','','The broader daily workflow — reported context'),element('p','',automationContext));
+ const intro=element('header','build-intro');intro.append(element('h2','',"Selected Work."),element('p','','Operational improvements, automation tools, and release QA—focused on the problem, my contribution, and the checks that matter.'));
+ const featured=element('nav','build-featured');featured.setAttribute('aria-label','Featured work');
+ featuredWorkIds.forEach(id=>{const p=projects.find(p=>p.id===id);const a=element('a','',p.title);a.href='#work-'+id;featured.append(a);});
+ const context=element('details','build-workflow-context');context.append(element('summary','','Daily documentation & label printing — estimated context'),element('p','',automationContext));
  intro.append(featured,context);
  const index=element('div','build-project-index');announcement=element('p','build-selection-announcement');announcement.setAttribute('role','status');
- const ordered=[...featuredAutomationIds.map(id=>projects.find(p=>p.id===id)),...projects.filter(p=>!featuredAutomationIds.includes(p.id))];
+ const ordered=[...featuredWorkIds.map(id=>projects.find(p=>p.id===id)),...projects.filter(p=>!featuredWorkIds.includes(p.id)&&p.group!=='learning'),...projects.filter(p=>!featuredWorkIds.includes(p.id)&&p.group==='learning')];
  ordered.forEach((project,i)=>{
-  const article=element('article','build-project-row');article.id='work-'+project.id;
+  if(project.group==='learning'&&ordered.find(p=>p.group==='learning')===project)index.append(element('h2','','Learning & Experiments'));
+   const article=element('article','build-project-row');article.id='work-'+project.id;
   const heading=element('h3','build-row-heading'),button=element('button','build-row-toggle');button.type='button';button.id='project-toggle-'+project.id;button.dataset.project=project.id;
   button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls','project-panel-'+project.id);
   const title=element('span','build-row-title'),preview=projectMedia(project).poster;

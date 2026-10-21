@@ -20,7 +20,7 @@ export function createStackTable(section){
  const selection=el('p','Select an element. Its story appears below the table on smaller screens.','stack-selection-note');
  const announcement=el('p',null,'stack-sr-only');announcement.setAttribute('role','status');announcement.setAttribute('aria-live','polite');
  const categoryName=key=>stackCategories.find(([id])=>id===key)[1];
- const order=['python','javascript','typescript','git','selenium','unity-test','react','api','apps-script','excel','sql','wms'];
+ const order=['wms','excel','apps-script','python','unity-test','javascript','git','selenium','typescript','react','api','sql'];
  for(const [index,id] of order.entries()){
   const item=stackElements.find(item=>item.id===id);
   const button=el('button',null,'stack-element');button.type='button';button.dataset.element=item.id;button.dataset.category=item.category;

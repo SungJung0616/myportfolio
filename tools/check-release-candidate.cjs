@@ -4,16 +4,17 @@ const fs=require('node:fs');
 const path=require('node:path');
 const {pathToFileURL}=require('node:url');
 const root=path.resolve(__dirname,'..');
+const resumeSource=process.argv.includes('--resume-candidate')?'resume/Sung_Jung_Business_Systems_Resume.pdf':'public/resume/Sung_Jung_Resume.pdf';
 let checks=0;
 function check(value,message){assert.ok(value,message);checks++;}
 async function main(){
  const catalog=await import(pathToFileURL(path.join(root,'preview/v0304-p2-hero-cta/project-catalog.js')));
  const ids=['google-sheets-automation','label','qr'];
  check(new Set(catalog.projects.map(p=>p.id)).size===catalog.projects.length,'unique project IDs');
- check(JSON.stringify(catalog.featuredAutomationIds)===JSON.stringify(ids),'featured order');
+ check(JSON.stringify(catalog.featuredWorkIds)===JSON.stringify(['google-sheets-automation','qr','eternights','coupang']),'featured order');
  check(JSON.stringify(catalog.filmProjects.slice(0,3).map(p=>p.id))===JSON.stringify(ids),'Film uses same representative records');
  check(catalog.getProject('qr').results===null,'no QR-only broader workflow metric');
- check(/150.*50.*20–30/.test(catalog.automationContext),'broader historical metric context');
+ check(/180–200.*150.*30–50/.test(catalog.automationContext),'broader historical metric context');
  for(const id of ids){const p=catalog.getProject(id);
   for(const field of ['previous','demonstrated','human','outcome','flow'])check(!!p.caseStudy[field],id+' case study '+field);
   check(Object.keys(p.caseStudy.flow).length===4,id+' four workflow stages');
@@ -29,11 +30,11 @@ async function main(){
   const dir=path.join(root,'.netlify','portfolio-2-'+mode);const read=p=>fs.readFileSync(path.join(dir,p),'utf8');
   const html=read('index.html'),headers=read('_headers'),robots=read('robots.txt');
   check(mode==='production'?!/noindex/i.test(html+headers+robots):/noindex/.test(html)&&/noindex/.test(headers)&&/Disallow: \//.test(robots),mode+' indexing');
-  check(mode==='production'?html.includes('Sung Jung — Operations, QA & Automation'):html.includes('UI Preview'),mode+' title');
+  check(mode==='production'?html.includes('Sung Jung — Business Systems & Process Improvement'):html.includes('UI Preview'),mode+' title');
   check(headers.includes('Content-Security-Policy')&&headers.includes('X-Content-Type-Options'),mode+' security headers retained');
   const pdf=fs.readFileSync(path.join(dir,'resume/Sung_Jung_Resume.pdf'));
   check(pdf.subarray(0,5).toString()==='%PDF-',mode+' actual PDF');
-  check(pdf.equals(fs.readFileSync(path.join(root,'public/resume/Sung_Jung_Resume.pdf'))),mode+' canonical resume identity');
+  check(pdf.equals(fs.readFileSync(path.join(root,resumeSource))),mode+' selected resume identity');
   check(read('hero.js').includes('href="/resume/Sung_Jung_Resume.pdf"'),mode+' bundled Hero resume');
   check(read('navigation.js').includes('href="/resume/Sung_Jung_Resume.pdf"'),mode+' bundled Contact resume');
   const redirects=read('_redirects').trim().split('\n');check(redirects.length===6,mode+' six legacy mappings');

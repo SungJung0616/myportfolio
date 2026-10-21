@@ -11,7 +11,7 @@ export function createInteractivePlaybook(){
  document.querySelector('#project-controls>div').replaceChildren(launch);
  let trigger=null,loaded=false,pendingFrame=0;
  const signal=type=>frame.contentWindow?.postMessage({type},location.origin);
- function open(){if(dialog.open)return;trigger=document.activeElement;if(!loaded){frame.src='../p2-03b-playbook/?case=coupang&stage=0&embed=1';loaded=true;}dialog.showModal();signal('playbook:resume');close.focus({preventScroll:true});}
+ function open(){if(dialog.open)return;trigger=document.activeElement;if(!loaded){frame.src='../p2-03b-playbook/?case=label&stage=0&embed=1';loaded=true;}dialog.showModal();signal('playbook:resume');close.focus({preventScroll:true});}
  close.onclick=()=>dialog.close();launch.onclick=open;
  window.addEventListener('portfolio:navigate',event=>{cancelAnimationFrame(pendingFrame);if(event.detail.id!=='playbook')return;const start=performance.now();function arrive(){if(Math.abs((window.arenaDiagnostics?.progress??0)-.83)<.004){open();return;}if(performance.now()-start<12000)pendingFrame=requestAnimationFrame(arrive);}pendingFrame=requestAnimationFrame(arrive);});
  dialog.addEventListener('close',()=>{signal('playbook:pause');trigger?.focus({preventScroll:true});});
