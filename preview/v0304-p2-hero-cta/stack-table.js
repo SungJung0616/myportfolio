@@ -7,7 +7,7 @@ export function createStackTable(section){
  const header=el('div',null,'stack-intro'),heading=el('div');
  heading.append(el('p','Tools, systems & technologies','stack-eyebrow'));
  const title=el('h2','The Periodic Table of My Stack');title.id='stack-heading';heading.append(title);
- const lede=el('div',null,'stack-intro-copy');lede.append(el('p','A collection of tools I use to build, test, automate, and improve real-world workflows.'),el('p','Professional work, project experience and foundational knowledge — each in context.','stack-context-note'));
+ const lede=el('div',null,'stack-intro-copy');lede.append(el('p','Tools I use to understand operational workflows, improve information handoffs, and validate business-system outcomes.'),el('p','Professional work, project experience and foundational knowledge — each in context.','stack-context-note'));
  header.append(heading,lede);
  const legend=el('ul',null,'stack-legend');legend.setAttribute('aria-label','Technology categories');
  for(const [key,label] of stackCategories){const li=el('li',label);li.dataset.category=key;legend.append(li);}
@@ -20,7 +20,7 @@ export function createStackTable(section){
  const selection=el('p','Select an element. Its story appears below the table on smaller screens.','stack-selection-note');
  const announcement=el('p',null,'stack-sr-only');announcement.setAttribute('role','status');announcement.setAttribute('aria-live','polite');
  const categoryName=key=>stackCategories.find(([id])=>id===key)[1];
- const order=['python','javascript','typescript','git','selenium','unity-test','react','api','apps-script','excel','sql','wms'];
+ const order=['wms','excel','apps-script','python','unity-test','javascript','git','selenium','typescript','react','api','sql'];
  for(const [index,id] of order.entries()){
   const item=stackElements.find(item=>item.id===id);
   const button=el('button',null,'stack-element');button.type='button';button.dataset.element=item.id;button.dataset.category=item.category;

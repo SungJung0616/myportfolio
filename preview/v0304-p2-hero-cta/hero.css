@@ -20,3 +20,31 @@
 #intro-hero .hero-utility a{min-height:44px;padding:8px 0;border:0;border-radius:0;color:#573970;font-size:13px;text-decoration:underline;text-underline-offset:4px}
 @media(max-width:799px){#intro-hero{min-height:0;padding-top:18px;padding-bottom:22px}#intro-hero .hero-name{margin-bottom:10px}#intro-hero .hero-description{margin-top:14px;line-height:1.45}#intro-hero .hero-philosophy{margin-top:14px}#intro-hero .hero-specialty{margin-top:6px}#intro-hero .hero-actions{margin-top:16px;gap:8px}#intro-hero .hero-actions a,#intro-hero .hero-actions button{min-height:44px;font-size:13px;padding:10px 12px}}
 @media(min-width:600px) and (max-width:799px){#intro-hero{padding-top:clamp(66px,10.5vh,110px);padding-left:32px;padding-right:48px}}
+@font-face{font-family:'Bricolage';src:url('fonts/bricolage-latin.woff2') format('woff2');font-weight:200 800;font-style:normal;font-display:swap}
+@font-face{font-family:'Manrope';src:url('fonts/manrope-latin.woff2') format('woff2');font-weight:200 800;font-style:normal;font-display:swap}
+/* Name-led identity; reserve the bottom-left control area without changing the scene. */
+#intro-hero{padding-bottom:104px}
+#intro-hero h1{font-size:clamp(54px,5.2vw,76px);line-height:1.04;letter-spacing:-2px;text-wrap:nowrap}
+#intro-hero .hero-identity{font:650 clamp(19px,1.8vw,25px)/1.3 'Segoe UI',sans-serif;margin:18px 0 0;max-width:28ch}
+#intro-hero .hero-description{margin-top:22px}
+#intro-hero .hero-philosophy{font-size:17px;line-height:1.4;margin-top:22px}
+#intro-hero .hero-actions{margin-top:24px}
+@media(min-width:800px) and (max-height:740px){#intro-hero{padding-top:24px;padding-bottom:96px}#intro-hero h1{font-size:54px}#intro-hero .hero-identity{font-size:20px;margin-top:14px}#intro-hero .hero-description{font-size:16px;margin-top:16px}#intro-hero .hero-philosophy{margin-top:16px}#intro-hero .hero-actions{margin-top:18px}}
+@media(max-width:799px){#intro-hero{padding:20px 44px 24px 22px;bottom:auto}#intro-hero h1{font-size:clamp(42px,11vw,60px);letter-spacing:-1.5px}#intro-hero .hero-identity{font-size:19px;margin-top:12px;max-width:30ch}#intro-hero .hero-description{font-size:15px;margin-top:14px}#intro-hero .hero-philosophy{font-size:15px;margin-top:16px}#intro-hero .hero-actions{margin-top:18px}}
+/* Arena editorial typography: expressive name, quiet and precise supporting text. */
+#intro-hero h1{font-family:'Bricolage',sans-serif;font-size:clamp(64px,6.1vw,92px);font-weight:800;letter-spacing:-.055em;word-spacing:.08em;line-height:.98;font-variation-settings:'opsz' 72,'wdth' 94}
+#intro-hero .hero-identity{font-family:'Manrope',sans-serif;font-size:clamp(19px,1.75vw,25px);font-weight:650;letter-spacing:-.035em;line-height:1.35;margin-top:22px}
+#intro-hero .hero-description{font-family:'Manrope',sans-serif;font-size:16px;font-weight:450;line-height:1.7;letter-spacing:-.012em;max-width:35ch;color:#65566e}
+#intro-hero .hero-philosophy{font-family:'Bricolage',sans-serif;font-weight:600;font-size:20px;letter-spacing:-.025em;line-height:1.2;margin-top:26px}
+#intro-hero .hero-actions a,#intro-hero .hero-actions button{font-family:'Manrope',sans-serif;font-weight:650;letter-spacing:-.025em}
+#site-header .site-name{font-family:'Bricolage',sans-serif;font-weight:800;letter-spacing:-.04em}
+#site-menu a{font-family:'Manrope',sans-serif;font-size:12px;letter-spacing:.045em}
+@media(min-width:800px) and (max-height:740px){#intro-hero h1{font-size:68px}#intro-hero .hero-identity{font-size:20px;margin-top:18px}#intro-hero .hero-philosophy{font-size:19px;margin-top:20px}}
+@media(max-width:799px){#intro-hero h1{font-size:clamp(50px,13.2vw,74px);letter-spacing:-.055em}#intro-hero .hero-identity{font-size:18px;margin-top:15px}#intro-hero .hero-description{font-size:14px;line-height:1.65;margin-top:16px}#intro-hero .hero-philosophy{font-size:18px;margin-top:18px}}
+/* Keep identity with the name; the brand line is supporting copy, not a headline. */
+#intro-hero .hero-identity{font-size:clamp(22px,1.9vw,27px);font-weight:700;line-height:1.32;letter-spacing:-.035em;margin-top:12px;max-width:none}
+#intro-hero .hero-identity span{display:block;white-space:nowrap}
+#intro-hero .hero-description{margin-top:24px;line-height:1.7}
+#intro-hero .hero-philosophy{font-size:15px;font-weight:450;line-height:1.5;letter-spacing:-.01em;margin-top:20px}
+@media(min-width:800px) and (max-height:740px){#intro-hero .hero-identity{font-size:22px;margin-top:12px}#intro-hero .hero-description{margin-top:22px}#intro-hero .hero-philosophy{font-size:14px;margin-top:18px}}
+@media(max-width:799px){#intro-hero .hero-identity{font-size:19px;line-height:1.35;margin-top:10px}#intro-hero .hero-description{margin-top:20px;line-height:1.65}#intro-hero .hero-philosophy{font-size:14px;font-weight:450;margin-top:16px}}

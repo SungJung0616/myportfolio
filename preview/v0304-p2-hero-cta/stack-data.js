@@ -10,14 +10,14 @@ export const stackElements=[
     use:'Transformed and validated marketplace order data with Python and openpyxl, preparing it for the existing shipping workflow.',
     example:'Coupang Order Preparation Automation',experience:'GPS Logix — Database Manager',
     boundary:'Final review, upload and shipping decisions stayed with people and internal systems.',
-    outcome:'Approximately 3 hours → 30 minutes for daily order preparation. Historical, user-reported result; not independently audited.',
+    outcome:'Approximately 3 hours → 30 minutes for daily order preparation. Historical operational estimate, not a controlled benchmark.',
     links:[['Read order automation case study',caseStudy('gps-order-automation')],['Explore Playbook','#playbook']]},
   {id:'git',symbol:'Gi',name:'Git',category:'workflow',context:'Project experience',shortContext:'Project',
     use:'Used Git and GitHub to track source changes and review portfolio and personal-project work.',
     example:'Personal Portfolio',boundary:'Project workflow experience; no claim about an employer’s development process.',
     links:[['View portfolio repository','https://github.com/SungJung0616/myportfolio']]},
   {id:'javascript',symbol:'Js',name:'JavaScript',category:'programming',context:'Project experience',shortContext:'Project',
-    use:'Browser-extension logic for reading visible batch information, preparing label inputs and validating QR-based row selection.',
+    use:'AI-assisted browser-extension development for visible batch information, worksheet input and QR-based row selection; operational requirements and acceptance checks guided the work.',
     example:'AcrossB Label Helper · AcrossB Flow QR Helper',
     boundary:'The helpers use browser UI and DOM operations. This is not a Sheets API or WMS API integration, and project ownership is not inferred from repository ownership.',
     links:[['Explore the three Playbook cases','#playbook']]},
@@ -35,7 +35,7 @@ export const stackElements=[
     example:'SungFlix · City Weather',boundary:'Learning-project context. No custom WMS or AcrossB API integration is claimed.',
     links:[['Explore projects','#work']]},
   {id:'apps-script',symbol:'Gas',name:'Google Apps Script',category:'automation',context:'Professional experience · AI-assisted',shortContext:'Professional',
-    use:'Connected Gmail and Google Sheets for classifying account communications, recording information and preparing daily operational summaries.',
+    use:'Used AI-assisted Apps Script development for packing-cover box guidance and information handoffs in Google Sheets. A separate workflow handles Gmail classification and daily summaries.',
     experience:'GPS Logix — Senior Operations Manager',example:'Account communication and daily summaries',
     boundary:'AI-assisted workflow improvement; not a completed end-to-end warehouse automation system.',
     links:[['Read operations case study',caseStudy('gps-3pl-operations')]]},
@@ -53,10 +53,14 @@ export const stackElements=[
     links:[['Read Eternights QA case study',caseStudy('eternights-qa')]]},
   {id:'sql',symbol:'Sql',name:'SQL',category:'systems',context:'Basic knowledge',shortContext:'Basic knowledge',
     use:'Basic SQL is listed in the resume.',
-    boundary:'No specific querying project or professional SQL outcome is documented here. This element is not a claim of professional proficiency or current study.',links:[]},
+    boundary:'Basic familiarity; no professional querying outcome is included.',links:[]},
   {id:'wms',symbol:'Wm',name:'WMS / OMS Systems',category:'systems',context:'Professional experience',shortContext:'Professional',
     use:'Worked with Extensiv WMS and Workpad OMS across warehouse execution, account workflows, work instructions and system requirements.',
     experience:'GPS Logix — Senior Operations Manager',example:'3PL operations · SKU batching and Workpad collaboration',
-    boundary:'Workpad development belonged to AcrossB. Sung’s scope includes operational workflow design, requirements and collaboration; custom WMS API ownership is not claimed.',
+    boundary:'AcrossB developed Workpad; a customer-led update improved SKU grouping. My scope includes operational requirements, work instructions and remaining information-transfer improvements.',
     links:[['Read operations case study',caseStudy('gps-3pl-operations')]]}
 ];
+
+// Prioritize business-system context while retaining each element ID and category.
+const businessPriority=['wms','excel','apps-script','python','unity-test','javascript','git'];
+stackElements.sort((a,b)=>{const rank=id=>{const i=businessPriority.indexOf(id);return i<0?businessPriority.length:i};return rank(a.id)-rank(b.id)});

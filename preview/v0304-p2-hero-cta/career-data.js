@@ -12,10 +12,10 @@ export const career = [
   },
   {
     id:'quality', period:'Dec 2021 – May 2024', company:'Studio Sai', role:'QA Engineer',
-    summary:'Made recurring regression checks more efficient while preserving validation coverage.',
+    summary:'Clarified expected behavior and verified fixes through targeted regression testing.',
     lines:['Quality through','every release.'],
-    detail:'Supported Eternights development and PlayStation release QA through gameplay, functional, regression and localization testing. Wrote reproducible defect reports, validated fixes and collaborated with developers.',
-    result:'Recurring regression workflow: approximately 8 hours → 4 hours, using developer-provided save states and checkpoints. Unity Test Framework use was within the existing environment.',
+    detail:'Supported Eternights development and PlayStation release QA through functional, gameplay, regression and localization testing. Wrote reproducible defect reports, clarified expected behavior with developers and verified fixes.',
+    result:'A particular recurring regression workflow: approximately 8 hours → 4 hours using developer-provided save states and checkpoints. Used Unity Test Framework within the existing environment.',
     steps:['Reproduce','Validate fix','Regression'],
     note:'Release QA · Workflow diagram'
   },
@@ -24,8 +24,8 @@ export const career = [
     id:'operations', period:'2024 – Present', company:'GPS Logix', role:'Senior Operations Manager',
     summary:'Connected warehouse workflows, system requirements and daily operational execution.',
     lines:['From warehouse','to workflow.'],
-    detail:'Helped establish a new 3PL operation with account-specific locations, picking and packing flows, and work instructions. Designed an Excel-based SKU batching workflow and partnered with the AcrossB development team until automated SKU separation was added to Workpad.',
-    result:'Operations scope includes Extensiv WMS and Workpad OMS. This describes operational requirements and collaboration, not sole software ownership or API integration.',
+    detail:'Translated warehouse constraints into operational requirements, work instructions and system handoffs across Extensiv WMS and Workpad OMS. Coordinated with stakeholders and developers. A customer-led Workpad update improved SKU grouping; my AI-assisted improvements addressed remaining information transfer, including Korean/English retrieval and shortcut/mouse usability.',
+    result:'Broader warehouse volume: approximately 10,000 daily orders. Estimated documentation and label-printing time: 180–200 → about 150 minutes per day across broader workflow improvements. Operators verify shipment information before release.',
     steps:['Observe flow','Define change','Work with team'],
     note:'Operations systems · Workflow diagram'
   }
