@@ -1,7 +1,7 @@
 # Local RC1 configuration; no site settings or deploys are changed by editing this file.
 # Production uses a separate generated output; Preview retains noindex safeguards.
 [context.production]
-  command = "node tools/package-portfolio-preview.cjs --production"
+  command = "node tools/package-portfolio-preview.cjs --production --resume-candidate"
   publish = ".netlify/portfolio-2-production"
 
 [context.deploy-preview]
