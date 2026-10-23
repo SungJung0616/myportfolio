@@ -21,7 +21,7 @@ let count=0;const check=(ok,label)=>{assert.ok(ok,label);count++};
  const hero=read('preview/v0304-p2-hero-cta/hero.js');
  check(hero.includes('I Make Complex Work Feel Simple.'),'headline preserved');
  check(hero.includes('I turn operational challenges into clearer workflows, smarter tools, and more reliable systems.'),'approved positioning');
- check(hero.includes('Business Systems &amp; Operations Improvement'),'professional identity');
+ check(hero.includes('<span>Business Systems</span> <span>&amp; Operations Improvement</span>'),'professional identity intentional wrapping');
  check(hero.includes('<h1 id="hero-title">Sung Jung</h1>'),'name is primary headline');
  check(!hero.includes('Senior Operations Manager'),'no seniority branding');
  const html=read('preview/p2-03b-playbook/index.html');
