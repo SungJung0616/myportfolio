@@ -1,9 +1,9 @@
 {
   "name": "Sung Jung",
-  "headline": "Business Systems | Operations Systems | Process Improvement",
+  "headline": "Business Systems & Operations Improvement",
   "contact": "Gardena, CA | 949-300-1641 | sungjung0616@gmail.com",
   "links": [["LinkedIn", "https://www.linkedin.com/in/sungjung0616/"], ["Portfolio", "https://sj-personalportfolio.netlify.app/"], ["GitHub", "https://github.com/SungJung0616"]],
-  "summary": "Operations and QA professional translating warehouse and software workflows into practical system improvements. Experience in operational requirements, workflow analysis, stakeholder coordination, data validation, and release testing. Uses AI-assisted development and automation to reduce repetitive work while retaining human review and exception handling.",
+  "summary": "Business systems and operations improvement professional who turns operational challenges into clearer workflows, smarter tools, and more reliable systems. Identifies bottlenecks, defines requirements, coordinates with operational stakeholders and developers, and validates outcomes through data checks and release QA. Uses AI-assisted development to improve repetitive work while retaining human review and exception handling.",
   "competencies": "Workflow analysis | Operational requirements | Process improvement | Stakeholder coordination | Work instructions | Data validation | Exception management | Defect reproduction | Regression testing | Fix verification",
   "roles": [
     {

@@ -15,6 +15,8 @@ const resumeCandidate = process.argv.includes('--resume-candidate');
 // Explicit runtime allowlist: no QA captures, development notes, or disabled demo video.
 const heroFiles = [
   '_headers', 'index.html', 'review.html', 'robots.txt', 'THREE-LICENSE.txt',
+  'fonts/bricolage-latin.woff2', 'fonts/manrope-latin.woff2',
+  'fonts/Bricolage-OFL.txt', 'fonts/Manrope-OFL.txt',
   'arena-court.js', 'BufferGeometryUtils.js', 'career-data.js',
   'career-gallery.css', 'career-gallery.js', 'career-walk.js', 'contact.css',
   'dice-poster.png', 'exterior-lighting.js', 'exterior.css', 'exterior.js',
@@ -129,8 +131,8 @@ if (!checkOnly) {
       fs.writeFileSync(destination,text);
     }
     if(production&&file.target==='index.html'){
-      let html=fs.readFileSync(destination,'utf8').replace('<meta name="robots" content="noindex,nofollow">','<meta name="robots" content="index,follow">').replace("Sung's home court — UI Preview",'Sung Jung — Business Systems & Process Improvement');
-      html=html.replace('</head>','<meta name="description" content="Operations and QA professional translating workflow problems into practical system improvements through requirements analysis, stakeholder collaboration, automation, and validation."><link rel="canonical" href="https://sj-personalportfolio.netlify.app/"><meta property="og:type" content="website"><meta property="og:title" content="Sung Jung — Business Systems &amp; Process Improvement"><meta property="og:description" content="Business systems, process improvement, and practical automation grounded in operations and QA."><meta property="og:url" content="https://sj-personalportfolio.netlify.app/"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Sung Jung — Business Systems &amp; Process Improvement"></head>');
+      let html=fs.readFileSync(destination,'utf8').replace('<meta name="robots" content="noindex,nofollow">','<meta name="robots" content="index,follow">').replace("Sung's home court — UI Preview",'Sung Jung — Business Systems & Operations Improvement');
+      html=html.replace('</head>','<meta name="description" content="I turn operational challenges into clearer workflows, smarter tools, and more reliable systems through requirements analysis, stakeholder coordination, and outcome validation."><link rel="canonical" href="https://sj-personalportfolio.netlify.app/"><meta property="og:type" content="website"><meta property="og:title" content="Sung Jung — Business Systems &amp; Operations Improvement"><meta property="og:description" content="Business Systems &amp; Operations Improvement. Clearer workflows, smarter tools, and more reliable systems."><meta property="og:url" content="https://sj-personalportfolio.netlify.app/"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Sung Jung — Business Systems &amp; Operations Improvement"></head>');
       fs.writeFileSync(destination,html);
     }
     if(production&&file.target==='_headers'){

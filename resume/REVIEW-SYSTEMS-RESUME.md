@@ -1,5 +1,73 @@
 # Business systems resume review
 
+## Final career identity alignment
+
+### Review Preview gate
+
+Final selective Bricolage/Manrope typography was inspected at desktop 1440×900,
+tablet 1024×768 and 768×1024, and mobile 390×844. The name, identity, supporting
+copy and CTA hierarchy remained readable, with no clipping, horizontal overflow
+or CTA/Atmosphere intersection observed. Hero typography remains visually
+separate from the arena; no camera, geometry, Film Lab or scoreboard change.
+Fonts are self-hosted Latin WOFF2 with OFL notices and same-origin CSP permission.
+
+The existing 68 release and 30 content checks passed again. Preview and production
+packaging simulations passed; production simulation was not deployed.
+Forty unique catalog/profile/portfolio/resume URLs were checked: 38 HTTP 200,
+the existing What's in Your Fridge live URL returned 404, and LinkedIn returned
+999 (automated access blocked). These are not newly introduced link changes.
+HTTP reachability does not establish the correctness of every external app.
+DOCX pagination remains NOT VERIFIED because LibreOffice is unavailable.
+PDF remains two pages; career facts are unchanged from the approved baseline.
+Physical-device, screen-reader and measured performance tests remain unverified.
+
+This review commit includes the identity changes below plus the selective font
+assets, license notices, scoped `hero.css` rules, font packaging allowlist and
+`font-src 'self'` CSP directive. Local QA and historical captures are excluded.
+
+The current local candidate uses “Business Systems & Operations Improvement”
+as its professional headline. Its summary follows the owner-approved operational
+challenge → requirements → stakeholder coordination → workflow improvement →
+outcome-validation narrative. Official job titles remain in detailed history;
+seniority is not used as personal branding.
+
+Only `headline` and `summary` changed in the authoritative resume JSON in this
+pass. Employment, dates, responsibilities, metrics, project links, skills,
+education and certifications were compared with commit `50a10e4` and are equal.
+The regenerated PDF remains two pages and both page images were inspected.
+DOCX rendering was attempted but LibreOffice is unavailable; its visual
+pagination remains NOT VERIFIED.
+
+Local identity verification: 68 release checks, 30 content checks, JavaScript
+syntax and whitespace checks passed. Hero tested at 1280×720, 390×844 and
+375×667: no CTA/Atmosphere overlap or horizontal content overflow observed.
+Featured Work and Playbook order were exercised and preserved. No application
+errors were captured. This is viewport testing, not physical-device testing.
+Production/archive/LinkedIn accounts were not changed. The hosted review URL
+still serves the previous approved commit; this revision is local only.
+
+Exact files changed in this identity pass:
+
+```text
+preview/p2-03b-playbook/index.html
+preview/v0304-p2-hero-cta/career-gallery.js
+preview/v0304-p2-hero-cta/hero.css
+preview/v0304-p2-hero-cta/hero.js
+preview/v0304-p2-hero-cta/navigation.js
+preview/v0304-p2-hero-cta/project-showcase.js
+preview/v0304-p2-hero-cta/stack-table.js
+resume/REVIEW-SYSTEMS-RESUME.md
+resume/Sung_Jung_Business_Systems_Resume.docx
+resume/Sung_Jung_Business_Systems_Resume.pdf
+resume/systems-resume-content.json
+tools/check-release-candidate.cjs
+tools/check_content_revision.cjs
+tools/package-portfolio-preview.cjs
+docs/portfolio-2/LINKEDIN-IDENTITY-PROPOSAL.md
+```
+
+The sections below record earlier passes and their historical verification scope.
+
 `systems-resume-content.json` is the authoritative content source for the new
 review-only `Sung_Jung_Business_Systems_Resume.docx` and matching PDF.
 Run `tools/build_systems_resume.py` with the configured document runtime.

@@ -2,7 +2,7 @@ import {createStackTable} from './stack-table.js';
 import {createProjectShowcase,openWorkProject} from './project-showcase.js';
 const contactStyle=document.createElement('link');contactStyle.rel='stylesheet';contactStyle.href=new URL('./contact.css',import.meta.url).href;document.head.append(contactStyle);
 const destinations=[['home','Home Court',0],['career','Career Walk',.38],['playbook','Playbook',.83],['film','The Film Lab',1],['stack','Stack'],['work','Work'],['contact','Contact']];
-const header=document.createElement('div');header.id='site-header';header.setAttribute('role','banner');header.innerHTML='<a class="site-name" href="#home">SUNG JUNG</a><div class="local-info">Gardena, CA <span class="local-clock"></span><span class="weather"> · Weather unavailable · —</span></div><span class="specialty">Business Systems · Process Improvement · Automation</span><button id="menu-toggle" aria-expanded="false" aria-controls="site-menu">Menu</button><nav id="site-menu" aria-label="Main navigation"><a href="#stack">STACK</a><a href="#work">WORK</a><a href="#contact">CONTACT</a></nav>';
+const header=document.createElement('div');header.id='site-header';header.setAttribute('role','banner');header.innerHTML='<a class="site-name" href="#home">SUNG JUNG</a><div class="local-info">Gardena, CA <span class="local-clock"></span><span class="weather"> · Weather unavailable · —</span></div><span class="specialty">Business Systems &amp; Operations Improvement</span><button id="menu-toggle" aria-expanded="false" aria-controls="site-menu">Menu</button><nav id="site-menu" aria-label="Main navigation"><a href="#stack">STACK</a><a href="#work">WORK</a><a href="#contact">CONTACT</a></nav>';
 const dots=document.createElement('nav');dots.id='location-dots';dots.setAttribute('aria-label','Current location and section navigation');for(const [id,label]of destinations){const a=document.createElement('a');a.href='#'+id;a.dataset.destination=id;a.setAttribute('aria-label',label);a.innerHTML='<i aria-hidden="true"></i><span>'+label+'</span>';dots.append(a);}
 const content=document.createElement('div');content.id='reading-content';content.innerHTML=`<section id="stack" tabindex="-1"><p class="section-label">Stack</p><h2>Tools in context.</h2><div class="stack-list"></div></section><section id="work" tabindex="-1" aria-label="Things I have built"></section>
 <section id="contact" tabindex="-1" aria-labelledby="contact-title">
@@ -13,7 +13,7 @@ const content=document.createElement('div');content.id='reading-content';content
       <p>Good work starts with a conversation. Let’s find a practical next step.</p>
     </div>
     <div class="contact-connect">
-      <p class="contact-invitation">Open to full-time opportunities in business systems, operations systems, and process improvement.</p>
+      <p class="contact-invitation">Open to Business Systems Analyst, Operations Systems Analyst, Business Process Analyst, Business Applications Analyst, and Process Improvement opportunities.</p>
       <div class="contact-links"><a class="contact-email" href="mailto:sungjung0616@gmail.com">sungjung0616@gmail.com</a></div>
       <nav class="contact-profiles" aria-label="Professional profiles and resume">
         <a href="https://www.linkedin.com/in/sungjung0616/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn (opens in a new tab)">LinkedIn <span aria-hidden="true">↗</span></a>

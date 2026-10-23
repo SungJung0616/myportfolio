@@ -20,7 +20,7 @@ export function createCareerGallery(career){
  function overview(focus=false){
   body.replaceChildren();dialog.dataset.view='overview';
   const layout=el('div',null,'cg-overview'),intro=el('div',null,'cg-intro');
-  intro.append(el('h2','Where I’ve Worked.'),el('p','Business systems, operational improvement and release QA. Explore the responsibilities, tools and contributions behind each role.','cg-lede'));
+  intro.append(el('h2','Where I’ve Worked.'),el('p','Business Systems & Operations Improvement. Explore how I define requirements, coordinate with stakeholders, improve workflows and validate outcomes.','cg-lede'));
   const list=el('ol',null,'cg-timeline');
   for(const i of order){
    const r=records[i],li=el('li'),button=el('button');button.type='button';button.dataset.experience=i;

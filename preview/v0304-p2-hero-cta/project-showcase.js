@@ -135,7 +135,7 @@ export function openWorkProject(id,{origin='work',returnToFilm}={}){
 }
 export const openProjectDetail=openWorkProject;
 export function createProjectShowcase(section){
- const intro=element('header','build-intro');intro.append(element('h2','',"Selected Work."),element('p','','Operational improvements, automation tools, and release QA—focused on the problem, my contribution, and the checks that matter.'));
+ const intro=element('header','build-intro');intro.append(element('h2','',"Selected Work."),element('p','','Business systems and operations improvements—focused on the problem, my contribution, stakeholder coordination, and the checks that matter.'));
  const featured=element('nav','build-featured');featured.setAttribute('aria-label','Featured work');
  featuredWorkIds.forEach(id=>{const p=projects.find(p=>p.id===id);const a=element('a','',p.title);a.href='#work-'+id;featured.append(a);});
  const context=element('details','build-workflow-context');context.append(element('summary','','Daily documentation & label printing — estimated context'),element('p','',automationContext));

@@ -30,7 +30,7 @@ async function main(){
   const dir=path.join(root,'.netlify','portfolio-2-'+mode);const read=p=>fs.readFileSync(path.join(dir,p),'utf8');
   const html=read('index.html'),headers=read('_headers'),robots=read('robots.txt');
   check(mode==='production'?!/noindex/i.test(html+headers+robots):/noindex/.test(html)&&/noindex/.test(headers)&&/Disallow: \//.test(robots),mode+' indexing');
-  check(mode==='production'?html.includes('Sung Jung — Business Systems & Process Improvement'):html.includes('UI Preview'),mode+' title');
+  check(mode==='production'?html.includes('Sung Jung — Business Systems & Operations Improvement'):html.includes('UI Preview'),mode+' title');
   check(headers.includes('Content-Security-Policy')&&headers.includes('X-Content-Type-Options'),mode+' security headers retained');
   const pdf=fs.readFileSync(path.join(dir,'resume/Sung_Jung_Resume.pdf'));
   check(pdf.subarray(0,5).toString()==='%PDF-',mode+' actual PDF');
