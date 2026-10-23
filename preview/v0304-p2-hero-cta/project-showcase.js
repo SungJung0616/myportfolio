@@ -107,7 +107,7 @@ function projectContent(project) {
     journey.append(steps);detailBody.append(journey);
   }
   const links = element('div', 'build-links');
-  project.links.forEach(item => links.append(link(item.label, item.url)));
+  project.links.forEach(item => links.append(item.url ? link(item.label, item.url) : element('span', 'build-link-pending', item.label)));
   if (links.childElementCount) detailBody.append(links);
   return detailBody;
 }

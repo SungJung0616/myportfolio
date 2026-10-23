@@ -384,7 +384,7 @@ const legacyProjects=archive.map(item=>{
   limitations:'No additional implementation, ownership, or outcome claims are inferred from the catalog entry.',
   evidence:'Existing portfolio project record.',
   evidenceType:['Existing portfolio record'],evidenceRefs:[item.link&&{label:'Existing project source',url:item.link}].filter(Boolean),
-  links:[item.link&&{label:'GitHub',url:item.link},item.liveLink&&{label:'Visit project',url:item.liveLink},item.caseStudy&&{label:'Archived case study',url:`https://sungjung-portfolio-v1.netlify.app${item.caseStudy}`}].filter(Boolean),
+  links:[item.link&&{label:'GitHub',url:item.link},extra.id==='fridge'?{label:'Coming Soon',url:null}:item.liveLink&&{label:'Visit project',url:item.liveLink},item.caseStudy&&{label:'Archived case study',url:`https://sungjung-portfolio-v1.netlify.app${item.caseStudy}`}].filter(Boolean),
   ...extra
  });
 });
