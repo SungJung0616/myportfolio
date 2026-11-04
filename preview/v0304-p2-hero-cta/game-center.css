@@ -15,7 +15,8 @@
 @media(prefers-reduced-motion:reduce){.game-center button:active,.game-center-trigger:active{transform:none}}
 
 /* A restrained arena broadcast desk, rather than a stack of generic panels. */
-.gc-content{display:grid;grid-template-columns:1.6fr 1fr;gap:0 28px}
+.gc-content{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:0 28px}
+.gc-content>section,.gc-content section>div{min-width:0}
 .gc-content section:first-child{background:#342c43;color:#f2eddf;padding:26px;margin-top:20px;border-bottom:4px solid #d2a657}
 .gc-content section:first-child a{color:#ecd092}
 .gc-content section:nth-child(2){margin-top:20px;padding:26px 0}

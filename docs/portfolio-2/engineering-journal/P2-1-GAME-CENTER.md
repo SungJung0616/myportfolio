@@ -149,3 +149,11 @@ The new instruction explicitly prefers the original Kobe memorial. Its geometry 
 - All 130 excluded historical artifacts and the pre-existing service-setup document were unchanged by SHA-256 comparison. New screenshots and official DOM captures remain in ignored local QA storage.
 
 The feature remains Preview-only. A successful Preview or test run does not authorize a Production merge or release.
+
+### Final hosted follow-up
+
+After the checkpoint above, the unattended browser tour reached face four, returned to its saved invitation view and restored focus to Explore Jumbotron. It was slow in the controlled browser session; normal-speed smoothness and FPS remain unmeasured.
+
+The final 390px dashboard check exposed intrinsic grid overflow: a wide player table expanded the parent grid and hid the opponent despite a normal document width. Constrained grid tracks and child minimum widths keep overflow inside the statistics region. Hosted readback then showed dialog scrollWidth equal to clientWidth (337px), both matchup columns visible, and document width equal to 390px. No critical console errors were captured.
+
+Hosted Preview: https://6aeb889ace2423bc601421e9--sj-personalportfolio.netlify.app/ (ready, unpromoted). The API exposes eight approved games; Production and V1 published deployment identifiers remain unchanged. The implementation was committed on the feature branch; no Production merge or release was performed.
