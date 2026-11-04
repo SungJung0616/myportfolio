@@ -1,0 +1,23 @@
+'use strict';
+const assert=require('node:assert/strict');
+const {pathToFileURL}=require('node:url');
+const path=require('node:path');
+(async()=>{
+ const base=path.resolve(__dirname,'../preview/v0304-p2-hero-cta');
+ const T=await import(pathToFileURL(path.join(base,'three.module.js')));
+ const {buildJumbotron,isRenderedHit}=await import(pathToFileURL(path.join(base,'jumbotron.js')));
+ const textures=Array.from({length:4},()=>new T.Texture());const {group,faces}=buildJumbotron(textures);group.updateMatrixWorld(true);
+ let checks=0;const check=(name,fn)=>{fn();checks++;console.log('PASS '+name);};
+ check('four independent display faces',()=>assert.equal(faces.length,4));
+ check('four independently addressable LED surfaces',()=>assert.equal(new Set(faces.map(f=>f.material.map)).size,4));
+ check('court centred',()=>assert.deepEqual([group.position.x,group.position.z],[0,-29]));
+ const bounds=new T.Box3().setFromObject(group);
+ check('suspended below roof',()=>assert.ok(bounds.max.y<11.375&&bounds.min.y>6));
+ for(let i=0;i<4;i++)check('raycast face '+i,()=>{const a=i*Math.PI/2,origin=new T.Vector3(Math.sin(a)*10,9,-29+Math.cos(a)*10),ray=new T.Raycaster(origin,new T.Vector3(0,9,-29).sub(origin).normalize());assert.equal(ray.intersectObject(group,true)[0].object,faces[i]);});
+ check('behind memorial viewpoint',()=>assert.ok(bounds.min.z>-37.8));
+ check('memorial sightline unobstructed',()=>{const origin=new T.Vector3(0,4.4,-37.8),ray=new T.Raycaster(origin,new T.Vector3(0,7.8,-46.43).sub(origin).normalize());assert.equal(ray.intersectObject(group,true).length,0);});
+ check('no dynamic lights or shadows',()=>{group.traverse(o=>{assert.ok(!o.isLight);assert.ok(!o.castShadow);});});
+ check('modest geometry budget',()=>{let meshes=0;group.traverse(o=>{if(o.isMesh)meshes++;});assert.ok(meshes<=25);});
+ check('clipped shell cannot intercept mobile input',()=>{const m=new T.Mesh(new T.BoxGeometry(),new T.MeshBasicMaterial({clippingPlanes:[new T.Plane(new T.Vector3(0,0,1),4)]}));assert.equal(isRenderedHit({object:m,point:new T.Vector3(0,6.46,-14.08)}),false);assert.equal(isRenderedHit({object:m,point:new T.Vector3(0,0,0)}),true);});
+ console.log(checks+' Jumbotron geometry checks passed. No FPS claim.');
+})().catch(e=>{console.error(e.message);process.exitCode=1;});
