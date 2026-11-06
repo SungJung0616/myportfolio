@@ -18,7 +18,7 @@ const heroFiles = [
   'fonts/bricolage-latin.woff2', 'fonts/manrope-latin.woff2',
   'fonts/Bricolage-OFL.txt', 'fonts/Manrope-OFL.txt',
   'arena-court.js', 'arena-clock.js', 'BufferGeometryUtils.js', 'career-data.js',
-  'game-center.js', 'game-center.css', 'jumbotron.js', 'jumbotron-tour.js', 'team-assets.js',
+  'game-center.js', 'game-center-client.js', 'game-center.css', 'jumbotron.js', 'jumbotron-tour.js', 'team-assets.js',
   'career-gallery.css', 'career-gallery.js', 'career-walk.js', 'contact.css',
   'dice-poster.png', 'exterior-lighting.js', 'exterior.css', 'exterior.js',
   'film-data.js', 'film-entrance.js', 'film.css', 'film.js', 'GLTFLoader.js',
