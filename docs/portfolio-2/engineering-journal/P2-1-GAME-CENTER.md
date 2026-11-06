@@ -157,3 +157,17 @@ After the checkpoint above, the unattended browser tour reached face four, retur
 The final 390px dashboard check exposed intrinsic grid overflow: a wide player table expanded the parent grid and hid the opponent despite a normal document width. Constrained grid tracks and child minimum widths keep overflow inside the statistics region. Hosted readback then showed dialog scrollWidth equal to clientWidth (337px), both matchup columns visible, and document width equal to 390px. No critical console errors were captured.
 
 Hosted Preview: https://6aeb889ace2423bc601421e9--sj-personalportfolio.netlify.app/ (ready, unpromoted). The API exposes eight approved games; Production and V1 published deployment identifiers remain unchanged. The implementation was committed on the feature branch; no Production merge or release was performed.
+
+## Approved release preparation — November 5, 2026 (Pacific)
+
+Later user-approved refinements supersede the earlier tour and memorial design decisions above. The memorial now uses 75% scale at y=7.28; its 24/08 artwork is unchanged. The Playbook uses 70% scale and an 18-degree turn. The right team bench and seats directly behind the board were removed.
+
+The Jumbotron opens directly into its face view, holds each face for 2.8 seconds, and uses a 0.65-second automatic transition. Arrow input changes faces immediately. Compact arrow/dot/close controls sit below the display. Reduced motion disables automatic rotation. English dates and a Unicode-capable player-name font address the reported mixed-language and diacritic issues.
+
+The fourth face now reads the earliest future, reviewed, publication-approved Scheduled record from Notion. Missing tip-off times, unapproved records and expired schedules are withheld; scheduled time is never treated as proof of live play. The HTML dialog uses the same schedule. Sacramento was added to the team-ID registry without introducing licensed logos.
+
+The November 4 Sacramento game was checked against the official NBA box score and stored as 15 participants and three inactive players. Fifteen additive statistical totals matched the source before publication. The November 6 Portland home game was separately checked against the official Lakers schedule. These are reviewed records, not a live sports feed. Season coverage remains explicitly partial after the additional game because the earlier exact-set audit only covered November 2.
+
+Hosted Preview `6aed2725bf2705de6ea4228c` returned nine approved games, the Sacramento 116–103 result, 18 related player records and the Portland schedule. A real Chrome session displayed the player table and Next Game Preview face. The approved resume matched by SHA-256; Preview noindex was retained. Production and V1 were unchanged at this checkpoint.
+
+Release preparation reran 233 deterministic checks: API 35, ingestion 7, geometry 13, tour 30, team registry 34, spatial/clock 13, content 33 and release packaging 68. Production packaging is indexable and uses the approved candidate resume. Physical-device, screen-reader, FPS and GPU measurements remain NOT VERIFIED. Publication authorization does not resolve the previously documented credential-rotation risk. The subsequent merge and actual Production deployment must be verified separately; this entry does not claim they already occurred.

@@ -1,5 +1,5 @@
 'use strict';
-const {approvedGames,player,overview,createCache}=require('./lib/game-center.cjs');
+const {approvedGames,nextGame,player,overview,createCache}=require('./lib/game-center.cjs');
 const {createStore}=require('./lib/notion-store.cjs');
 const cache=createCache();
 const headers={'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','X-Robots-Tag':'noindex'};
@@ -14,6 +14,7 @@ function createHandler({env=process.env,store,sharedCache=cache}={}){return asyn
  const provider=store||createStore({token:env.NOTION_TOKEN,gamesId:env.NOTION_GAMES_SOURCE_ID,playersId:env.NOTION_PLAYERS_SOURCE_ID});
  const snapshot=await sharedCache.get('games',async()=>({pages:await provider.games(),fetchedAt:new Date().toISOString()}));
  const games=approvedGames(snapshot.pages).filter(g=>g.season===season);
+ const next=nextGame(snapshot.pages.filter(p=>(p.properties.Season?.rich_text||[]).map(x=>x.plain_text??x.text?.content??'').join('')===season));
  const clean=g=>{const {approved,...safe}=g;return safe;};
  const common={state:'ready',fetchedAt:snapshot.fetchedAt,source:'NBA.com; reviewed records maintained in Notion',coverage:overview(games).coverage};
  if(action==='boxscore'){
@@ -24,9 +25,9 @@ function createHandler({env=process.env,store,sharedCache=cache}={}){return asyn
  if(players.some(p=>!p.reviewed))return reply(200,{...common,state:'pending-review',game:clean(selected),players:[],message:'Player records are awaiting review.'});
  return reply(200,{...common,game:clean(selected),players:players.map(({reviewed,...p})=>p)});
  }
- if(action==='next')return reply(200,{...common,next:null,message:'A verified next-game schedule is not available.'});
+ if(action==='next')return reply(200,{...common,next,message:next?'Verified schedule; not a live score feed.':'A verified next-game schedule is not available.'});
  if(action==='season')return reply(200,{...common,season:overview(games),playerTotals:null,message:'Cumulative player totals withheld until coverage is reconciled.'});
- return reply(200,{...common,games:action==='latest'?games.slice(0,1).map(clean):games.map(clean),latest:games[0]?clean(games[0]):null,season:overview(games),next:null});
+ return reply(200,{...common,games:action==='latest'?games.slice(0,1).map(clean):games.map(clean),latest:games[0]?clean(games[0]):null,season:overview(games),next});
  }catch{return reply(503,{state:'unavailable',error:'data_temporarily_unavailable',message:'Records could not be loaded. Please try again later.'});}
 };}
 exports.handler=createHandler();exports.createHandler=createHandler;

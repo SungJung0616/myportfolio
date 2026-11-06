@@ -7,6 +7,7 @@ const rows=[
  ['1610612744','Golden State Warriors','GSW',['Warriors']],
  ['1610612746','Los Angeles Clippers','LAC',['LA Clippers','Clippers']],
  ['1610612757','Portland Trail Blazers','POR',['Trail Blazers','Blazers']],
+ ['1610612758','Sacramento Kings','SAC',['Kings']],
  ['1610612762','Utah Jazz','UTA',['Jazz']]
 ];
 export const TEAM_ASSETS=Object.freeze(Object.fromEntries(rows.map(([id,name,abbreviation,aliases])=>[id,Object.freeze({id,name,abbreviation,aliases,assetPath:null,assetSource:null,licenseStatus:'Permission unresolved — abbreviation badge only'})])));

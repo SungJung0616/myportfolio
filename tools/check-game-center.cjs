@@ -1,11 +1,17 @@
 'use strict';
 const assert=require('node:assert/strict');
-const {fields,number,player,approvedGames,overview,validateTotals,createCache}=require('../netlify/functions/lib/game-center.cjs');
+const {fields,number,player,approvedGames,nextGame,overview,validateTotals,createCache}=require('../netlify/functions/lib/game-center.cjs');
 const {createHandler}=require('../netlify/functions/game-center.js');
 const rich=s=>({rich_text:[{plain_text:s}]});
 const game=(id='0022600001',approved=true)=>({id:'page-'+id,last_edited_time:'2026-11-02T00:00:00Z',properties:{'NBA Game ID':rich(id),Season:rich('2026-27'),Competition:{select:{name:'Regular Season'}},'Game Date PT':{date:{start:'2026-10-01'}},Opponent:rich('Synthetic Test Opponent'),'Game Status':{select:{name:'Final'}},'LAL PTS':{number:100},'OPP PTS':{number:90},Source:{url:'https://www.nba.com/game/test-'+id+'/box-score'},'Publication Approved':{checkbox:approved},Review:{select:{name:'검토 완료'}}}});
 let count=0;const check=(label,fn)=>{fn();count++;console.log('PASS '+label);};
 (async()=>{
+ const scheduled=()=>{const g=game();g.properties['Game Status'].select.name='Scheduled';g.properties['Game Date PT'].date.start='2026-11-06T19:00:00-08:00';return g;};
+ const scheduleNow=Date.parse('2026-11-05T12:00:00-08:00');
+ check('approved future schedule selected',()=>assert.equal(nextGame([scheduled()],scheduleNow).status,'Scheduled'));
+ check('unapproved schedule withheld',()=>{const g=scheduled();g.properties['Publication Approved'].checkbox=false;assert.equal(nextGame([g],scheduleNow),null);});
+ check('expired schedule not presented as live',()=>assert.equal(nextGame([scheduled()],Date.parse('2026-11-07T12:00:00Z')),null));
+ check('unknown tipoff withheld',()=>{const g=scheduled();g.properties['Game Date PT'].date.start='2026-11-06';assert.equal(nextGame([g],scheduleNow),null);});
  check('missing is null',()=>assert.equal(number(undefined),null));
  check('zero remains zero',()=>assert.equal(number(0),0));
  check('string is not silently a number',()=>assert.equal(number('0'),null));

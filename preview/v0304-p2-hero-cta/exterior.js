@@ -229,7 +229,7 @@ buildArenaCourt({scene,box,mesh,tex,M});
 // Seating stays low at the outer edges, leaving broad circulation bands.
 const seats=[],backs=[];
 for(let row=0;row<3;row++){const y=.65+row*.48,z=-42-row*.7;box(20,.42,.76,4,y-.12,z,interiorCream,.12);for(let j=0;j<35;j++){const x=(j-17)*.77;if(x<-6.6)continue;seats.push([x,y+.13,z]);backs.push([x,y+.43,z-.18]);}}
-for(const side of [-1,1])for(let row=0;row<2;row++){const x=side*(16+row*.7);box(.75,.45,15,x,.55+row*.5,-29,interiorCream,.1);for(let j=0;j<18;j++){seats.push([x,.87+row*.5,-35.3+j*.75]);backs.push([x+side*.17,1.17+row*.5,-35.3+j*.75,side]);}}
+for(const side of [-1,1])for(let row=0;row<2;row++){const x=side*(16+row*.7);box(.75,.45,15,x,.55+row*.5,-29,interiorCream,.1);for(let j=0;j<18;j++){const z=-35.3+j*.75;if(side===1&&z<-33.3)continue;seats.push([x,.87+row*.5,z]);backs.push([x+side*.17,1.17+row*.5,z,side]);}}
 function batch(geo,material,positions){const im=new T.InstancedMesh(geo,material,positions.length),o=new T.Object3D();positions.forEach(([x,y,z,side],i)=>{o.position.set(x,y,z);o.rotation.set(0,side?Math.PI/2:0,0);o.updateMatrix();im.setMatrixAt(i,o.matrix);});im.castShadow=true;im.receiveShadow=true;scene.add(im);}
 batch(new RoundedBoxGeometry(.55,.12,.48,3,.055),M.purple,seats);batch(new RoundedBoxGeometry(.53,.47,.14,3,.065),M.purple,backs);
 // Six existing shadowless lights, with recessed ivory diffusers rather than gold glow.
@@ -269,7 +269,7 @@ const careerWalk=createCareerWalk({stops,railElement,isReduced:()=>reduce.checke
 const stageLabels=['stage','headline','hint'].map(id=>document.getElementById(id)),stopButtons=[...document.querySelectorAll('[data-stop]')];
 let lastUiStop=-1,lastUiGoal=-1;
 function tick(now){
- requestAnimationFrame(tick);const dt=Math.min(.05,(now-last)/1000);last=now;
+ requestAnimationFrame(tick);const cameraDt=Math.max(0,(now-last)/1000),dt=Math.min(.05,cameraDt);last=now;
  const railEnd=railElement.offsetHeight-innerHeight,goal=welcomeIntro.arrivalTarget??Math.max(0,Math.min(1,scrollY/railEnd));
  if(!dialog.open&&!projectSpace.dialog.open&&!gameCenter.dialog.open&&!gameCenter.touring&&!welcomeIntro.holdingCamera){if(scrollY>=railEnd)progress=1;else progress+=(goal-progress)*(1-Math.exp(-dt*8));}
  const reading=document.body.classList.contains('reading-mode');
@@ -295,7 +295,7 @@ function tick(now){
  if(i!==lastUiStop){const stop=i>=0?stops[i]:null,careerIndex=stop?.careerIndex;careerActions.hidden=!Number.isInteger(careerIndex);careerActions.querySelectorAll('[data-career]').forEach(b=>{b.hidden=Number(b.dataset.career)!==careerIndex;b.textContent='Explore this experience';b.setAttribute('aria-label','Explore '+career[Number(b.dataset.career)].role+' at '+career[Number(b.dataset.career)].company);});projectControls.hidden=stop?.s!==.83;stageLabels.forEach((node,j)=>node.textContent=(i>=0?text[i]:['Career Walk','','Scroll to explore.'])[j]);stopButtons.forEach(b=>b.setAttribute('aria-current',String(Number(b.dataset.stop)===stop?.s)));lastUiStop=i;}
  if(Math.abs(goal-lastUiGoal)>.00001){progressBar.style.width=goal*100+'%';lastUiGoal=goal;}
  if(window.inspectionCamera){camera.position.fromArray(window.inspectionCamera.p);camera.lookAt(new T.Vector3(...window.inspectionCamera.t));camera.fov=65;camera.updateProjectionMatrix();}
- gameCenter.applyCamera(dt,reduce.checked);
+ gameCenter.applyCamera(cameraDt,reduce.checked);
  arenaClock.update();weather.update(p,dt);updateCareerLighting(dt);renderer.render(scene,camera);readingFrameCached=reading;
  window.arenaDiagnostics={progress:p,camera:camera.position.toArray(),filmDoorOpen:projectSpace.filmEntrance.openFraction,drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles,contextLost:renderer.getContext().isContextLost(),rendering:!reading};
 }

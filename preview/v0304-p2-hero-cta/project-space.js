@@ -2,11 +2,8 @@ import * as T from './three.module.js';
 import {createInteractivePlaybook} from './interactive-playbook.js';
 import {createFilmEntrance} from './film-entrance.js';
 export function buildProjectSpace({scene,box,mesh,sign,tex,M,interiorCream}){
- const bench=new T.Group();bench.position.set(14,0,-29);bench.rotation.y=-Math.PI/2;scene.add(bench);
- box(6.1,.18,.9,0,.85,0,M.purple,.12,bench);box(6.1,.8,.16,0,1.26,-.4,M.purple,.1,bench);
- for(const x of [-2.5,0,2.5])box(.16,.52,.65,x,.51,0,M.deep,.04,bench);
- for(let i=0;i<5;i++)box(.94,.11,.75,-2.25+i*1.12,.99,0,interiorCream,.09,bench);
- const board=new T.Group();board.position.set(14,0,-36);board.rotation.y=-Math.PI/2;scene.add(board);
+ // Keep the right goal and Playbook circulation area free of the former team bench.
+ const board=new T.Group();board.position.set(14,0,-36);board.scale.setScalar(.7);board.rotation.y=-Math.PI/2+Math.PI/10;scene.add(board);
  // A physical coaching surface: a quiet court, role magnets and one illustrative pass.
  box(6.8,4.3,.32,0,3.1,-.02,M.deep,.14,board);
  box(6.58,4.08,.10,0,3.1,.115,M.gold,.06,board);
@@ -51,8 +48,10 @@ export function buildProjectSpace({scene,box,mesh,sign,tex,M,interiorCream}){
  for(const x of [-2.5,2.5]){box(.17,1.55,.17,x,.84,-.03,M.deep,.035,board);box(.8,.13,.85,x,.35,0,M.deep,.05,board);}
  box(5.12,.12,.12,0,.64,-.03,M.deep,.03,board);
  const cardMeshes=[];
- box(11.4,4.35,.42,0,7.8,-46.67,M.deep,.18);
- box(11.12,4.08,.08,0,7.8,-46.42,M.gold,.06);
+ // 55% of the clear height above the third seating row (top 2.275, roof 11.375).
+ const memorial=new T.Group();memorial.position.set(0,7.28,-46.43);memorial.scale.setScalar(.75);scene.add(memorial);
+ box(11.4,4.35,.42,0,0,-.24,M.deep,.18,memorial);
+ box(11.12,4.08,.08,0,0,.01,M.gold,.06,memorial);
  const scoreMap=tex(1600,600,c=>{
   c.fillStyle='#30223f';c.fillRect(0,0,1600,600);c.textAlign='center';
   c.fillStyle='#21192c';c.fillRect(110,139,440,282);c.fillRect(1050,139,440,282);c.fillRect(605,161,390,174);
@@ -80,7 +79,7 @@ export function buildProjectSpace({scene,box,mesh,sign,tex,M,interiorCream}){
   c.fillStyle='#b8a5c6';c.font='21px Arial';c.fillText('ILLUSTRATIVE GAME · A QUIET TRIBUTE',800,558);
  });
  // An unlit display retains deep purple blacks under the bright court lighting.
- mesh(new T.PlaneGeometry(10.9,3.9),new T.MeshBasicMaterial({map:scoreMap,toneMapped:false}),0,7.8,-46.37);
+ mesh(new T.PlaneGeometry(10.9,3.9),new T.MeshBasicMaterial({map:scoreMap,toneMapped:false}),0,0,.06,memorial);
  // A 12-seat screening room with a central aisle, not a media player.
  const room=new T.Group();room.position.z=-10.2;scene.add(room);const wall=M.purple.clone();wall.color.set('#65516e');const dark=M.deep.clone();dark.color.set('#30253d');
  box(9.6,.16,9.6,-12,.25,-41.6,interiorCream,.05,room);

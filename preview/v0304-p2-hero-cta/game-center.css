@@ -32,6 +32,20 @@
 body.jumbotron-touring footer{visibility:hidden}
 body.jumbotron-touring #location-dots{visibility:hidden}
 body.jumbotron-touring .gc-tour{bottom:20px}
+.gc-tour .gc-icon{font-size:24px;line-height:1;min-width:48px}
+.gc-tour .gc-demo{display:block;margin:24px auto 0}
+/* Minimal cinematic controls: no large surface in front of the display. */
+body.jumbotron-touring .gc-tour{width:auto;max-width:calc(100vw - 24px);padding:0;border:0;border-radius:0;background:none;box-shadow:none;bottom:max(16px,env(safe-area-inset-bottom));pointer-events:none}
+.gc-tour>div{align-items:center;gap:8px;flex-wrap:nowrap}
+.gc-tour .gc-icon{width:44px;height:44px;min-width:44px;padding:0;border:0;border-radius:50%;background:#493958e8;color:#f2eddf;font:24px/1 Arial,sans-serif;pointer-events:auto}
+.gc-tour .gc-dots{display:flex;gap:5px;align-items:center;padding:0 2px}
+.gc-dots i{width:6px;height:6px;border-radius:50%;background:#8b769d}
+.gc-dots i.active{background:#e7c578}
+.gc-tour .gc-secondary{display:block;margin:6px auto 0;padding:4px 10px;border:0;background:#20172edb;border-radius:12px;font-size:11px;min-height:32px;pointer-events:auto}
+.gc-tour .gc-demo{pointer-events:auto}
+.gc-tour .gc-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.gc-tour button[hidden]{display:none}
+body.jumbotron-touring .gc-tour{bottom:auto;padding:6px 10px;background:rgba(32,23,46,.94);border-radius:32px;box-shadow:0 4px 14px #0002}
 /* Keep the mobile location rail off the display during its invitation view.
    Main navigation and the explicit Game Center buttons remain available. */
 @media(max-width:650px){body.jumbotron-cue #location-dots{visibility:hidden;pointer-events:none;}}
