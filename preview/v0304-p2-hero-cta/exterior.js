@@ -11,6 +11,8 @@ import {createCareerWalk} from './career-walk.js';
 import {GLTFLoader} from './GLTFLoader.js';
 import {buildProjectSpace} from './project-space.js?v=film-entrance-plaque-1';
 import {buildArenaCourt} from './arena-court.js';
+import {createArenaClock} from './arena-clock.js';
+import {createGameCenter} from './game-center.js';
 import {layout,rail} from './spatial-data.js';
 const canvas=document.querySelector('#world'),scene=new T.Scene();
 scene.background=new T.Color('#cbdfea');scene.fog=new T.Fog('#cbdfea',160,300);
@@ -227,7 +229,7 @@ buildArenaCourt({scene,box,mesh,tex,M});
 // Seating stays low at the outer edges, leaving broad circulation bands.
 const seats=[],backs=[];
 for(let row=0;row<3;row++){const y=.65+row*.48,z=-42-row*.7;box(20,.42,.76,4,y-.12,z,interiorCream,.12);for(let j=0;j<35;j++){const x=(j-17)*.77;if(x<-6.6)continue;seats.push([x,y+.13,z]);backs.push([x,y+.43,z-.18]);}}
-for(const side of [-1,1])for(let row=0;row<2;row++){const x=side*(16+row*.7);box(.75,.45,15,x,.55+row*.5,-29,interiorCream,.1);for(let j=0;j<18;j++){seats.push([x,.87+row*.5,-35.3+j*.75]);backs.push([x+side*.17,1.17+row*.5,-35.3+j*.75,side]);}}
+for(const side of [-1,1])for(let row=0;row<2;row++){const x=side*(16+row*.7);box(.75,.45,15,x,.55+row*.5,-29,interiorCream,.1);for(let j=0;j<18;j++){const z=-35.3+j*.75;if(side===1&&z<-33.3)continue;seats.push([x,.87+row*.5,z]);backs.push([x+side*.17,1.17+row*.5,z,side]);}}
 function batch(geo,material,positions){const im=new T.InstancedMesh(geo,material,positions.length),o=new T.Object3D();positions.forEach(([x,y,z,side],i)=>{o.position.set(x,y,z);o.rotation.set(0,side?Math.PI/2:0,0);o.updateMatrix();im.setMatrixAt(i,o.matrix);});im.castShadow=true;im.receiveShadow=true;scene.add(im);}
 batch(new RoundedBoxGeometry(.55,.12,.48,3,.055),M.purple,seats);batch(new RoundedBoxGeometry(.53,.47,.14,3,.065),M.purple,backs);
 // Six existing shadowless lights, with recessed ivory diffusers rather than gold glow.
@@ -239,6 +241,8 @@ for(const x of [-8,8])for(const z of [-21,-30,-39]){
 }
 
 const projectSpace=buildProjectSpace({scene,box,mesh,sign,tex,M,interiorCream});
+const arenaClock=createArenaClock(scene);
+const gameCenter=createGameCenter({scene,canvas,camera});
 const film=createFilmArchive({camera,renderer,screen:projectSpace.mediaScreen,room:projectSpace.room,onExit:()=>{const b=document.querySelector('[data-stop="0.74"]');b.click();b.focus({preventScroll:true});}});
 canvas.addEventListener('click',e=>{panelRay.setFromCamera(new T.Vector2(e.clientX/innerWidth*2-1,1-e.clientY/innerHeight*2),camera);const hit=panelRay.intersectObjects(scene.children,true)[0];if(hit)projectSpace.handleHit(hit);});
 const hallObjects=scene.children.filter(o=>!beforeHall.has(o)&&!persistentGallery.has(o));let insideMode=null;function setSpatialView(p){const next=p>.23;if(next===insideMode)return;insideMode=next;hallObjects.forEach(o=>o.visible=next);shellMaterials.forEach(m=>{m.clippingPlanes=next?[shellCut]:[];m.needsUpdate=true;});}setSpatialView(0);window.galleryState=()=>careerMeshes.map((m,i)=>({visible:m.visible&&m.parent.visible,textureReady:!!m.material.map?.image,opacity:m.material.opacity,selected:selectedCareer===i,hovered:hoveredCareer===i,light:careerLights[i].intensity,emphasis:careerRims[i].material.emissiveIntensity}));
@@ -253,7 +257,7 @@ new GLTFLoader().load('sung-miniature-v1.glb',g=>{sung=g.scene;sung.scale.setSca
 // Continuous rail; welcome captions never own camera or scroll input.
 window.leaveFilmRoom=()=>film.exit({returnToCourt:false});const stops=rail;window.spatialLayout=layout;window.cameraRail=rail;
 const smooth=t=>t*t*(3-2*t);let progress=0,last=performance.now();const reduce=document.querySelector('#reduce');reduce.checked=matchMedia('(prefers-reduced-motion: reduce)').matches;
-function pose(p){let a=stops.findIndex((s,i)=>i<stops.length-1&&p<=stops[i+1].s);if(a<0)a=stops.length-2;const b=a+1,u=(p-stops[a].s)/(stops[b].s-stops[a].s),t=smooth(Math.max(0,Math.min(1,u)));camera.position.fromArray(stops[a].p).lerp(new T.Vector3(...stops[b].p),t);if(stops[a].via){const v=new T.Vector3(...stops[a].via);camera.position.copy(t<.5?new T.Vector3(...stops[a].p).lerp(v,t*2):v.lerp(new T.Vector3(...stops[b].p),(t-.5)*2));}const target=new T.Vector3(...stops[a].t).lerp(new T.Vector3(...stops[b].t),t);camera.fov=T.MathUtils.lerp(stops[a].fov,stops[b].fov,t);if(innerWidth<650){if(a===0){const k=1-t;camera.position.x*=.65;camera.position.y+=21*k;camera.position.z+=76*k+4*t;}else if(a===1){camera.position.x*=.65;camera.position.z+=4*(1-t);}else{camera.fov+=10;}const weight=smooth(Math.max(0,1-Math.abs(p-.64)/.06));camera.position.lerp(new T.Vector3(0,6.4,-13.8),weight);target.lerp(new T.Vector3(0,2.3,-32),weight);camera.fov=T.MathUtils.lerp(camera.fov,132,weight);camera.fov=T.MathUtils.lerp(camera.fov,116,smooth(Math.max(0,1-Math.abs(p-.88)/.04)));camera.fov=T.MathUtils.lerp(camera.fov,116,smooth(Math.max(0,(p-.94)/.06)));}const galleryWeight=smooth(Math.min(1,Math.max(0,(p-.30)/.08),Math.max(0,(.55-p)/.04)));if(galleryWeight>0){const fitFov=Math.max(43,T.MathUtils.radToDeg(2*Math.atan(2.15/(2*4.18*camera.aspect*.78))));camera.fov=T.MathUtils.lerp(camera.fov,fitFov,galleryWeight);}camera.updateProjectionMatrix();camera.lookAt(target);}
+function pose(p){let a=stops.findIndex((s,i)=>i<stops.length-1&&p<=stops[i+1].s);if(a<0)a=stops.length-2;const b=a+1,u=(p-stops[a].s)/(stops[b].s-stops[a].s),t=smooth(Math.max(0,Math.min(1,u)));camera.position.fromArray(stops[a].p).lerp(new T.Vector3(...stops[b].p),t);if(stops[a].via){const v=new T.Vector3(...stops[a].via);camera.position.copy(t<.5?new T.Vector3(...stops[a].p).lerp(v,t*2):v.lerp(new T.Vector3(...stops[b].p),(t-.5)*2));}const target=new T.Vector3(...stops[a].t).lerp(new T.Vector3(...stops[b].t),t);camera.fov=T.MathUtils.lerp(stops[a].fov,stops[b].fov,t);if(innerWidth<650){if(a===0){const k=1-t;camera.position.x*=.65;camera.position.y+=21*k;camera.position.z+=76*k+4*t;}else if(a===1){camera.position.x*=.65;camera.position.z+=4*(1-t);}else{camera.fov+=10;}const weight=smooth(Math.max(0,1-Math.abs(p-.64)/.045));camera.position.lerp(new T.Vector3(0,6.4,-13.8),weight);target.lerp(new T.Vector3(0,2.3,-32),weight);camera.fov=T.MathUtils.lerp(camera.fov,132,weight);camera.fov=T.MathUtils.lerp(camera.fov,116,smooth(Math.max(0,1-Math.abs(p-.88)/.04)));camera.fov=T.MathUtils.lerp(camera.fov,116,smooth(Math.max(0,(p-.94)/.06)));}const jumbotronWeight=smooth(Math.max(0,1-Math.abs(p-.69)/.045));if(jumbotronWeight>0){const fit=Math.max(56,T.MathUtils.radToDeg(2*Math.atan(6.5/(2*6.89*camera.aspect*.86))));camera.fov=T.MathUtils.lerp(camera.fov,fit,jumbotronWeight);}const galleryWeight=smooth(Math.min(1,Math.max(0,(p-.30)/.08),Math.max(0,(.55-p)/.04)));if(galleryWeight>0){const fitFov=Math.max(43,T.MathUtils.radToDeg(2*Math.atan(2.15/(2*4.18*camera.aspect*.78))));camera.fov=T.MathUtils.lerp(camera.fov,fitFov,galleryWeight);}camera.updateProjectionMatrix();camera.lookAt(target);}
 
 window.checkEnclosure=()=>{const ray=new T.Raycaster(),leaks=[];let rays=0;scene.updateMatrixWorld(true);camera.updateMatrixWorld(true);for(let y=-.9;y<=.9;y+=.15)for(let x=-.9;x<=.9;x+=.15){ray.setFromCamera(new T.Vector2(x,y),camera);const hits=ray.intersectObjects(scene.children,true);rays++;if(!hits.length||hits[0].object.name==='outside-ground')leaks.push([x,y]);}return {rays,leaks};};
 let readingFrameCached=false;
@@ -265,9 +269,9 @@ const careerWalk=createCareerWalk({stops,railElement,isReduced:()=>reduce.checke
 const stageLabels=['stage','headline','hint'].map(id=>document.getElementById(id)),stopButtons=[...document.querySelectorAll('[data-stop]')];
 let lastUiStop=-1,lastUiGoal=-1;
 function tick(now){
- requestAnimationFrame(tick);const dt=Math.min(.05,(now-last)/1000);last=now;
+ requestAnimationFrame(tick);const cameraDt=Math.max(0,(now-last)/1000),dt=Math.min(.05,cameraDt);last=now;
  const railEnd=railElement.offsetHeight-innerHeight,goal=welcomeIntro.arrivalTarget??Math.max(0,Math.min(1,scrollY/railEnd));
- if(!dialog.open&&!projectSpace.dialog.open&&!welcomeIntro.holdingCamera){if(scrollY>=railEnd)progress=1;else progress+=(goal-progress)*(1-Math.exp(-dt*8));}
+ if(!dialog.open&&!projectSpace.dialog.open&&!gameCenter.dialog.open&&!gameCenter.touring&&!welcomeIntro.holdingCamera){if(scrollY>=railEnd)progress=1;else progress+=(goal-progress)*(1-Math.exp(-dt*8));}
  const reading=document.body.classList.contains('reading-mode');
  welcomeIntro.update(progress,goal,dt,reduce.checked);
  const nearest=stops.reduce((a,b)=>Math.abs(a.s-goal)<Math.abs(b.s-goal)?a:b).s,p=reduce.checked?nearest:progress;
@@ -275,6 +279,7 @@ function tick(now){
  // Reconcile Film UI before sleeping; keep rendering while editorial content only
  // partially covers the arena so wheel re-entry never exposes stale controls/frames.
  film.update(p,{allowEntry:!reading});
+ gameCenter.update(p);
  if(reading&&readingFrameCached&&Math.abs((window.filmState?.light??15)-15)<.05){if(window.arenaDiagnostics){window.arenaDiagnostics.progress=p;window.arenaDiagnostics.rendering=false;}return;}
  setSpatialView(p);pose(p);camera.clearViewOffset();applyHero(camera,p);
  if(p>.95)film.applyCamera(smooth(Math.min(1,(p-.95)/.05)));
@@ -285,11 +290,13 @@ function tick(now){
  const isCareer=Number.isInteger(stops[nearestIndex].careerIndex),settledCareer=isCareer&&Math.abs(p-stops[nearestIndex].s)<.002&&Math.abs(goal-stops[nearestIndex].s)<.003;
  const i=isCareer&&!settledCareer?-2:nearestIndex;
  document.body.classList.toggle('career-view',p>.31&&p<.535);
+ document.body.classList.toggle('jumbotron-cue',p>.665&&p<.715);
  document.body.classList.toggle('tunnel',p>.34);
  if(i!==lastUiStop){const stop=i>=0?stops[i]:null,careerIndex=stop?.careerIndex;careerActions.hidden=!Number.isInteger(careerIndex);careerActions.querySelectorAll('[data-career]').forEach(b=>{b.hidden=Number(b.dataset.career)!==careerIndex;b.textContent='Explore this experience';b.setAttribute('aria-label','Explore '+career[Number(b.dataset.career)].role+' at '+career[Number(b.dataset.career)].company);});projectControls.hidden=stop?.s!==.83;stageLabels.forEach((node,j)=>node.textContent=(i>=0?text[i]:['Career Walk','','Scroll to explore.'])[j]);stopButtons.forEach(b=>b.setAttribute('aria-current',String(Number(b.dataset.stop)===stop?.s)));lastUiStop=i;}
  if(Math.abs(goal-lastUiGoal)>.00001){progressBar.style.width=goal*100+'%';lastUiGoal=goal;}
  if(window.inspectionCamera){camera.position.fromArray(window.inspectionCamera.p);camera.lookAt(new T.Vector3(...window.inspectionCamera.t));camera.fov=65;camera.updateProjectionMatrix();}
- weather.update(p,dt);updateCareerLighting(dt);renderer.render(scene,camera);readingFrameCached=reading;
+ gameCenter.applyCamera(cameraDt,reduce.checked);
+ arenaClock.update();weather.update(p,dt);updateCareerLighting(dt);renderer.render(scene,camera);readingFrameCached=reading;
  window.arenaDiagnostics={progress:p,camera:camera.position.toArray(),filmDoorOpen:projectSpace.filmEntrance.openFraction,drawCalls:renderer.info.render.calls,triangles:renderer.info.render.triangles,contextLost:renderer.getContext().isContextLost(),rendering:!reading};
 }
 async function prepareScene(){const start=performance.now();const textures=new Set();scene.traverse(o=>{for(const m of (Array.isArray(o.material)?o.material:[o.material]))if(m)for(const k of ['map','emissiveMap','alphaMap'])if(m[k])textures.add(m[k]);});textures.forEach(t=>renderer.initTexture(t));const target=new T.WebGLRenderTarget(64,64);renderer.setRenderTarget(target);for(const p of [0,.26]){setSpatialView(p);pose(p);await renderer.compileAsync(scene,camera);renderer.render(scene,camera);}renderer.setRenderTarget(null);target.dispose();setSpatialView(0);pose(0);window.preparation={milliseconds:performance.now()-start,textures:textures.size};window.sceneReady=true;last=performance.now();requestAnimationFrame(tick);}prepareScene().catch(e=>{document.querySelector('#failure').hidden=false;console.error(e);});
