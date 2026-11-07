@@ -79,3 +79,71 @@ Token rotation was explicitly excluded by the user; prior disclosure remains a
 security limitation, not a resolved finding. No paid services were introduced.
 
 Raw screenshots/profiling observations are retained locally, outside Git.
+
+## Final QA follow-up — 2026-11-06
+
+This follow-up continues Draft PR #4; it does not repeat the completed renderer
+optimization or change geometry, camera paths, visual quality, or content.
+
+### Confirmed layout-shift causes and correction
+
+The local observer now records source elements and standard CLS session windows
+(one-second gaps, five-second maximum), rather than only an unbounded sum.
+At 1280 x 720, a fresh reproduction measured 0.325929: `header.build-intro`
+contributed 0.305556 while its asynchronously inserted stylesheet was pending;
+the Atmosphere control's late Hero-state placement contributed 0.019960.
+At 390 x 844, late Contact styles also exposed `nav.contact-review` briefly.
+
+Work and Contact styles now load in the document head before their elements are
+created. Initial home Hero state is applied before Atmosphere mounting rather
+than waiting for the first WebGL frame. Duplicate dynamic stylesheet insertions
+were removed. Remaining tiny shifts are font-metric changes, not hidden by the
+measurement harness. The harness output is an inert JSON script, not an overlay.
+
+### Repeatable local comparison
+
+Baseline: preserved package from `7a282c8`. Candidate: the scoped changes above.
+Same in-app Chromium browser, 390 x 844 viewport, same Hero camera, no CPU/network
+throttling, three reloads per version. These are desktop-hosted mobile-viewport
+tests, not physical-phone measurements. Cache was not forcibly cleared; timing
+variation is expected. Runs with unrelated user input were discarded.
+
+| Metric | Before, runs 1 / 2 / 3 | After, runs 1 / 2 / 3 |
+| --- | --- | --- |
+| CLS | 0.501039 / 0.102935 / 0.501039 | 0.000215 / 0.000215 / 0.000215 |
+| Hero-description LCP, ms | 928 / 796 / 760 | 908 / 972 / 768 |
+| Load event, ms | 648.8 / 511.6 / 503.6 | 729.7 / 672.3 / 510.8 |
+| Mean RAF interval, ms (last 600 samples) | 7.050 / 7.027 / 7.084 | 7.050 / 7.061 / 7.050 |
+| p95 RAF interval, ms | 7.1 / 7.0 / 7.1 | 7.0 / 7.1 / 7.0 |
+
+Desktop spot check after the Work/Hero correction: CLS 0.0000196. No LCP/FPS
+improvement is claimed. RAF cadence is not GPU frame completion time. The
+render-blocking CSS trade-off removes visible unstyled content; throttled loading
+still needs validation before a final performance sign-off.
+
+Actual mobile Jumbotron input observations after the correction: entry event
+96–104 ms; next-face event 16 ms; previous-face event 32–40 ms (Event Timing
+durations, not a field INP score). Forward/reverse face changes and automatic
+rotation worked. Playbook opened with Packing Cover, QR, and Coupang in order.
+
+### Preview-only obstruction
+
+The PR alias injects a `Netlify Drawer` iframe from `app.netlify.com/cdp/`.
+Its observed desktop rectangle was x=242.5, y=672, width=780, height=48; its
+embedded document was an error page. The same deploy's immutable permalink had
+no Drawer iframe. Use the deploy permalink for unobstructed review. No CSP
+relaxation, application CSS workaround, or Production setting change was made.
+See [Netlify's troubleshooting guidance](https://docs.netlify.com/deploy/review-deploys/netlify-drawer-for-feedback/troubleshoot-the-netlify-drawer/).
+
+### Validation and remaining gate
+
+All 233 existing focused checks, the request/cache checks, 4,002 camera-pose
+comparisons, and new initial-style/state assertions passed. Both packages built
+twice; the approved resume and indexing checks passed. The first RC1 invocation
+omitted `--resume-candidate` and correctly rejected the candidate PDF against the
+legacy expectation; rerunning with the actual release option passed all 68 checks.
+
+CPU/network throttling: **NOT VERIFIED**. Native Chrome DevTools access timed out
+at the computer-control approval step. Physical mobile, GPU memory/time, field
+INP, and screen-reader tests remain **NOT VERIFIED**. This is not unconditional
+Production performance approval; the throttled mobile gate remains outstanding.

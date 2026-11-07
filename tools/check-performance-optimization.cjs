@@ -31,6 +31,14 @@ const {pathToFileURL}=require('node:url');
  const gc=fs.readFileSync('preview/v0304-p2-hero-cta/game-center.js','utf8');
  assert.ok(gc.includes('faceKeys[i]===key'));
  assert.ok(gc.includes('document.fonts?.ready.then(()=>paintFaces(true))'));
+ const html=fs.readFileSync('preview/v0304-p2-hero-cta/index.html','utf8');
+ for(const css of ['project-showcase.css','contact.css']) { const at=html.indexOf(`href="${css}"`); assert.ok(at>=0&&at<html.indexOf('</head>')); }
+ assert.ok(!fs.readFileSync('preview/v0304-p2-hero-cta/project-showcase.js','utf8').includes("document.createElement('link')"));
+ assert.ok(!fs.readFileSync('preview/v0304-p2-hero-cta/navigation.js','utf8').includes("document.createElement('link')"));
+ const hero=fs.readFileSync('preview/v0304-p2-hero-cta/hero.js','utf8');
+ const initialState=hero.indexOf("classList.toggle('hero-active'");
+ assert.ok(initialState>=0&&initialState<hero.indexOf("document.createElement('section')"));
+ console.log('PASS: initial Work/Contact styles and Hero state precede visible component mounting.');
  const a=fs.readFileSync('.netlify/portfolio-2-preview/resume/Sung_Jung_Resume.pdf');
  assert.ok(a.equals(fs.readFileSync('.netlify/portfolio-2-production/resume/Sung_Jung_Resume.pdf')));
  console.log('PASS: request coalescing (2 concurrent -> 1), cache hit (1 -> 0), expiry, refresh, failure retry, cancellation, vector reuse, diagnostics reuse, hidden-tab guard, face invalidation, font refresh, resume identity.');
