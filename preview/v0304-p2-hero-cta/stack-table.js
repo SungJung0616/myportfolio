@@ -32,9 +32,23 @@ export function createStackTable(section){
  table.append(detail);
  const note=el('p','Element numbers organize this collection. Experience context describes documented use, not a proficiency score.','stack-footnote');
  section.replaceChildren(header,legend,selection,table,note,announcement);
+ const mobile=matchMedia('(max-width:600px)');
+ const tiles=Array.from(table.querySelectorAll('.stack-element'));
+ let selectedButton=null;
+ function placeDetail(){
+  if(mobile.matches&&selectedButton){
+   const nextRow=Math.min(tiles.length,(Math.floor(tiles.indexOf(selectedButton)/3)+1)*3);
+   table.insertBefore(detail,tiles[nextRow]||null);
+  }else table.append(detail);
+  selection.textContent=mobile.matches?'Select a card to see its story directly below.':'Select an element. Its story appears below the table on smaller screens.';
+ }
+ mobile.addEventListener('change',placeDetail);
+ placeDetail();
 
  function select(item,button){
   const savedY=scrollY;
+  const buttonTop=button.getBoundingClientRect().top;
+  selectedButton=button;
   table.querySelectorAll('.stack-element').forEach(tile=>tile.setAttribute('aria-pressed',String(tile===button)));
   body.replaceChildren();detail.dataset.category=item.category;detail.dataset.state='selected';
   const top=el('div',null,'stack-detail-top'),symbol=el('span',item.symbol,'stack-detail-symbol'),names=el('div');
@@ -47,9 +61,11 @@ export function createStackTable(section){
   if(item.boundary){const scope=el('details',null,'stack-detail-scope');scope.append(el('summary','Context & scope'),el('p',item.boundary));body.append(scope);}
   if(item.links.length){const links=el('div',null,'stack-detail-links');for(const [label,href]of item.links){const a=el('a',label);a.href=href;if(!href.startsWith('#')){a.target='_blank';a.rel='noopener noreferrer';a.setAttribute('aria-label',label+' (opens in a new tab)');}links.append(a);}body.append(links);}
   detail.scrollTop=0;
-  selection.textContent=item.name+' selected. Details are below the table on smaller screens.';
+  placeDetail();
+  selection.textContent=item.name+(mobile.matches?' selected. Details are directly below this row.':' selected. Details are below the table on smaller screens.');
   announcement.textContent=item.name+' selected. '+item.context+'. Details updated.';
   // Selection updates the existing region, retaining focus and page position.
-  if(scrollY!==savedY)scrollTo({top:savedY,behavior:'instant'});
+  const targetY=mobile.matches?scrollY+button.getBoundingClientRect().top-buttonTop:savedY;
+  if(scrollY!==targetY)scrollTo({top:targetY,behavior:'instant'});
  }
 }

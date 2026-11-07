@@ -1,10 +1,7 @@
 import {projects, featuredWorkIds, automationContext, selectProject} from './project-catalog.js';
 import {createProjectMediaFigure, projectMedia, pauseProjectMedia, releaseMediaWithin} from './project-media.js';
 
-const style = document.createElement('link');
-style.rel = 'stylesheet';
-style.href = new URL('./project-showcase.css', import.meta.url).href;
-document.head.append(style);
+// Render-blocking stylesheet is declared in index.html before this content exists.
 
 function element(tag, className, text) {
   const node = document.createElement(tag);

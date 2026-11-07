@@ -1,6 +1,6 @@
 import {createStackTable} from './stack-table.js';
 import {createProjectShowcase,openWorkProject} from './project-showcase.js';
-const contactStyle=document.createElement('link');contactStyle.rel='stylesheet';contactStyle.href=new URL('./contact.css',import.meta.url).href;document.head.append(contactStyle);
+// Contact styles are loaded by index.html before navigation content is mounted.
 const destinations=[['home','Home Court',0],['career','Career Walk',.38],['playbook','Playbook',.83],['film','The Film Lab',1],['stack','Stack'],['work','Work'],['contact','Contact']];
 const header=document.createElement('div');header.id='site-header';header.setAttribute('role','banner');header.innerHTML='<a class="site-name" href="#home">SUNG JUNG</a><div class="local-info">Gardena, CA <span class="local-clock"></span><span class="weather"> · Weather unavailable · —</span></div><span class="specialty">Business Systems &amp; Operations Improvement</span><button id="menu-toggle" aria-expanded="false" aria-controls="site-menu">Menu</button><nav id="site-menu" aria-label="Main navigation"><a href="#stack">STACK</a><a href="#work">WORK</a><a href="#contact">CONTACT</a></nav>';
 const dots=document.createElement('nav');dots.id='location-dots';dots.setAttribute('aria-label','Current location and section navigation');for(const [id,label]of destinations){const a=document.createElement('a');a.href='#'+id;a.dataset.destination=id;a.setAttribute('aria-label',label);a.innerHTML='<i aria-hidden="true"></i><span>'+label+'</span>';dots.append(a);}

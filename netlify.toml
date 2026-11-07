@@ -5,5 +5,5 @@
   publish = ".netlify/portfolio-2-production"
 
 [context.deploy-preview]
-  command = "node tools/package-portfolio-preview.cjs"
+  command = "node tools/package-portfolio-preview.cjs --resume-candidate"
   publish = ".netlify/portfolio-2-preview"

@@ -1,0 +1,6 @@
+// Loopback-only profiling harness. Never included in either published package.
+const http=require('node:http'),fs=require('node:fs'),path=require('node:path');
+const root=path.resolve(process.argv[2]||'.netlify/portfolio-2-preview');
+const port=Number(process.argv[3]||6521);
+const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.png':'image/png','.jpg':'image/jpeg','.woff2':'font/woff2','.glb':'model/gltf-binary','.pdf':'application/pdf','.webm':'video/webm'};
+http.createServer((req,res)=>{const u=new URL(req.url,'http://localhost');if(u.pathname==='/performance-review.js'){res.setHeader('Content-Type','text/javascript');res.end(fs.readFileSync(path.join(__dirname,'performance-review.js')));return;}const file=path.resolve(root,'.'+decodeURIComponent(u.pathname)+(u.pathname.endsWith('/')?'index.html':''));if(!file.startsWith(root+path.sep)||!fs.existsSync(file)||!fs.statSync(file).isFile()){res.writeHead(404);res.end();return;}res.setHeader('Content-Type',mime[path.extname(file)]||'application/octet-stream');if(file.endsWith('index.html'))res.end(fs.readFileSync(file,'utf8').replace('</head>','<script src="/performance-review.js" defer></script></head>'));else fs.createReadStream(file).pipe(res);}).listen(port,'127.0.0.1',()=>console.log('Local profiling server http://127.0.0.1:'+port));
