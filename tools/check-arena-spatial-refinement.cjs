@@ -20,7 +20,7 @@ const path=require('node:path');
  check('only right-side seats behind board omitted',()=>assert.ok(exterior.includes('if(side===1&&z<-33.3)continue')));
  check('playbook camera tracks scaled face',()=>assert.deepEqual(rail.find(s=>s.s===.83).t,[14,2.17,-36]));
  const scene=new T.Scene(),{clock,update}=createArenaClock(scene);
- check('clock on left wall above far-side goal sightline',()=>{assert.deepEqual(clock.position.toArray(),[-17.52,6.5,-39]);assert.equal(clock.rotation.y,Math.PI/2);});
+ check('clock shifted one six-unit bay left with size and height preserved',()=>{assert.deepEqual(clock.position.toArray(),[-17.52,6.5,-33]);assert.equal(clock.rotation.y,Math.PI/2);assert.equal(clock.geometry.parameters.radius,1.05);});
  const now=Date.parse('2026-11-04T15:30:00Z');update(now);const version=clock.material.map.version;update(now+1000);
  check('no repeated texture upload within minute',()=>assert.equal(clock.material.map.version,version));
  update(now+60000);check('updates next minute',()=>assert.equal(clock.material.map.version,version+1));
