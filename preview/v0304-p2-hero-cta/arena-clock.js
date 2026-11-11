@@ -5,7 +5,8 @@ export function createArenaClock(scene){
  const canvas=document.createElement('canvas');canvas.width=512;canvas.height=512;
  const c=canvas.getContext('2d'),texture=new T.CanvasTexture(canvas);texture.colorSpace=T.SRGBColorSpace;
  const clock=new T.Mesh(new T.CircleGeometry(1.05,64),new T.MeshBasicMaterial({map:texture,toneMapped:false}));
- clock.name='los-angeles-wall-clock';clock.position.set(-17.52,6.5,-39);clock.rotation.y=Math.PI/2;scene.add(clock);
+ // One six-unit roof/column bay toward the entrance (screen-left at Court reveal).
+ clock.name='los-angeles-wall-clock';clock.position.set(-17.52,6.5,-33);clock.rotation.y=Math.PI/2;scene.add(clock);
  const formatter=new Intl.DateTimeFormat('en-US',{timeZone:'America/Los_Angeles',hour:'numeric',minute:'2-digit',hourCycle:'h23'});
  let lastMinute=-1;
  function update(now=Date.now()){

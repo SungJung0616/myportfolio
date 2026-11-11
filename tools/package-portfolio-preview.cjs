@@ -9,6 +9,9 @@ const production = process.argv.includes('--production');
 const outputName = production ? 'portfolio-2-production' : 'portfolio-2-preview';
 const output = path.join(root, '.netlify', outputName);
 const checkOnly = process.argv.includes('--check');
+const teamLogoManifest = require('./nba-team-logo-manifest.cjs');
+// Official originals are excluded from Git; verify/download into ignored build storage.
+require('node:child_process').execFileSync(process.execPath,[path.join(__dirname,'cache-nba-team-logos.cjs')],{stdio:'inherit'});
 // Explicit local review opt-in; normal Netlify builds retain the approved public PDF.
 const resumeCandidate = process.argv.includes('--resume-candidate');
 
@@ -40,6 +43,7 @@ const heroFiles = [
 const playbookFiles = ['index.html', 'prototype.css', 'prototype.js', 'coupang.js', 'interaction.js'];
 const files = [
   ...heroFiles.map(file => ({source: path.join(hero, file), target: file})),
+  ...Object.keys(teamLogoManifest).map(id => ({source:path.join(root,'.netlify/nba-team-assets',`${id}.svg`),target:`team-logos/${id}.svg`})),
   ...playbookFiles.map(file => ({source: path.join(playbook, file), target: `p2-03b-playbook/${file}`})),
   {source:path.join(root,resumeCandidate?'resume/Sung_Jung_Business_Systems_Resume.pdf':'public/resume/Sung_Jung_Resume.pdf'),target:'resume/Sung_Jung_Resume.pdf'},
 ];
